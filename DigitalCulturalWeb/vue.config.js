@@ -36,7 +36,15 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    proxy: {                 //设置代理，必须填
+      '/api': {              //设置拦截器  拦截器格式   斜杠+拦截器名字，名字可以自己定
+          target: 'http://localhost:8080',     //代理的目标地址
+          changeOrigin: true,              //是否设置同源，输入是的
+          pathRewrite: {                   //路径重写
+              '^/api': ''                     //选择忽略拦截器里面的内容
+            }
+        }
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
