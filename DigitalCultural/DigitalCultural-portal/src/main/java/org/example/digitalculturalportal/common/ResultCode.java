@@ -1,28 +1,30 @@
 package org.example.digitalculturalportal.common;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
 /**
- * API返回码封装类
- * Created by macro on 2019/4/19.
- */
-public enum ResultCode implements IErrorCode {
-    SUCCESS(200, "操作成功"),
-    FAILED(500, "操作失败"),
-    VALIDATE_FAILED(404, "参数检验失败"),
-    UNAUTHORIZED(401, "暂未登录或token已经过期"),
-    FORBIDDEN(403, "没有相关权限");
-    private long code;
-    private String message;
+ * @Author: adlx
+ * @Description: 公共返回对象枚举
+ * @DateTime: 2024/5/16 11:06
+ **/
 
-    private ResultCode(long code, String message) {
-        this.code = code;
-        this.message = message;
-    }
+@ToString
+@Getter
+@AllArgsConstructor
+public enum ResultCode {
 
-    public long getCode() {
-        return code;
-    }
+//    通用
+    SUCCESS(200, "SUCCESS"),
+    ERROR(500,"服务端异常"),
+//
+    INPUT_ERROR(777000, "手机号或密码错误"),
+    STOCK_EMPTY(66600, "库存不足"),
+    REPEAT_ERROR(500011,"重复抢购"),
+    LACKLUCK(123123,"秒杀失败");
 
-    public String getMessage() {
-        return message;
-    }
+
+    private final Integer code;
+    private final String message;
 }
