@@ -26,12 +26,8 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-    @Value("${jwt.tokenHeader}")
-    private String tokenHeader;
-
     @Value("${jwt.tokenHead}")
     private String tokenHead;
-
 
     @ApiOperation("用户登录")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
