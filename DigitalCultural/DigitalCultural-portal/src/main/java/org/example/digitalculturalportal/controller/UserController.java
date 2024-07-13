@@ -4,14 +4,17 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.digitalculturalportal.common.CommonResult;
+import org.example.digitalculturalportal.common.ResultCode;
+import org.example.digitalculturalportal.pojo.User;
 import org.example.digitalculturalportal.pojo.UserLoginParam;
+import org.example.digitalculturalportal.service.UserService;
+import org.example.digitalculturalportal.utils.JWTUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,20 +29,45 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-    @Value("${jwt.tokenHead}")
-    private String tokenHead;
+    @Autowired
+    private UserService userService;
 
-    @ApiOperation("用户登录")
+    @ApiOperation("用户登录,返回token")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult login(@RequestBody UserLoginParam userLoginParam) {
+        String username = userLoginParam.getUsername();
+        String password = userLoginParam.getPassword();
+        User user = userService.login(username,password);
+        if (user == null) {
+            return CommonResult.error(ResultCode.INPUT_ERROR);
+        }
         System.out.println(userLoginParam);
-//        System.out.println(CommonResult.success(userLoginParam));
         Map<String, String> tokenMap = new HashMap<>();
-        String token = "plokmijn";
+//        User user = new User();
+//        user.setUsername("gfgfg");user.setPassword("fddf");
+//        String token = JWTUtil.createToken(user);
+        String token = "dfkfd";
         tokenMap.put("token", token);
-        tokenMap.put("tokenHead", tokenHead);
-        return CommonResult.success(token);
+        return CommonResult.success(tokenMap);
+    }
+
+    @ApiOperation("获取用户信息")
+    @RequestMapping(value = "/getInfo",method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult getInfo(@RequestParam("token") String token) {
+        Map<String, String> map = new HashMap<>();
+        map.put("name", "adlx");
+        map.put("avatar", "https://example.com/avatar.jpg");
+        return CommonResult.success(map);
+    }
+
+    @ApiOperation("退出登录")
+    @RequestMapping(value = "/logout",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult logout() {
+
+        return CommonResult.success();
     }
 
 }
