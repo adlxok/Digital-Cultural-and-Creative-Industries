@@ -36,17 +36,18 @@ public class CommunityPostController {
     public CommonResult addCommunityPost(@RequestParam("title") String title,@RequestParam("content") String content) {
         String username=userHolder.get();
         if(username==null){
-            return CommonResult.fail(ResultCode.FAIL,"您还未登录");
+            return CommonResult.fail(ResultCode.FAIL_LOGIN);
         }
         if (title.isEmpty()) {
-            return CommonResult.fail(ResultCode.FAIL,"标题不能为空");
+            return CommonResult.fail(ResultCode.FAIL_TITLE);
         }
         CommunityPost communityPost=new CommunityPost();
         communityPost.setTitle(title);
         communityPost.setContent(content);
-        communityPost.setUserId(2);
+        communityPost.setUserId(2);//2为测试
         communityPost.setCreateTime(new Date());
         communityPostService.addCommunityPost(communityPost);
         return CommonResult.success();
     }
+
 }
