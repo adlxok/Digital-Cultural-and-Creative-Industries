@@ -26,4 +26,12 @@
         insert into community_post (<include refid="insertFields"/>)
         values (#{userId}, #{title}, #{content}, #{type}, #{status}, #{createTime}, #{commentCount}, #{score})
     </insert>
+    <!--根据id查询帖子-->
+    <select id="selectCommunityPostById" resultMap="BaseResultMap">
+        SELECT
+            <include refid="selectFields"/>
+            FROM
+                commnity_post
+        WHERE id=#{id}
+    </select>
 </mapper>
