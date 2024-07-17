@@ -9,6 +9,7 @@ import org.example.digitalculturalportal.pojo.User;
 import org.example.digitalculturalportal.pojo.UserLoginParam;
 import org.example.digitalculturalportal.service.UserService;
 import org.example.digitalculturalportal.utils.JWTUtil;
+import org.example.digitalculturalportal.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private UserHolder userHolder;
     @ApiOperation("用户登录,返回token")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
@@ -66,7 +68,6 @@ public class UserController {
     @RequestMapping(value = "/logout",method = RequestMethod.POST)
     @ResponseBody
     public CommonResult logout() {
-
         return CommonResult.success();
     }
 

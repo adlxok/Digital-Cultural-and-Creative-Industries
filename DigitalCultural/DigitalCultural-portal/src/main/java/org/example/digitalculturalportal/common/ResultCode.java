@@ -18,7 +18,8 @@ public enum ResultCode {
 //    通用
     SUCCESS(200, "SUCCESS"),
     ERROR(500,"服务端异常"),
-    INPUT_ERROR(400, "账号或密码错误");
+    INPUT_ERROR(400, "账号或密码错误"),
+    FAIL(303,"没有按预期执行");
 
     private final Integer code;
     private final String message;
