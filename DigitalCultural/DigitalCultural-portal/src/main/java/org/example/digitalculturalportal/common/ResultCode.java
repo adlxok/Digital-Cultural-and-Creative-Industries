@@ -19,7 +19,8 @@ public enum ResultCode {
     SUCCESS(200, "SUCCESS"),
     ERROR(500,"服务端异常"),
     INPUT_ERROR(400, "账号或密码错误"),
-    FAIL(303,"没有按预期执行");
+    FAIL_LOGIN(300,"您还未登录"),
+    FAIL_TITLE(301,"标题不能为空");
 
     private final Integer code;
     private final String message;
