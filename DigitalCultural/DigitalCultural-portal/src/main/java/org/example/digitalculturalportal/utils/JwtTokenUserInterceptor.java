@@ -22,8 +22,7 @@ public class JwtTokenUserInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //令牌验证
-//        String token = request.getHeader("Authorization");
-          String token= "dfkfd";
+        String token = request.getHeader("Authorization");
         try {
             log.info("令牌验证：" + token);
 //            token = token.replace("_", "+").replace("-", "+");
