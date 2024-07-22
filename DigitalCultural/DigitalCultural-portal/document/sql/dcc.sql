@@ -51,3 +51,23 @@ INSERT INTO `user` VALUES (4, 'jane_smith', 'hashed_password_2', 'Jane', 'jane.s
 INSERT INTO `user` VALUES (5, 'alice_wonderland', 'hashed_password_3', 'Alice', 'alice.wonderland@example.com', '1995-11-10', 2, '1765432109', '789 Oak St', 'San Francisco', 'USA', 'https://example.com/alice_wonderland.jpg', 'Hey, I am Alice Wonderland.', 1, '2024-07-13 12:36:24', '2024-07-13 12:36:24');
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+    -- -----------------------------
+-- Table structure for community_post
+-- ----------------------------------
+DROP TABLE IF EXISTS `community_post`;
+SET character_set_client = utf8mb4 ;
+CREATE TABLE `community_post` (
+                                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                                  `user_id` int(11) NOT NULL,
+                                  `title` varchar(100) NOT NULL,
+                                  `content` text,
+                                  `type` int(11) DEFAULT NULL COMMENT '0-普通; 1-置顶;',
+                                  `status` int(11) DEFAULT NULL COMMENT '0-正常; 1-精华; 2-拉黑;',
+                                  `create_time` timestamp NULL DEFAULT NULL,
+                                  `comment_count` int(11) DEFAULT NULL,
+                                  `score` double DEFAULT NULL,
+                                  PRIMARY KEY (`id`),
+                                  KEY `index_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+

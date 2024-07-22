@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.digitalculturalportal.dao.CommunityPostDao">
+    <resultMap id="BaseResultMap" type="org.example.digitalculturalportal.pojo.CommunityPost">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="type" property="type"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="comment_count" property="commentCount"/>
+        <result column="score" property="score"/>
+    </resultMap>
+
+    <sql id="selectFields">
+        id, user_id, title, content, type, status, create_time, comment_count, score
+    </sql>
+
+    <sql id="insertFields">
+        user_id, title, content, type, status, create_time, comment_count, score
+    </sql>
+
+    <!-- 添加帖子 -->
+    <insert id="addCommunityPost" parameterType="org.example.digitalculturalportal.pojo.CommunityPost">
+        insert into community_post (<include refid="insertFields"/>)
+        values (#{userId}, #{title}, #{content}, #{type}, #{status}, #{createTime}, #{commentCount}, #{score})
+    </insert>
+    <!--根据id查询帖子-->
+    <select id="selectCommunityPostById" resultMap="BaseResultMap">
+        SELECT
+            <include refid="selectFields"/>
+            FROM
+                commnity_post
+        WHERE id=#{id}
+    </select>
+</mapper>

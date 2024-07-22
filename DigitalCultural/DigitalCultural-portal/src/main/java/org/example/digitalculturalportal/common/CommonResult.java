@@ -86,4 +86,10 @@ public class CommonResult {
     public static CommonResult error(int code, String message, Object data) {
         return new CommonResult(code, message, data);
     }
+    public static CommonResult fail(ResultCode resultCode) {
+        return new CommonResult(resultCode.getCode(), resultCode.getMessage(),null);
+    }
+    public static CommonResult fail(ResultCode resultCode, Object data) {
+        return new CommonResult(resultCode.getCode(), resultCode.getMessage(), data);
+    }
 }

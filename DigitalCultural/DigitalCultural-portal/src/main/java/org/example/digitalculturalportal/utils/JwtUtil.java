@@ -9,14 +9,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 import java.util.Date;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -24,6 +21,7 @@ import java.util.UUID;
  * @CreateTime : 2021/6/18
  * @Description :
  **/
+
 
 public class JwtUtil {
     // 设置有效期为60 * 60 *1000  一个小时

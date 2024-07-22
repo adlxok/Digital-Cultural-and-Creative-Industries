@@ -10,6 +10,8 @@ import org.example.digitalculturalportal.pojo.User;
 import org.example.digitalculturalportal.pojo.UserLoginParam;
 import org.example.digitalculturalportal.service.UserService;
 import org.slf4j.LoggerFactory;
+import org.example.digitalculturalportal.utils.JwtUtil;
+import org.example.digitalculturalportal.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,6 +40,9 @@ public class UserController {
     private UserService userService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+
+    private UserHolder userHolder;
 
     @ApiOperation("用户登录,返回token")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -80,7 +85,6 @@ public class UserController {
 //    @PreAuthorize("hasAuthority('dcc:use')")
     @ResponseBody
     public CommonResult logout() {
-
         return CommonResult.success();
     }
 
