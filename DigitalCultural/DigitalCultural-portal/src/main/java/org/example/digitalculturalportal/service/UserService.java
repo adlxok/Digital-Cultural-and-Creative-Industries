@@ -12,5 +12,5 @@ import org.example.digitalculturalportal.pojo.User;
  * @since 2024-07-13
  */
 public interface UserService {
-    User login(String username, String password);
+    String login(String username, String password);
 }

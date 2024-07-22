@@ -1,38 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.example.digitalculturalportal.dao.UserDao">
-
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="org.example.digitalculturalportal.pojo.User">
-        <id column="id" property="id" />
-        <result column="username" property="username" />
-        <result column="password" property="password" />
-        <result column="nickname" property="nickname" />
-        <result column="email" property="email" />
-        <result column="birth_date" property="birthDate" />
-        <result column="gender" property="gender" />
-        <result column="phone" property="phone" />
-        <result column="address" property="address" />
-        <result column="city" property="city" />
-        <result column="country" property="country" />
-        <result column="profile_image_url" property="profileImageUrl" />
-        <result column="bio" property="bio" />
-        <result column="status" property="status" />
-        <result column="create_time" property="createTime" />
-        <result column="login_time" property="loginTime" />
-    </resultMap>
-
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, username, password, nickname, email, birth_date, gender, phone, address, city, country, profile_image_url, bio, status, create_time, login_time
     </sql>
 
-    <select id="login" resultMap="BaseResultMap">
+    <select id="findUserByusername" resultType="org.example.digitalculturalportal.pojo.User">
         SELECT
             <include refid="Base_Column_List"/>
         FROM
-            user
-        WHERE username = #{username} AND password = #{password}
+            udc_user
+        WHERE username = #{username}
+    </select>
+
+    <select id="selectPermsByUserId" resultType="String">
+        SELECT
+            DISTINCT m.perm_key
+        FROM
+            udc_user_role ur
+                LEFT JOIN udc_role r on ur.role_id = r.id
+                LEFT JOIN udc_role_menu rm on ur.role_id = rm.role_id
+                LEFT JOIN udc_menu m on rm.menu_id = m.id
+        WHERE ur.user_id = #{userId} and r.`status` = 1 and m.`status` = 1
     </select>
 
 </mapper>

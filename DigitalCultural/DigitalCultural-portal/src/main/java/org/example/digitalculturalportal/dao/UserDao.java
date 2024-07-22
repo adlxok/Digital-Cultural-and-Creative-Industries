@@ -4,6 +4,8 @@ package org.example.digitalculturalportal.dao;
 import org.apache.ibatis.annotations.Param;
 import org.example.digitalculturalportal.pojo.User;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -14,5 +16,7 @@ import org.example.digitalculturalportal.pojo.User;
  */
 
 public interface UserDao {
-    User login(@Param("username") String username, @Param("password") String password);
+    User findUserByusername(@Param("username") String username);
+
+    List<String> selectPermsByUserId(@Param("userId") Long userId);
 }

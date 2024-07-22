@@ -1,72 +1,106 @@
 package org.example.digitalculturalportal.utils;
 
-
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import org.example.digitalculturalportal.pojo.User;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @Author: adlx
  * @Description: TODO
- * @DateTime: 2024/7/13 13:01
+ * @DateTime: 2024/7/17 17:26
+ **/
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.util.Base64;
+import java.util.Date;
+import java.util.Map;
+import java.util.UUID;
+
+/**
+ * @Author : lzy
+ * @CreateTime : 2021/6/18
+ * @Description :
  **/
 
-public class JWTUtil {
-    //token有效时长
-    private static final long EXPIRE=30*60*1000L;
-    //token的密钥 可自行定义
-    private static final String SECRET="jwt";
+public class JwtUtil {
+    // 设置有效期为60 * 60 *1000  一个小时
+    public static final Long JWT_TTL = 60 * 60 * 1000L;
+    //设置秘钥明文
+    public static final String JWT_KEY = "xbaozi";
 
-
-    public static String createToken(User user) throws UnsupportedEncodingException {
-        //token过期时间
-        Date date=new Date(System.currentTimeMillis()+EXPIRE);
-
-        //jwt的header部分
-        Map<String ,Object>map=new HashMap<>();
-        map.put("alg","HS256");
-        map.put("typ","JWT");
-
-        //使用jwt的api生成token
-        String token= JWT.create()
-                .withHeader(map)
-                .withClaim("username", user.getUsername())//私有声明
-                .withExpiresAt(date)//过期时间
-                .withIssuedAt(new Date())//签发时间
-                .sign(Algorithm.HMAC256(SECRET));//签名
+    public static String getUUID() {
+        String token = UUID.randomUUID().toString().replaceAll("-", "");
         return token;
     }
 
     /**
-     * 校验token的有效性
-     * 1 token的header和payload是否没改过
-     * 2 没有过期
+     * 生成jtw
+     * @param subject token中要存放的数据（json格式）
      */
-    public static boolean verify(String token){
-        try {
-            //解密
-            JWTVerifier verifier=JWT.require(Algorithm.HMAC256(SECRET)).build();
-            verifier.verify(token);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
+    public static String createJWT(String subject) {
+        JwtBuilder builder = getJwtBuilder(subject, null, getUUID());// 设置过期时间
+        return builder.compact();
     }
-    //无需解密也可以获取token的信息
-    public static String getUsername(String token){
-        try {
-            DecodedJWT jwt = JWT.decode(token);
-            return jwt.getClaim("username").asString();
-        } catch (JWTDecodeException e) {
-            return null;
+
+    /**
+     * 生成jwt
+     * @param subject   token中要存放的数据（json格式）
+     * @param ttlMillis token超时时间
+     */
+    public static String createJWT(String subject, Long ttlMillis) {
+        JwtBuilder builder = getJwtBuilder(subject, ttlMillis, getUUID());// 设置过期时间
+        return builder.compact();
+    }
+
+    private static JwtBuilder getJwtBuilder(String subject, Long ttlMillis, String uuid) {
+        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+        SecretKey secretKey = generalKey();
+        long nowMillis = System.currentTimeMillis();
+        Date now = new Date(nowMillis);
+        if (ttlMillis == null) {
+            ttlMillis = JwtUtil.JWT_TTL;
         }
+        long expMillis = nowMillis + ttlMillis;
+        Date expDate = new Date(expMillis);
+        return Jwts.builder()
+                .setId(uuid)            //唯一的ID
+                .setSubject(subject)    // 主题  可以是JSON数据
+                .setIssuer("sg")        // 签发者
+                .setIssuedAt(now)       // 签发时间
+                .signWith(signatureAlgorithm, secretKey) //使用HS256对称加密算法签名, 第二个参数为秘钥
+                .setExpiration(expDate);
+    }
+
+    /**
+     * 创建token
+     */
+    public static String createJWT(String id, String subject, Long ttlMillis) {
+        JwtBuilder builder = getJwtBuilder(subject, ttlMillis, id);// 设置过期时间
+        return builder.compact();
+    }
+
+    /**
+     * 生成加密后的秘钥 secretKey
+     */
+    public static SecretKey generalKey() {
+        byte[] encodedKey = Base64.getDecoder().decode(JwtUtil.JWT_KEY);
+        SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
+        return key;
+    }
+
+    /**
+     * 解析
+     * @throws Exception
+     */
+    public static Claims parseJWT(String jwt) throws Exception {
+        SecretKey secretKey = generalKey();
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(jwt)
+                .getBody();
     }
 }
+

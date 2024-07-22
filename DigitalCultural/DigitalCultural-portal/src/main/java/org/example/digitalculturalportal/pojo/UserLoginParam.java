@@ -1,5 +1,6 @@
 package org.example.digitalculturalportal.pojo;
 
+import com.sun.istack.internal.NotNull;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
