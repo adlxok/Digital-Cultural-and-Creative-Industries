@@ -5,15 +5,14 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.digitalculturalportal.common.CommonResult;
 import org.example.digitalculturalportal.common.ResultCode;
-import org.example.digitalculturalportal.pojo.LoginUser;
 import org.example.digitalculturalportal.pojo.User;
 import org.example.digitalculturalportal.pojo.UserLoginParam;
 import org.example.digitalculturalportal.service.UserService;
+
 import org.slf4j.LoggerFactory;
-import org.example.digitalculturalportal.utils.JwtUtil;
+
 import org.example.digitalculturalportal.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -41,8 +40,9 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
+    @Autowired
     private UserHolder userHolder;
+
 
     @ApiOperation("用户登录,返回token")
     @RequestMapping(value = "/login", method = RequestMethod.POST)

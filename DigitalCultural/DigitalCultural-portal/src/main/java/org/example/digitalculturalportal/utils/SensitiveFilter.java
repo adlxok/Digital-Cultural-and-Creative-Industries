@@ -1,7 +1,6 @@
 package org.example.digitalculturalportal.utils;
 
 
-//import com.mysql.cj.util.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
