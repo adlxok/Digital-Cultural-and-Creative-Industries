@@ -1,6 +1,6 @@
 package org.example.digitalculturalportal.utils;
 
-import org.example.digitalculturalportal.controller.CommunityPostController;
+//import org.example.digitalculturalportal.controller.CommunityPostController;
 import org.example.digitalculturalportal.pojo.User;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

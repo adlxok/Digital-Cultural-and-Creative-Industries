@@ -37,8 +37,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserHolder userHolder;
@@ -50,12 +48,10 @@ public class UserController {
     public CommonResult login(@RequestBody UserLoginParam userLoginParam) {
         String username = userLoginParam.getUsername();
         String password = userLoginParam.getPassword();
-        LOGGER.info("passwordEncode: {}", passwordEncoder.encode("123456"));
         String token = userService.login(username,password);
         if (token == null) {
             return CommonResult.error(ResultCode.INPUT_ERROR);
         }
-        LOGGER.info("登录参数：{}， token: {}", userLoginParam, token);
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         return CommonResult.success(tokenMap);
@@ -65,8 +61,10 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult register(@RequestBody User user) {
-
-        return CommonResult.success();
+        if (userService.register(user) == null) {
+            return CommonResult.error(ResultCode.USER_EXITS, user);
+        }
+        return CommonResult.success(user);
     }
 
     @ApiOperation("获取用户信息")
@@ -80,11 +78,11 @@ public class UserController {
     }
 
     @ApiOperation("退出登录")
-    @PreAuthorize("hasAuthority('test')")
+    @PreAuthorize("@adlx.hasAuthority('dcc:use')")
     @RequestMapping(value = "/logout",method = RequestMethod.POST)
-//    @PreAuthorize("hasAuthority('dcc:use')")
     @ResponseBody
     public CommonResult logout() {
+        userService.logout();
         return CommonResult.success();
     }
 

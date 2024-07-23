@@ -13,4 +13,6 @@ import org.example.digitalculturalportal.pojo.User;
  */
 public interface UserService {
     String login(String username, String password);
+    void logout();
+    User register(User user);
 }

@@ -17,6 +17,6 @@ import java.util.List;
 
 public interface UserDao {
     User findUserByusername(@Param("username") String username);
-
     List<String> selectPermsByUserId(@Param("userId") Long userId);
+    int insertList(@Param("list") List<User> list);
 }

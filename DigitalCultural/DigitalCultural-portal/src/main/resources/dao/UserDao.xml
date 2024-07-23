@@ -25,4 +25,13 @@
         WHERE ur.user_id = #{userId} and r.`status` = 1 and m.`status` = 1
     </select>
 
+    <insert id="insertList">
+        INSERT INTO udc_user (username, password, create_time) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.username},
+             #{item.password},
+             #{item.createTime})
+        </foreach>
+    </insert>
+
 </mapper>

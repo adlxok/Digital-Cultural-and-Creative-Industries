@@ -14,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.naming.AuthenticationException;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * <p>
@@ -36,14 +38,15 @@ public class UserServiceImpl implements UserService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private RedisCache rediscache;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public String login(String username, String password) {
         //AuthenticationManager authenticate进行用户认证
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-        LOGGER.info("{}", authenticate);
-        LOGGER.info("{}", Objects.isNull(authenticate));
+        Authentication authenticate1 = authenticationManager.authenticate(authenticationToken);
         //如果认证没通过，给出提示
         if(Objects.isNull(authenticate)){
             throw new RuntimeException("登录失败");
@@ -57,4 +60,33 @@ public class UserServiceImpl implements UserService {
 
         return jwt;
     }
+
+    @Override
+    public void logout() {
+        //获取SecurityContextHolder中的用户id
+        UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken ) SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Long userid = loginUser.getUser().getId();
+        //删除Redis中的值
+        rediscache.deleteObject("login:"+userid);
+    }
+
+    @Override
+    public User register(User user) {
+        String username = user.getUsername();
+        String password = user.getPassword();
+        User one = userDao.findUserByusername(username);
+        if (one == null) {
+            List<User> list = new ArrayList<>();
+            user.setPassword(passwordEncoder.encode(password));
+            user.setCreateTime(new Date());
+            list.add(user);
+            userDao.insertList(list);
+        } else {
+            return null;
+        }
+        return user;
+    }
+
+
 }
