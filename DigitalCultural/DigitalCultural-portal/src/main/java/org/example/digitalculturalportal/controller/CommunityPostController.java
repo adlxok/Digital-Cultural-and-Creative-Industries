@@ -20,34 +20,34 @@ import java.util.Date;
  * @author  jisamin
  * @since  2024/7/15
  */
-@Controller
-@Api(tags = "CommunityPostController")
-@Tag(name="CommunityPostController",description = "社区帖子管理")
-@RequestMapping("/post")
-public class CommunityPostController {
-    @Autowired
-    private CommunityPostService communityPostService;
-    @Autowired
-    private UserHolder userHolder;
-
-    @ApiOperation("用户发布帖子")
-    @RequestMapping(value = "/addPost", method = RequestMethod.GET)
-    @ResponseBody
-    public CommonResult addCommunityPost(@RequestParam("title") String title,@RequestParam("content") String content) {
-        String username=userHolder.get();
-        if(username==null){
-            return CommonResult.fail(ResultCode.FAIL_LOGIN);
-        }
-        if (title.isEmpty()) {
-            return CommonResult.fail(ResultCode.FAIL_TITLE);
-        }
-        CommunityPost communityPost=new CommunityPost();
-        communityPost.setTitle(title);
-        communityPost.setContent(content);
-        communityPost.setUserId(2);//2为测试
-        communityPost.setCreateTime(new Date());
-        communityPostService.addCommunityPost(communityPost);
-        return CommonResult.success();
-    }
-
-}
+//@Controller
+//@Api(tags = "CommunityPostController")
+//@Tag(name="CommunityPostController",description = "社区帖子管理")
+//@RequestMapping("/post")
+//public class CommunityPostController {
+//    @Autowired
+//    private CommunityPostService communityPostService;
+//    @Autowired
+//    private UserHolder userHolder;
+//
+//    @ApiOperation("用户发布帖子")
+//    @RequestMapping(value = "/addPost", method = RequestMethod.GET)
+//    @ResponseBody
+//    public CommonResult addCommunityPost(@RequestParam("title") String title,@RequestParam("content") String content) {
+//        String username=userHolder.get();
+//        if(username==null){
+//            return CommonResult.fail(ResultCode.FAIL_LOGIN);
+//        }
+//        if (title.isEmpty()) {
+//            return CommonResult.fail(ResultCode.FAIL_TITLE);
+//        }
+//        CommunityPost communityPost=new CommunityPost();
+//        communityPost.setTitle(title);
+//        communityPost.setContent(content);
+//        communityPost.setUserId(2);//2为测试
+//        communityPost.setCreateTime(new Date());
+//        communityPostService.addCommunityPost(communityPost);
+//        return CommonResult.success();
+//    }
+//
+//}
