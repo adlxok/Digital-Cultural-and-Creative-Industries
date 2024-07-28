@@ -8,6 +8,8 @@ import org.example.digitalculturalportal.common.CommonPage;
 import org.example.digitalculturalportal.common.CommonResult;
 import org.example.digitalculturalportal.pojo.CommunityPost;
 import org.example.digitalculturalportal.service.CommunityPostService;
+import org.example.digitalculturalportal.utils.CommunityConstant;
+import org.example.digitalculturalportal.utils.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 社区首页
@@ -27,24 +30,21 @@ import java.util.List;
 @Api(tags = "CommunityHomeController")
 @Tag(name="CommunityHomeController",description = "社区首页")
 @RequestMapping("/communityHome")
-public class CommunityHomeController {
+public class CommunityHomeController implements CommunityConstant{
     @Autowired
     private CommunityPostService communityPostService;
     @ApiOperation("分页展示帖子列表")
     @RequestMapping(value = "/postList", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult showPostList(@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-                                     @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                     Integer userId,Integer orderMode){
-        List<CommunityPost> postList=communityPostService.queryCommunityPosts(userId,orderMode,pageSize,pageNum);
+    public CommonResult showPostList(@RequestParam(value = "pageNum", defaultValue = DEFAULT_PAGENUM) Integer pageNum,
+                                     @RequestParam(value = "pageSize", defaultValue = DEFAULT_PAGESIZE) Integer pageSize,
+                                     @RequestParam("userId") Integer userId,@RequestParam("orderMode") Integer orderMode){
+        //保存当前页码页数作键
+        RedisKeyUtil redisKeyUtil=new RedisKeyUtil();
+        redisKeyUtil.setHotPosTKey(pageNum.toString(),pageSize.toString());
+        List<CommunityPost> postList=communityPostService.queryCommunityPosts(userId,orderMode,pageNum,pageSize);
         log.info("查询帖子成功");
         return CommonResult.success(CommonPage.restPage(postList));
     }
 
-//    @ApiOperation("我的主页详情")
-//    @RequestMapping(value = "/myHomepage", method = RequestMethod.GET)
-//    @ResponseBody
-//    public CommonResult myDetails(){
-//
-//    }
 }

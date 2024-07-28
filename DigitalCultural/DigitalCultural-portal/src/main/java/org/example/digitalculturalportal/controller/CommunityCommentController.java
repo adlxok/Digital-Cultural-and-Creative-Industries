@@ -2,19 +2,18 @@ package org.example.digitalculturalportal.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.example.digitalculturalportal.common.CommonResult;
 import org.example.digitalculturalportal.common.ResultCode;
 import org.example.digitalculturalportal.pojo.CommunityComment;
+import org.example.digitalculturalportal.pojo.LoginUser;
 import org.example.digitalculturalportal.service.CommunityCommentService;
-import org.example.digitalculturalportal.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 
 /**
  * 社区评论管理Controller
@@ -35,13 +34,16 @@ public class CommunityCommentController {
     @ResponseBody
     public CommonResult addComment(@RequestParam("content") String content, @PathVariable  Integer postId){
         if (content==null){
-          return CommonResult.fail(ResultCode.FAIL_CONTENT);
+          return CommonResult.fail(ResultCode.FAIL_TITLE);
         }
-//         int userId=UserHolder.get();//获取当前用户id
+        //获取SecurityContextHolder中的用户id
+        UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken ) SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Long userid = loginUser.getUser().getId();
         CommunityComment communityComment=new CommunityComment();
         communityComment.setContent(content);
         communityComment.setEntityId(postId);
-        communityComment.setUserId(3);//3为测试
+        communityComment.setUserId(Math.toIntExact(userid));//3为测试
         communityCommentService.addCommunityComment(communityComment);
         return CommonResult.success();
     }

@@ -53,3 +53,23 @@ mybatis:
       cluster-name: elasticsearch
       cluster-nodes: 127.0.0.1:9300
 
+# Quartz 【内存调度程序的配置集】
+  quartz:
+    #数据库方式
+    job-store-type: jdbc
+    #相关属性配置
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: CommunityScheduler #调度程序实例名称
+            instanceId: AUTO #自动生成唯一id
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            isClustered: true
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 5
+
+

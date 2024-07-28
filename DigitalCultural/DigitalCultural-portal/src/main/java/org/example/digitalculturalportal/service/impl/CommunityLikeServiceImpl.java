@@ -1,6 +1,5 @@
 package org.example.digitalculturalportal.service.impl;
 
-import org.apache.kafka.common.protocol.types.Field;
 import org.example.digitalculturalportal.service.CommunityLikeService;
 import org.example.digitalculturalportal.utils.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
