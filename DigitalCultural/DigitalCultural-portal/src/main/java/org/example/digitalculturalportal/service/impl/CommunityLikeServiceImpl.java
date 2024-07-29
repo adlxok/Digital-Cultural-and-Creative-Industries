@@ -15,6 +15,7 @@ public class CommunityLikeServiceImpl implements CommunityLikeService {
     private RedisTemplate redisTemplate;
     @Override
     public void like(Integer userId, Integer entityType, Integer entityId,Integer entityUserId) {
+        //redis事务管理
         redisTemplate.execute(new SessionCallback() {
             @Override
             public Object execute(RedisOperations operations) throws DataAccessException {
@@ -28,7 +29,7 @@ public class CommunityLikeServiceImpl implements CommunityLikeService {
                     redisTemplate.opsForValue().decrement(userLikeKey);//若key存在-1
                 }else{
                     redisTemplate.opsForSet().add(entityLikeKey,userId);
-                    redisTemplate.opsForValue().increment(userLikeKey);//若key存在+1
+                    redisTemplate.opsForValue().increment(userLikeKey);//若key不存在+1
                 }
                 return operations.exec();
             }

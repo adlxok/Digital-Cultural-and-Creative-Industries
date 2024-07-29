@@ -1,14 +1,8 @@
 package org.example.digitalculturalportal.service.impl;
 
-import com.github.benmanes.caffeine.cache.CacheLoader;
-import com.github.benmanes.caffeine.cache.Caffeine;
-import com.github.benmanes.caffeine.cache.LoadingCache;
 import com.github.pagehelper.PageHelper;
-import com.mongodb.lang.NonNull;
-import com.mongodb.lang.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import org.example.digitalculturalportal.dao.CommunityPostDao;
-import org.example.digitalculturalportal.pojo.CommunityComment;
 import org.example.digitalculturalportal.pojo.CommunityPost;
 import org.example.digitalculturalportal.service.CommunityPostService;
 import org.example.digitalculturalportal.utils.CommunityConstant;
@@ -16,16 +10,13 @@ import org.example.digitalculturalportal.utils.RedisCache;
 import org.example.digitalculturalportal.utils.RedisKeyUtil;
 import org.example.digitalculturalportal.utils.SensitiveFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
-import javax.annotation.PostConstruct;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+
 
 @Service
 @Slf4j
