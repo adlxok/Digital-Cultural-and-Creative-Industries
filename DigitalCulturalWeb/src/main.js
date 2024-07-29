@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+// import { fabric } from 'fabric'
 
 Vue.config.productionTip = false
 
@@ -11,6 +12,8 @@ import "swiper/css/swiper.min.css";
 
 //引入MockServe.js-----mock数据
 // import './mock/mockServer';
+
+// Vue.use(fabric);
 
 new Vue({
     router,
