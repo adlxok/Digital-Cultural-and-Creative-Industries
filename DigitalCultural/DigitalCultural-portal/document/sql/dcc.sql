@@ -136,3 +136,24 @@ INSERT INTO `udc_user_role` VALUES (1, 3, 2);
 INSERT INTO `udc_user_role` VALUES (2, 4, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- --------------------------------
+-- Table structure for community_post
+-- --------------------------------
+DROP TABLE IF EXISTS `community_post`;
+SET character_set_client = utf8mb4 ;
+CREATE TABLE `community_post` (
+                                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                                  `user_id` int(11) NOT NULL,
+                                  `title` varchar(100) NOT NULL,
+                                  `content` text,
+                                  `type` int(11) DEFAULT 0 COMMENT '0-普通; 1-置顶;',
+                                  `status` int(11) DEFAULT 0 COMMENT '0-正常; 1-精华; 2-拉黑;',
+                                  `create_time` timestamp NULL DEFAULT NULL,
+                                  `comment_count` int(11) DEFAULT 0,
+                                  `score` double DEFAULT 0.0,
+                                  PRIMARY KEY (`id`),
+                                  KEY `index_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+

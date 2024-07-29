@@ -119,6 +119,19 @@ public class RedisCache
     }
 
     /**
+     * 获得缓存的list对象
+     * @param key 缓存的键值
+     * @param start 起始索引
+     * @param end 终止索引
+     * @return 缓存键值对应的数据
+     * @param <T>
+     */
+    public <T> List<T> getCacheListByRange(final String key,final Integer start,final  Integer end)
+    {
+        return redisTemplate.opsForList().range(key, start, end);
+    }
+
+    /**
      * 缓存Set
      * @param key 缓存键值
      * @param dataSet 缓存的数据
@@ -134,6 +147,17 @@ public class RedisCache
         }
         return setOperation;
     }
+
+    /**
+     * 缓存单个对象到set中
+     * @param key
+     * @param value
+     */
+    public <T> void setCacheObjectInSet(final String key, final T value) {
+        BoundSetOperations<String, T> setOperation = redisTemplate.boundSetOps(key);
+        setOperation.add(value);
+    }
+
 
     /**
      * 获得缓存的set
