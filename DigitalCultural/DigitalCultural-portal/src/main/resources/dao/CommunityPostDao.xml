@@ -22,7 +22,10 @@
     </sql>
 
     <!-- 添加帖子 -->
-    <insert id="addCommunityPost" parameterType="org.example.digitalculturalportal.pojo.CommunityPost">
+    <insert id="addCommunityPost" parameterType="org.example.digitalculturalportal.pojo.CommunityPost" >
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+              SELECT LAST_INSERT_ID()
+        </selectKey>
         insert into community_post (<include refid="insertFields"/>)
         values (#{userId}, #{title}, #{content}, #{type}, #{status}, #{createTime}, #{commentCount}, #{score})
     </insert>
@@ -31,7 +34,61 @@
         SELECT
             <include refid="selectFields"/>
             FROM
-                commnity_post
+        community_post
         WHERE id=#{id}
+    </select>
+    <!--查询帖子个数-->
+    <select id="selectCommunityPostRows" resultType="int">
+        SELECT COUNT(id)
+        FROM community_post
+        WHERE status!=2
+        <if test="userId!=0">
+        AND user_id=#{userId}
+        </if>
+    </select>
+    <!--查询帖子信息-->
+    <select id="selectCommunityPosts" resultMap="BaseResultMap">
+        SELECT <include refid="selectFields"></include>
+            FROM community_post
+            WHERE status!=2
+            <if test="userId!=0">
+                AND user_id = #{userId}
+            </if>
+            <if test="orderMode==0">
+                ORDER BY type DESC, create_time DESC
+            </if>
+            <if test="orderMode==1">
+                ORDER BY type DESC,score DESC,create_time DESC
+            </if>
+    </select>
+    <!--修改评论数量-->
+    <update id="updateCommentCount" parameterType="int">
+        UPDATE community_post
+        SET comment_count=#{commentCount}
+        WHERE id=#{id}
+    </update>
+    <!--修改评论状态-->
+    <update id="updateCommentStatus" parameterType="int">
+        UPDATE community_post
+        SET status=#{status}
+        WHERE id=#{id}
+    </update>
+    <!--修改帖子类型-->
+    <update id="updateType" parameterType="int">
+        UPDATE community_post
+        SET type=#{type}
+        WHERE id=#{id}
+    </update>
+    <!--修改帖子分数-->
+    <update id="updateScore">
+        UPDATE  community_post
+        SET score=#{score}
+        WHERE id=#{id}
+    </update>
+    <!--查询某个帖子评论数量-->
+    <select id="selectCommentCount" resultType="int">
+        SELECT comment_count
+        FROM community_post
+        WHERE id = #{id}
     </select>
 </mapper>

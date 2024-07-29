@@ -11,10 +11,8 @@ import org.example.digitalculturalportal.service.UserService;
 
 import org.slf4j.LoggerFactory;
 
-import org.example.digitalculturalportal.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,8 +36,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserHolder userHolder;
+
 
 
     @ApiOperation("用户登录,返回token")
