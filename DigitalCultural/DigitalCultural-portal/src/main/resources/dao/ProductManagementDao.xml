@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.digitalculturalportal.dao.ProductManagementDao">
+    <resultMap id="BaseResultMap" type="org.example.digitalculturalportal.pojo.Product">
+        <id column="id" property="id"/>
+        <result column="product_name" property="productName"/>
+        <result column="product_price" property="productPrice"/>
+        <result column="product_quantity" property="productQuantity"/>
+    </resultMap>
+
+    <sql id="insertProducts">
+        product_name,product_price,product_quantity
+    </sql>
+
+    <sql id="ProductList">
+        id,product_name,product_price,product_quantity
+    </sql>
+
+    <!-- 添加商品 -->
+    <insert id="insertProduct" parameterType="org.example.digitalculturalportal.pojo.Product">
+        insert into product (<include refid="insertProducts"/>)
+        values (#{productName}, #{productPrice}, #{productQuantity})
+    </insert>
+
+    <!--删除商品-->
+    <delete id="deleteProductById" parameterType="long">
+        delete from product where id = #{id}
+    </delete>
+
+    <!--修改商品信息-->
+    <update id="updateProduct" parameterType="org.example.digitalculturalportal.pojo.Product">
+        UPDATE product
+        SET product_name = #{productName}, product_price =#{productPrice}, product_quantity = #{productQuantity}
+        WHERE id = #{id}
+    </update>
+
+</mapper>
