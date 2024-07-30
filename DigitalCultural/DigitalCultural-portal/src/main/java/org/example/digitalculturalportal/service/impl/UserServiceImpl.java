@@ -8,6 +8,7 @@ import org.example.digitalculturalportal.pojo.User;
 import org.example.digitalculturalportal.service.UserService;
 import org.example.digitalculturalportal.utils.JwtUtil;
 import org.example.digitalculturalportal.utils.RedisCache;
+import org.example.digitalculturalportal.utils.RedisKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,18 @@ public class UserServiceImpl implements UserService {
             userDao.insertList(list);
         } else {
             return null;
+        }
+        return user;
+    }
+
+    @Override
+    public User queryUserByIdInCache(Integer userId) {
+        String key= RedisKeyUtil.getUserKey(userId);
+        User user=rediscache.getCacheObject(key);
+        if(user==null){
+            user=userDao.findUserByuserId(userId);
+            //存缓存
+            rediscache.setCacheObject(key,user);
         }
         return user;
     }

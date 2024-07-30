@@ -15,4 +15,11 @@ public interface UserService {
     String login(String username, String password);
     void logout();
     User register(User user);
+
+    /**
+     *从缓存获取用户，未命中查数据库
+     * @param userId
+     * @return
+     */
+    User queryUserByIdInCache(Integer userId);
 }
