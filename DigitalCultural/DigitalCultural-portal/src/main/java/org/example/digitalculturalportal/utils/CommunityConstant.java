@@ -21,15 +21,15 @@ public interface CommunityConstant {
     String DEFAULT_PAGENUM="1";
     //默认一页数据数量
     String DEFAULT_PAGESIZE="5";
-    //Kafka 主题：评论
-    String TOPIC_COMMENT="comment";
-    //Kafka 主题：点赞
-    String TOPIC_LIKE="like";
-    //Kafka 主题：关注
-    String TOPIC_FOLLOW="follow";
-    // Kafka 主题：发帖
-    String TOPIC_PUBLISH = "publish";
+    //系统用户
+    Integer SYSTEM_USER_ID=0;
 
-    // Kafka 主题：删帖
-    String TOPIC_DELETE = "delete";
+    //事件类型：评论
+    String EVENT_TYPE_COMMENT="comment";
+    //事件类型：点赞
+    String EVENT_TYPE_LIKE="like";
+    //事件类型：关注
+    String EVENT_TYPE_FOLLOW="follow";
+    //事件类型：帖子
+    String EVENT_TYPE_POST="post";
 }
