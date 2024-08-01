@@ -1,8 +1,6 @@
 package org.example.digitalculturalportal.pojo;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -16,6 +14,8 @@ import java.util.Date;
  * @since 2024/7/15
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Document(indexName = "communitypost", shards = 6, replicas = 3)
 public class CommunityPost {
     @Id

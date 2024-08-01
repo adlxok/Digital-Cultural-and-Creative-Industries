@@ -22,14 +22,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 /**
- * 社区帖子管理Controller
+ * 社区帖子Controller
  * @author  jisamin
  * @since  2024/7/15
  */
 @Controller
 @Slf4j
 @Api(tags = "CommunityPostController")
-@Tag(name="CommunityPostController",description = "社区帖子管理")
+@Tag(name="CommunityPostController",description = "社区帖子")
 @RequestMapping("/post")
 public class CommunityPostController implements CommunityConstant {
     @Autowired
@@ -48,11 +48,11 @@ public class CommunityPostController implements CommunityConstant {
         //获取SecurityContextHolder中的用户id
         UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken ) SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        Long userid = loginUser.getUser().getId();
+        Long userId = loginUser.getUser().getId();
         CommunityPost communityPost=new CommunityPost();
         communityPost.setTitle(title);
         communityPost.setContent(content);
-        communityPost.setUserId(Math.toIntExact(userid));
+        communityPost.setUserId(Math.toIntExact(userId));
         communityPost.setCreateTime(new Date());
         int post=communityPostService.addCommunityPost(communityPost);
         //帖子存进redis定时计算更新分数
