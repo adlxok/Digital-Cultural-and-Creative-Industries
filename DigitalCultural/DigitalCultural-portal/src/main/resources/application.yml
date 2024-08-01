@@ -71,5 +71,11 @@ mybatis:
           threadPool:
             class: org.quartz.simpl.SimpleThreadPool
             threadCount: 5
-
+#RabbitMq
+    rabbitmq:
+      host:127.0.0.1
+      port=5672
+      username=guest
+      password=guest
+      publisher-confirm-type=correlated
 
