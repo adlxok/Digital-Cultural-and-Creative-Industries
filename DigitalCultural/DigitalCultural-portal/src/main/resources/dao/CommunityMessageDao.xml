@@ -19,7 +19,8 @@
     </sql>
     <!--添加一条私信-->
     <insert id="insertMessage" parameterType="org.example.digitalculturalportal.pojo.CommunityMessage" keyProperty="id">
-        INSERT INTO (<include refid="insertFields"></include>)
+        INSERT INTO community_message
+        (<include refid="insertFields"></include>)
         VALUES(#{fromId}, #{toId}, #{conversationId}, #{content}, #{status}, #{createTime})
     </insert>
     <!--查询当前用户会话列表-->

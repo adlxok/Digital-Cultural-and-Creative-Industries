@@ -12,7 +12,7 @@ public class CommunityMessage {
     /**
      * 发送私信的用户id
      */
-    private int formId;
+    private int fromId;
     /**
      * 接收私信的用户id
      */
@@ -33,6 +33,5 @@ public class CommunityMessage {
      * 发送时间
      */
     private Date createTime;
-
 
 }
