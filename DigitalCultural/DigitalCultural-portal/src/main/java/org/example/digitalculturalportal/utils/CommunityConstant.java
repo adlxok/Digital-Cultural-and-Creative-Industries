@@ -22,7 +22,7 @@ public interface CommunityConstant {
     //默认一页数据数量
     String DEFAULT_PAGESIZE="5";
     //系统用户
-    Integer SYSTEM_USER_ID=0;
+    int SYSTEM_USER_ID=1;
 
     //事件类型：评论
     String EVENT_TYPE_COMMENT="comment";

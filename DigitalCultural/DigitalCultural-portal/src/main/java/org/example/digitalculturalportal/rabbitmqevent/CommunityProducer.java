@@ -1,5 +1,8 @@
 package org.example.digitalculturalportal.rabbitmqevent;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.digitalculturalportal.config.RabbitMqConfig;
 import org.example.digitalculturalportal.pojo.CommunityEvent;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -16,6 +19,13 @@ public class CommunityProducer {
     @Autowired
     private RabbitTemplate rabbitTemplate;
     public void sendEvent(CommunityEvent communityEvent){
-        rabbitTemplate.convertAndSend(RabbitMqConfig.MESSAGE_EXCHANGE,RabbitMqConfig.SYSTEM_MESSAGE_RK,communityEvent);
+        ObjectMapper mapper=new ObjectMapper();
+        try {
+            //将对象转换为json字符串
+            String jsonStr=mapper.writeValueAsString(communityEvent);
+            rabbitTemplate.convertAndSend(RabbitMqConfig.MESSAGE_EXCHANGE, RabbitMqConfig.SYSTEM_MESSAGE_RK, jsonStr);
+        }catch (Exception e){
+            System.out.println("发送消息失败"+e);
+        }
     }
 }
