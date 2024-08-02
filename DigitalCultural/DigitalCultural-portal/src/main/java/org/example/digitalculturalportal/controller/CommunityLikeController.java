@@ -1,5 +1,6 @@
 package org.example.digitalculturalportal.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.digitalculturalportal.common.CommonResult;
 import org.example.digitalculturalportal.pojo.CommunityEvent;
 import org.example.digitalculturalportal.pojo.LoginUser;
+import org.example.digitalculturalportal.rabbitmqevent.CommunityProducer;
 import org.example.digitalculturalportal.service.CommunityLikeService;
 import org.example.digitalculturalportal.utils.CommunityConstant;
 import org.example.digitalculturalportal.utils.RedisCache;
@@ -33,6 +35,8 @@ import java.util.Map;
 public class CommunityLikeController implements CommunityConstant {
     @Autowired
     private CommunityLikeService communityLikeService;
+    @Autowired
+    private CommunityProducer communityProducer;
     @Autowired
     private RedisCache redisCache;
 
@@ -63,6 +67,7 @@ public class CommunityLikeController implements CommunityConstant {
             communityEvent.setEntityId(entityId);
             communityEvent.setEntityUserId(entityUserId);
             communityEvent.setData("postId", postId);
+            communityProducer.sendEvent(communityEvent);
         }
         if (entityType == ENTITY_TYPE_POST) {
             //加分
@@ -72,12 +77,19 @@ public class CommunityLikeController implements CommunityConstant {
 
      return CommonResult.success(map);
     }
-    @ApiOperation("点赞数量")
-    @RequestMapping(value = "/likeCount", method = RequestMethod.GET)
+    @ApiOperation("实体获赞数量")
+    @RequestMapping(value = "/entLikeCount", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult likeCount(@RequestParam("entityId") Integer entityId,@RequestParam("entityType") Integer entityType){
-       long count=communityLikeService.queryEntityLikeCount(entityId, entityType);
+    public CommonResult entLikeCount(@RequestParam("entityType") Integer entityType,@RequestParam("entityId") Integer entityId){
+       long count=communityLikeService.queryEntityLikeCount(entityType, entityId);
        return CommonResult.success(count);
+    }
+    @ApiOperation("用户获赞数量")
+    @RequestMapping(value = "/useLikeCount", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult useLikeCount(@RequestParam("userId") Integer userId){
+        long count=communityLikeService.queryUserLikeCount(userId);
+        return CommonResult.success(count);
     }
 
     @ApiOperation("点赞状态")

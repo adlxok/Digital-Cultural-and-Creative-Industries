@@ -20,12 +20,12 @@ public class CommunityLikeServiceImpl implements CommunityLikeService {
             @Override
             public Object execute(RedisOperations operations) throws DataAccessException {
                 String entityLikeKey= RedisKeyUtil.getEntityLikeKey(entityType,entityId);
-                String userLikeKey=RedisKeyUtil.getUserLikeKey(entityUserId);
+                String userLikeKey=RedisKeyUtil.getUserLikeKey(entityUserId);//计算实体作者获赞总数
                 boolean isMember=redisTemplate.opsForSet().isMember(entityLikeKey,userId);
                 operations.multi();
                 if(isMember){
                     //用户已点过赞->取消点赞
-                    redisTemplate.opsForSet().remove(entityLikeKey);
+                    redisTemplate.opsForSet().remove(entityLikeKey,userId);
                     redisTemplate.opsForValue().decrement(userLikeKey);//若key存在-1
                 }else{
                     redisTemplate.opsForSet().add(entityLikeKey,userId);
