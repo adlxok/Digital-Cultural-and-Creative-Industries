@@ -1,5 +1,6 @@
 package org.example.digitalculturalportal.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -50,9 +51,9 @@ public class CommunityCommentController implements CommunityConstant {
     private RedisCache redisCache;
 
     @ApiOperation("用户发布评论")
-    @RequestMapping(value = "/addComment/{postId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/addComment/{postId}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult addComment(@PathVariable("postId") Integer postId, @RequestParam("comment") CommunityComment communityComment){
+    public CommonResult addComment(@PathVariable("postId") Integer postId, @RequestBody CommunityComment communityComment)  {
         if (communityComment==null){
           return CommonResult.fail(ResultCode.FAIL_TITLE);
         }
@@ -119,34 +120,34 @@ public class CommunityCommentController implements CommunityConstant {
 
 
            //该评论的回复列表->不分页
-            List<CommunityComment> replyList=communityCommentService.queryCommentList(ENTITY_TYPE_COMMENT,communityComment.getId(),0,-1);
+            List<CommunityComment> replyList=communityCommentService.queryCommentList(ENTITY_TYPE_COMMENT,communityComment.getId(),1,Integer.MAX_VALUE);
             List<Map<String,Object>> allReply=new ArrayList<>();
             for (CommunityComment replyComment : replyList) {
                 //封装回复评论相关消息
-                Map<String,Object> replyComInfo=new HashMap<>();
+                Map<String, Object> replyComInfo = new HashMap<>();
                 //回复
-                replyComInfo.put("replyComment",replyComment);
+                replyComInfo.put("replyComment", replyComment);
                 //该条回复的点赞数量
-                likeCount=communityLikeService.queryEntityLikeCount(ENTITY_TYPE_COMMENT,replyComment.getId());
-                replyComInfo.put("likeCount",likeCount);
+                likeCount = communityLikeService.queryEntityLikeCount(ENTITY_TYPE_COMMENT, replyComment.getId());
+                replyComInfo.put("likeCount", likeCount);
                 //该条回复的点赞状态
-                likeStatus=communityLikeService.isLike(Math.toIntExact(userId),ENTITY_TYPE_COMMENT,replyComment.getId());
-                replyComInfo.put("likeStatus",likeStatus);
+                likeStatus = communityLikeService.isLike(Math.toIntExact(userId), ENTITY_TYPE_COMMENT, replyComment.getId());
+                replyComInfo.put("likeStatus", likeStatus);
                 //该条回复的作者
-                replyComInfo.put("user",userService.queryUserByIdInCache(replyComment.getUserId()));
+                replyComInfo.put("user", userService.queryUserByIdInCache(replyComment.getUserId()));
                 //该条回复的目标
-                User target=userService.queryUserByIdInCache(replyComment.getTargetId());
-                replyComInfo.put("target",target);
+                User target = userService.queryUserByIdInCache(replyComment.getTargetId());
+                replyComInfo.put("target", target);
 
-               allReply.add(replyComInfo);
-               postComInfo.put("allreply",allReply);
+                allReply.add(replyComInfo);
             }
+            postComInfo.put("allreply", allReply);
             //该评论的回复总数量
             long replyCount=communityCommentService.queryCommentCount(ENTITY_TYPE_COMMENT,communityComment.getId());
             postComInfo.put("replyCount",replyCount);
             allPostInfo.add(postComInfo);
         }
-      return CommonResult.success(allPostInfo) ;
+      return CommonResult.success(CommonPage.restPage(allPostInfo)) ;
     }
 //    @ApiOperation("回复评论列表")
 //    @RequestMapping(value = "/replyCommentList", method = RequestMethod.GET)
