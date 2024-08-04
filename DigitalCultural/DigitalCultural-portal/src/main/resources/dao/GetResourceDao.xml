@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.digitalculturalportal.dao.GetResourcesDao">
+    <sql id="navi">
+        id, name, url, parent_id, position, is_active, created_at, updated_at
+    </sql>
+
+    <sql id="cal">
+        id, img_url, alt_text, link_url, position, is_active, created_at, updated_at
+    </sql>
+
+    <select id="reqGetHeadList" resultType="org.example.digitalculturalportal.pojo.NavigationItems">
+        SELECT <include refid="navi"></include>
+            FROM
+        navigation_items WHERE is_active = 1
+    </select>
+
+
+    <select id="reqGetBannerList" resultType="org.example.digitalculturalportal.pojo.Carousel">
+        SELECT <include refid="cal"></include>
+        FROM
+        carousel WHERE is_active = 1
+    </select>
+
+</mapper>

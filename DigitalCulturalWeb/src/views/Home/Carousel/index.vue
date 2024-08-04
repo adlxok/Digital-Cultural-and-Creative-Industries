@@ -27,7 +27,7 @@
 <script>
 //引入swiper
 import Swiper from "swiper";
-import { reqGetBannerList } from "../../../api/index";
+import { reqGetBannerList } from "../../../api/reqGetBannerList";
 export default {
   name: "Carousel",
   data() {
@@ -64,7 +64,8 @@ export default {
     },
     getSwiperDatas() {
       reqGetBannerList().then((res) => {
-        this.list = res.data[0].banner;
+        this.list = res.data;
+        console.log(res.data)
         this.$nextTick(this.initSwiper);
       });
     },

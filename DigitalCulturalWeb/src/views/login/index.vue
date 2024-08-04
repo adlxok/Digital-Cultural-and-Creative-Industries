@@ -81,8 +81,12 @@
         }
       },
       handleLogin() {
-        login(this.username, this.password).then(res => {
-            console.log(res)
+        login(this.username, this.password).then((res) => {
+            console.log(res.data.token)
+            this.$message.success('登录成功')
+            this.$store.commit('SET_TOKEN', res.data.token)
+            // this.$store.commit('GET_USER', JSON.stringify(res.data.data))
+            // sessionStorage.setItem('token', res.data.token);
             this.$router.push('/');
         }).catch(e => {
             console.log(e)
@@ -130,6 +134,7 @@
   </script>
   
   <style scoped>
+  
   .login-container {
     max-width: 400px;
     margin: 0 auto;
