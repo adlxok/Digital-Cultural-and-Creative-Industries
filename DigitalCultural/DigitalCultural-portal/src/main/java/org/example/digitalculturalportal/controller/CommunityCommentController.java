@@ -95,13 +95,13 @@ public class CommunityCommentController implements CommunityConstant {
     @ResponseBody
     public CommonResult commentList(@RequestParam(value = "pageNum", defaultValue = DEFAULT_PAGENUM) Integer pageNum,
                                     @RequestParam(value = "pageSize", defaultValue = DEFAULT_PAGESIZE) Integer pageSize,
-                                    @RequestParam("entityId") Integer entityId){
+                                    @RequestParam("postId") Integer postId){
         //帖子顶级评论列表
-      List<CommunityComment> list=communityCommentService.queryCommentList(ENTITY_TYPE_POST,entityId,pageNum,pageSize);
+      List<CommunityComment> list=communityCommentService.queryCommentList(ENTITY_TYPE_POST,postId,pageNum,pageSize);
       if(list.isEmpty()){
           return CommonResult.success("该帖子还没有评论");
       }
-             List<Map<String,Object>> allPostInfo=new ArrayList<>();
+        List<Map<String,Object>> allPostInfo=new ArrayList<>();
         for (CommunityComment communityComment : list) {
             //封装帖子评论相关信息
             Map<String, Object> postComInfo=new HashMap<>();
@@ -138,7 +138,6 @@ public class CommunityCommentController implements CommunityConstant {
                 //该条回复的目标
                 User target = userService.queryUserByIdInCache(replyComment.getTargetId());
                 replyComInfo.put("target", target);
-
                 allReply.add(replyComInfo);
             }
             postComInfo.put("allreply", allReply);
