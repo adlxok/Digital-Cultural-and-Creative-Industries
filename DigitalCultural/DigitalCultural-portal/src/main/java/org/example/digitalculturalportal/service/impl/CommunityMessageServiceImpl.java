@@ -3,12 +3,16 @@ package org.example.digitalculturalportal.service.impl;
 import org.apache.logging.log4j.message.Message;
 import org.example.digitalculturalportal.dao.CommunityMessageDao;
 import org.example.digitalculturalportal.pojo.CommunityMessage;
+import org.example.digitalculturalportal.pojo.LoginUser;
 import org.example.digitalculturalportal.service.CommunityMessageService;
 import org.example.digitalculturalportal.utils.SensitiveFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class CommunityMessageServiceImpl implements CommunityMessageService {
@@ -36,7 +40,7 @@ public class CommunityMessageServiceImpl implements CommunityMessageService {
     }
 
     @Override
-    public int queryConversationCount(int userId) {
+    public int queryConversationCount(Integer userId) {
         return communityMessageDao.selectConversationCount(userId);
     }
 
@@ -51,8 +55,8 @@ public class CommunityMessageServiceImpl implements CommunityMessageService {
     }
 
     @Override
-    public int queryUnreadLetterCount(String conversationId) {
-        return communityMessageDao.selectUnreadLetterCount(conversationId);
+    public int queryUnreadLetterCount(Integer userId,String conversationId) {
+        return communityMessageDao.selectUnreadLetterCount(userId,conversationId);
     }
 
     @Override
@@ -61,7 +65,22 @@ public class CommunityMessageServiceImpl implements CommunityMessageService {
     }
 
     @Override
-    public int queryLatestNotice(Integer userId, String topic) {
+    public List<Integer> screenUnreadLetter(List<CommunityMessage> list) {
+        List<Integer> screenList=new ArrayList<>();
+        //获取SecurityContextHolder中的用户id
+        UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Long userId = loginUser.getUser().getId();
+        for (CommunityMessage communityMessage : list) {
+            if(communityMessage.getFromId()!=Math.toIntExact(userId)&&communityMessage.getStatus()==0){
+                screenList.add(communityMessage.getId());
+            }
+        }
+        return screenList;
+    }
+
+    @Override
+    public CommunityMessage queryLatestNotice(Integer userId, String topic) {
         return communityMessageDao.selectLatestNotice(userId,topic);
     }
 
@@ -71,12 +90,12 @@ public class CommunityMessageServiceImpl implements CommunityMessageService {
     }
 
     @Override
-    public int queryNoticeUnReadCount(int userId, String topic) {
+    public int queryNoticeUnReadCount(Integer userId, String topic) {
         return communityMessageDao.selectNoticeUnReadCount(userId,topic);
     }
 
     @Override
-    public List<Message> queryNoticeList(int userId, String topic) {
+    public List<CommunityMessage> queryNoticeList(Integer userId, String topic) {
         return communityMessageDao.selectNoticeList(userId, topic);
     }
 }

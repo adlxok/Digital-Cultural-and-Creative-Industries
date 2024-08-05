@@ -26,7 +26,7 @@ public class CommunityMessage {
      */
     private String  content;
     /**
-     * 状态 0-正常；2-拉黑
+     * 状态 0-未读；1-已读；2-拉黑
      */
     private int status;
     /**

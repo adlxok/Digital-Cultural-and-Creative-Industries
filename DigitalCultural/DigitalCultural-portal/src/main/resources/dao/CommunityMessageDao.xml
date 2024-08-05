@@ -33,6 +33,7 @@
              WHERE status!=2
              AND from_id!=1
              AND (from_id=#{fromId} OR to_id=#{userId})
+             GROUP BY conversation_id
         )
          ORDER BY id DESC
     </select>
@@ -59,7 +60,7 @@
     <!--查询某个会话的私信数量-->
     <select id="selectLetterCount" resultType="int">
         SELECT COUNT(id)
-        FROM cxommunity_message
+        FROM community_message
         WHERE status != 2
         AND from_id != 1
         AND conversation_id = #{conversationId}
@@ -80,7 +81,7 @@
         UPDATE community_message
         SET status = #{status}
         WHERE id IN
-        <foreach collection="indexId" item="id" open="(" separator="," close=")">
+        <foreach collection="indexId" item="id" separator="," open="(" close=")">
             #{id}
         </foreach>
     </update>
@@ -89,7 +90,7 @@
         SELECT <include refid="selectFields"></include>
         FROM community_message
         WHERE id IN (
-        SELECT MAX(id) FROM message
+        SELECT MAX(id) FROM community_message
         WHERE status != 2
         AND from_id = 1
         AND to_id = #{userId}
@@ -109,7 +110,7 @@
     <!--查询未读的系统通知数量-->
     <select id="selectNoticeUnReadCount" resultType="int">
         SELECT COUNT(id)
-        FROM commuity_message
+        FROM community_message
         WHERE status = 0
         AND from_id = 1
         AND to_id = #{userId}
