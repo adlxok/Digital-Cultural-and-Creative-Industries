@@ -1,9 +1,7 @@
 package org.example.digitalculturalportal.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.example.digitalculturalportal.common.CommonResult;
@@ -15,7 +13,6 @@ import org.example.digitalculturalportal.utils.CommunityConstant;
 import org.example.digitalculturalportal.utils.RedisCache;
 import org.example.digitalculturalportal.utils.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplicationRunListener;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
