@@ -18,6 +18,7 @@ import org.springframework.web.util.HtmlUtils;
 import java.util.List;
 
 import static org.example.digitalculturalportal.utils.CommunityConstant.ENTITY_TYPE_COMMENT;
+import static org.example.digitalculturalportal.utils.CommunityConstant.ENTITY_TYPE_POST;
 
 @Service
 public class CommunityCommentServiceImpl implements CommunityCommentService {
@@ -40,8 +41,9 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
         //过滤
         communityComment.setContent(sensitiveFilter.filter(communityComment.getContent()));
         int index=communityCommentDao.insertCommunityComment(communityComment);
-        if(communityComment.getEntityType()==ENTITY_TYPE_COMMENT){
-            int sum=communityPostService.queryCommentCount(communityComment.getEntityId());
+        //若实体是帖子则更新帖子的评论数量
+        if(communityComment.getEntityType()==ENTITY_TYPE_POST){
+            int sum=communityCommentDao.selectCommunityCommentCount(communityComment.getEntityType(),communityComment.getEntityId());
             communityPostService.alterCommentCount(communityComment.getEntityId(),sum);
         }
         return index;

@@ -33,5 +33,12 @@
              #{item.createTime})
         </foreach>
     </insert>
+    <select id="findUserByuserId" resultType="org.example.digitalculturalportal.pojo.User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        udc_user
+        WHERE id = #{userId}
+    </select>
 
 </mapper>

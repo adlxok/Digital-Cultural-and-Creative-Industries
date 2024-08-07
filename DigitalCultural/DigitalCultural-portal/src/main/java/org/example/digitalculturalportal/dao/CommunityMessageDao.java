@@ -2,8 +2,10 @@ package org.example.digitalculturalportal.dao;
 
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.message.Message;
 import org.example.digitalculturalportal.pojo.CommunityMessage;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -54,7 +56,7 @@ public interface CommunityMessageDao {
      * @param conversationId null-全部会话; !null-指定会话
      * @return
      */
-    int selectUnreadLetterCount(String conversationId);
+    int selectUnreadLetterCount(@Param("userId")Integer userId,@Param("conversationId") String conversationId);
 
     /**
      * 修改消息状态
@@ -62,7 +64,7 @@ public interface CommunityMessageDao {
      * @param status
      * @return
      */
-    int updateStatus(List<Integer> indexId, Integer status);
+    int updateStatus(@Param("indexId") List<Integer> indexId, @Param("status") Integer status);
 
     /**
      * 查询某个主题下的最新通知
@@ -70,7 +72,7 @@ public interface CommunityMessageDao {
      * @param topic
      * @return
      */
-    int selectLatestNotice(Integer userId,String topic);
+    CommunityMessage selectLatestNotice(@Param("userId") Integer userId, @Param("topic") String topic);
 
     /**
      * 查询某个主题下包含的系统通知数量
@@ -78,7 +80,7 @@ public interface CommunityMessageDao {
      * @param topic
      * @return
      */
-    int selectNoticeCount(Integer userId,String topic);
+    int selectNoticeCount(@Param("userId")Integer userId,@Param("topic")String topic);
 
     /**
      * 查询未读的系统通知数量
@@ -86,7 +88,7 @@ public interface CommunityMessageDao {
      * @param topic
      * @return
      */
-    int selectNoticeUnReadCount(int userId, String topic);
+    int selectNoticeUnReadCount(@Param("userId")int userId, @Param("topic")String topic);
 
     /**
      * 查询某个主题所包含的通知列表
@@ -94,7 +96,7 @@ public interface CommunityMessageDao {
      * @param topic
      * @return
      */
-    List<Message> selectNoticeList(int userId, String topic);
+    List<CommunityMessage> selectNoticeList(@Param("userId")int userId,@Param("topic") String topic);
 
 
 }

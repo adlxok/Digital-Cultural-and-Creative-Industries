@@ -24,7 +24,8 @@ public interface CommunityLikeService {
      * @param userId
      * @return
      */
-    boolean isLike(Integer userId,Integer entityType,Integer entityId);
+    int isLike(Integer userId,Integer entityType,Integer entityId);
+
 
     /**
      * 查询某个实体的点赞数量

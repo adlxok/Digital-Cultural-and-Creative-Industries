@@ -101,8 +101,8 @@ public class CommunityFollowServiceImpl implements CommunityFollowService {
         for (Integer indexId : indexIds) {
            Map<String,Object> map=new HashMap<>();
            //根据id获取用户信息
-//           User user=userService.queryUserByIdInCache(indexId);
-//           map.put("user",user);
+           User user=userService.queryUserByIdInCache(indexId);
+           map.put("user",user);
            //获取排序集合的分数（关注时间）
             Double score=redisTemplate.opsForZSet().score(followeeKey,indexId);
             Date followTime=new Date(score.longValue());
@@ -123,8 +123,8 @@ public class CommunityFollowServiceImpl implements CommunityFollowService {
         List<Map<String,Object>> list=new ArrayList<>();
         for (Integer indexId : indexIds) {
             Map<String,Object> map=new HashMap<>();
-//            User user=userService.queryUserByIdInCache(indexId);
-//            map.put("user",user);
+            User user=userService.queryUserByIdInCache(indexId);
+            map.put("user",user);
             Double score=redisTemplate.opsForZSet().score(followerKey,indexId);
             Date followTime=new Date(score.longValue());
             map.put("followTime",followTime);

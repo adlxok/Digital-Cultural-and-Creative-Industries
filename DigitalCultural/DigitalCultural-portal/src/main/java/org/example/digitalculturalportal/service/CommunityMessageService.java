@@ -1,8 +1,10 @@
 package org.example.digitalculturalportal.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.message.Message;
 import org.example.digitalculturalportal.pojo.CommunityMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -31,7 +33,7 @@ public interface CommunityMessageService {
      * @param userId
      * @return
      */
-    int queryConversationCount(int userId);
+    int queryConversationCount(Integer userId);
     /**
      * 查询某个会话的私信列表
      * @param conversationId
@@ -49,7 +51,7 @@ public interface CommunityMessageService {
      * @param conversationId null-全部会话; !null-指定会话
      * @return
      */
-    int queryUnreadLetterCount(String conversationId);
+    int queryUnreadLetterCount(Integer userId,String conversationId);
     /**
      * 读取私信（未读->已读）
      * @param indexId
@@ -57,34 +59,41 @@ public interface CommunityMessageService {
      * @return
      */
     int alterStatus(List<Integer> indexId, Integer status);
+
+    /**
+     * 筛选对方发送的未读私信
+     * @param list
+     * @return
+     */
+    List<Integer> screenUnreadLetter(List<CommunityMessage> list);
     /**
      * 查询某个主题下的最新通知
      * @param userId
      * @param topic
      * @return
      */
-    int queryLatestNotice(Integer userId,String topic);
+    CommunityMessage queryLatestNotice(Integer userId,String topic);
     /**
      * 查询某个主题下包含的系统通知数量
      * @param userId
      * @param topic
      * @return
      */
-    int queryNoticeCount(Integer userId,String topic);
+    int queryNoticeCount(@Param("userId") Integer userId,@Param("topic") String topic);
     /**
      * 查询未读的系统通知数量
      * @param userId
      * @param topic
      * @return
      */
-    int queryNoticeUnReadCount(int userId, String topic);
+    int queryNoticeUnReadCount(Integer userId, String topic);
     /**
      * 查询某个主题所包含的通知列表
      * @param userId
      * @param topic
      * @return
      */
-    List<Message> queryNoticeList(int userId, String topic);
+    List<CommunityMessage> queryNoticeList(Integer userId, String topic);
 
 
 }

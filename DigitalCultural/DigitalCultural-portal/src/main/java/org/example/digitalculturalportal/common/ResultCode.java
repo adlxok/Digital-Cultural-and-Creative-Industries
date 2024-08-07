@@ -20,7 +20,8 @@ public enum ResultCode {
     ERROR(500,"服务端异常"),
     INPUT_ERROR(40010, "账号或密码错误"),
     FAIL_TITLE(301,"内容不能为空"),
-    USER_EXITS(40011,"用户名已存在");
+    USER_EXITS(40011,"用户名已存在"),
+    USER_ERROR(302,"用户不存在");
 
     private final Integer code;
     private final String message;

@@ -12,7 +12,7 @@ public class CommunityMessage {
     /**
      * 发送私信的用户id
      */
-    private int formId;
+    private int fromId;
     /**
      * 接收私信的用户id
      */
@@ -26,13 +26,12 @@ public class CommunityMessage {
      */
     private String  content;
     /**
-     * 状态 0-正常；2-拉黑
+     * 状态 0-未读；1-已读；2-拉黑
      */
     private int status;
     /**
      * 发送时间
      */
     private Date createTime;
-
 
 }
