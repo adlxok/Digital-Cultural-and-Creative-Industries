@@ -11,12 +11,15 @@ public class RabbitMqConfig {
     public static final String MESSAGE_EXCHANGE="message_exchange";
     //点赞，评论，关注队列
     public static final String SYSTEM_MESSAGE_QUEUE="system_message_queue";
-//    public static final String COMMENT_QUEUE="comment_queue";
-//    public static final String FOLLOW_QUEUE="follow_queue";
+    //发帖队列
+    public static final String ADD_POST_QUEUE="add_post_queue";
+    //删帖队列
+    public static final String DELETE_POST_QUEUE="delete_post_queue";
+
     //路由
     public static final String SYSTEM_MESSAGE_RK="system_message_rk";
-//    public static final String COMMENT_RK="comment_rk";
-//    public static final String FOLLOW_RK="follow_rk";
+    public static final String ADD_POST_RK="add_post_rk";
+    public static final String DELETE_POST_RK="delete_post_rk";
     //声明交换机
     @Bean
     public DirectExchange messageExchange(){
@@ -27,29 +30,29 @@ public class RabbitMqConfig {
     public Queue systemMessageQueue(){
         return QueueBuilder.durable(SYSTEM_MESSAGE_QUEUE).build();
     }
-//    @Bean
-//    public Queue commentQueue(){
-//        return QueueBuilder.durable(COMMENT_QUEUE).build();
-//    }
-//    @Bean
-//    public Queue followQueue(){
-//        return QueueBuilder.durable(FOLLOW_QUEUE).build();
-//    }
+    @Bean
+    public Queue addPostQueue(){
+        return QueueBuilder.durable(ADD_POST_QUEUE).build();
+    }
+    @Bean
+    public Queue deletePostQueue(){
+        return QueueBuilder.durable(DELETE_POST_QUEUE).build();
+    }
     //绑定交换机和路由
     @Bean
     public Binding queue1BindingExchange(@Qualifier("systemMessageQueue") Queue systemMessageQueue,
                                          @Qualifier("messageExchange") DirectExchange messageExchange ){
         return BindingBuilder.bind(systemMessageQueue).to(messageExchange).with(SYSTEM_MESSAGE_RK);
     }
-//    @Bean
-//    public Binding queue2BindingExchange(@Qualifier("commentQueue") Queue commentQueue,
-//                                         @Qualifier("messageExchange") DirectExchange messageExchange ){
-//        return BindingBuilder.bind(commentQueue).to(messageExchange).with(COMMENT_RK);
-//    }
-//    @Bean
-//    public Binding queue3BindingExchange(@Qualifier("followQueue") Queue followQueue,
-//                                         @Qualifier("messageExchange") DirectExchange messageExchange ){
-//        return BindingBuilder.bind(followQueue).to(messageExchange).with(FOLLOW_RK);
-//    }
+    @Bean
+    public Binding queue2BindingExchange(@Qualifier("addPostQueue") Queue addPostQueue,
+                                         @Qualifier("messageExchange") DirectExchange messageExchange ){
+        return BindingBuilder.bind(addPostQueue).to(messageExchange).with(ADD_POST_RK);
+    }
+    @Bean
+    public Binding queue3BindingExchange(@Qualifier("deletePostQueue") Queue deletePoetQueue,
+                                         @Qualifier("messageExchange") DirectExchange messageExchange ){
+        return BindingBuilder.bind(deletePoetQueue).to(messageExchange).with(DELETE_POST_RK);
+    }
 
 }

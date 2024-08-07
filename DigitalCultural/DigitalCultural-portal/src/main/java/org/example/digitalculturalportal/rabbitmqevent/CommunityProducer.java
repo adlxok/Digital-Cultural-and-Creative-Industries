@@ -28,4 +28,24 @@ public class CommunityProducer {
             System.out.println("发送消息失败"+e);
         }
     }
+    public void sendAddPostEvent(CommunityEvent communityEvent){
+        ObjectMapper mapper=new ObjectMapper();
+        try {
+            //将对象转换为json字符串
+            String jsonStr=mapper.writeValueAsString(communityEvent);
+                rabbitTemplate.convertAndSend(RabbitMqConfig.MESSAGE_EXCHANGE, RabbitMqConfig.ADD_POST_RK, jsonStr);
+        }catch (Exception e){
+            System.out.println("发送消息失败"+e);
+        }
+    }
+    public void sendDeletePostEvent(CommunityEvent communityEvent){
+        ObjectMapper mapper=new ObjectMapper();
+        try {
+            //将对象转换为json字符串
+            String jsonStr=mapper.writeValueAsString(communityEvent);
+            rabbitTemplate.convertAndSend(RabbitMqConfig.MESSAGE_EXCHANGE, RabbitMqConfig.DELETE_POST_RK, jsonStr);
+        }catch (Exception e){
+            System.out.println("发送消息失败"+e);
+        }
+    }
 }
