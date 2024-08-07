@@ -16,7 +16,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(indexName = "communitypost", shards = 6, replicas = 3)
+@Document(indexName = "communitypost", shards = 6, replicas = 3) //索引名必须是小写
 public class CommunityPost {
     @Id
     private int id;

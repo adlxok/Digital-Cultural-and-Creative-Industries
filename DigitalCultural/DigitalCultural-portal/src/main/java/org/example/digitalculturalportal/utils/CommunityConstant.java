@@ -30,6 +30,9 @@ public interface CommunityConstant {
     String EVENT_TYPE_LIKE="like";
     //事件类型：关注
     String EVENT_TYPE_FOLLOW="follow";
-    //事件类型：帖子
-    String EVENT_TYPE_POST="post";
+    //事件类型：添加帖子
+    String EVENT_TYPE_ADDPOST="addPost";
+    //事件类型:删除帖子
+    String EVENT_TYPE_DELETEPOST="deletePost";
+
 }
