@@ -45,8 +45,13 @@
                 </dl>
               </dd>
             </li>
+
           </ul>
+<<<<<<< HEAD
            
+=======
+          
+>>>>>>> 27e39eb01143316aed2863ffeb2201124c2d0966
         </div>
         
       
@@ -63,7 +68,7 @@
             <li class="meg">
               <router-link to="/meg">
                 <div class="ul1" style="z-index: 999">
-                  <span class="a">留言板</span>
+                  <span class="a" @click="get">留言板</span>
                 </div>
               </router-link>
               
@@ -83,42 +88,60 @@
 </template>
 
 <script>
-import { reqGetHeadList } from "../../api/index";
+import { reqGetHeadList } from "../../api/reqGetHeadList";
+import {getInfo} from "../../api/getInfo"
 export default {
   data() {
     return {
       isShow: false,
-      headerList: [
-        {
-          name: "",
-          toUrl: "",
-          isShow: "false",
-          options: [
-            {
-              op: "",
-              toUrl: "",
-            },
-          ],
-        },
-      ],
+      // headerList: [
+      //   {
+      //     name: "",
+      //     toUrl: "",
+      //     isShow: "false",
+      //     options: [
+      //       {
+      //         op: "",
+      //         toUrl: "",
+      //       },
+      //     ],
+      //   },
+      // ],
+      headerList: [],
     };
   },
   mounted() {
     reqGetHeadList().then((res) => {
-      this.headerList = res.data[0].headerList;
+      this.headerList = res.data;
+      // console.log(this.headerList)
     });
   },
   methods: {
     showIt(item, index) {
-      this.headerList[index].isShow = true;
-      console.log("aaa", this.headerList[index].isShow); //true
-      console.log("aaa", this.headerList[index]);
-      console.log("aaa", item); //false
+      this.headerList[index].isActive = true;
+      // console.log(this.headerList)
+      // console.log("aaa", this.headerList[index].isShow); //true
+      // console.log("aaa", this.headerList[index]);
+      // console.log("aaa", item); //false
     },
     noShow(item, index) {
-      this.headerList[index].isShow = false;
-      console.log("bbb", item);
+      this.headerList[index].isActive = false;
+      // console.log("bbb", item);
     },
+    get() {
+      // console.log(sessionStorage.getItem('token'))
+      // let token = sessionStorage.getItem('token')
+      const token = this.$store.state.user.token;
+    // console.log(token)
+    console.log(this.$store.state.user.token)
+      getInfo(token).then(res => (
+        console.log(res)
+      )).catch(e => (
+        console.log(e)
+      ))
+      // this.$store.commit('LOGOUT')
+    }
+    
   },
 };
 </script>

@@ -47,7 +47,6 @@ public class UserServiceImpl implements UserService {
         //AuthenticationManager authenticate进行用户认证
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-        Authentication authenticate1 = authenticationManager.authenticate(authenticationToken);
         //如果认证没通过，给出提示
         if(Objects.isNull(authenticate)){
             throw new RuntimeException("登录失败");
