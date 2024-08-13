@@ -15,6 +15,7 @@
             <!-- </a> -->
           </div>
         </div>
+    
 
         <!-- 导航模块 -->
         <div class="nav_main">
@@ -45,11 +46,20 @@
               </dd>
             </li>
           </ul>
+           
         </div>
+        
+      
 
         <!-- 工具模块 -->
         <div class="tools">
           <ul>
+            <li class="com">  
+  <router-link to="/comhome">  
+    <span class="community_test">社区</span>
+  </router-link>  
+</li>
+
             <li class="meg">
               <router-link to="/meg">
                 <div class="ul1" style="z-index: 999">
@@ -195,6 +205,10 @@ textarea {
 .p-header.blk .nav_main {
   font-size: 18px;
 }
+/*社区测试*/
+.community_test {
+  color: #fff;
+}
 
 ol,
 ul,
@@ -280,6 +294,7 @@ img {
   background: url(../../assets/images/ico_tools_msg.png);
   background-size: 100%;
 }
+
 
 .p-header .tools ul .meg a:after {
   width: 20px;

@@ -9,6 +9,10 @@ import router from './router'
 //引入swiper样式
 import "swiper/css/swiper.min.css";
 
+import ElementUI from 'element-ui' //element-ui的全部组件
+import 'element-ui/lib/theme-chalk/index.css'//element-ui的css
+Vue.use(ElementUI) //使用elementUI
+
 //引入MockServe.js-----mock数据
 // import './mock/mockServer';
 
