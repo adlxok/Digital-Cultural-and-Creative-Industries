@@ -36,5 +36,10 @@ export default new VueRouter({
             name: 'meg',
             component:() => import('../views/meg/index.vue')
         },
+        {
+            path: '/comhome',
+            name: 'Comhome',
+            component:() => import('../views/Community/post/index.vue')
+        }
     ]
 })

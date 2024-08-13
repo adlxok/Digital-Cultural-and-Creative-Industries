@@ -12,11 +12,7 @@ import org.example.digitalculturalportal.utils.CommunityConstant;
 import org.example.digitalculturalportal.utils.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
@@ -42,8 +38,6 @@ public class CommunityHomeController implements CommunityConstant{
         RedisKeyUtil redisKeyUtil=new RedisKeyUtil();
         redisKeyUtil.setHotPosTKey(pageNum.toString(),pageSize.toString());
         List<CommunityPost> postList=communityPostService.queryCommunityPosts(userId,orderMode,pageNum,pageSize);
-        log.info("查询帖子成功");
         return CommonResult.success(CommonPage.restPage(postList));
     }
-
 }

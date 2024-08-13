@@ -1,4 +1,6 @@
 <template>
+
+
   <div>
     <!-- 轮播图 -->
     <Carousel></Carousel>
