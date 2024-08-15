@@ -25,7 +25,9 @@
 					</a>
 					<li class="nav1-item"><i class="el-icon-star-off "></i></li>
 					<li class="nav1-item"><i class="el-icon-time"></i></li>
-					<li class="nav1-item"><i class="el-icon-edit"></i></li>
+					<a href='../../Home/index.vue'>
+						<li class="nav1-item"><i class="el-icon-edit"></i></li>
+					</a>
 					<li class="nav1-item"><i class="el-icon-setting"></i></li>
 				</ul>
 
@@ -51,44 +53,62 @@
 				<div class="content-list">
 					<el-card class="box2-card">
 						<div class="content-header">
-							<span class="sign" @click="hotPostList">热门</span>
+							<span class="sign" :class="{ active: activeCategory === 'hot' }"
+								@click="hotPostList">热门</span>
 
 							<el-divider direction="vertical"></el-divider>
-							<span class="sign">最新</span>
+							<span class="sign" :class="{ active: activeCategory === 'new' }"
+								@click="newPostList">最新</span>
 							<el-divider direction="vertical"></el-divider>
-							<span class="sign">精华</span>
+							<span class="sign" :class="{ active: activeCategory === 'elite' }"
+								@click="elitePostList">精华</span>
 						</div>
 						<el-divider></el-divider>
 						<!-- <el-empty description="暂无数据"></el-empty> -->
 
 						<div class="post-list">
-							<!-- <div v-for="post in posts" :key="post.id" class="post-item">
-								<div class="profile-photo">
-									<el-avatar src={{ this.imageurl }}></el-avatar>
+							<div v-for="postmap in posts" :key="postmap.post.id" class="post-item">
+
+								<div class="profile-photo-main">
+									<el-avatar v-if="postmap.user && postmap.user.profileImageUrl" :size="50"
+										:src="postmap.user.profileImageUrl" alt="用户头像"></el-avatar>
+									<el-avatar v-else :size="50"
+										src="https://img1.baidu.com/it/u=3647744349,2477516282&fm=253&fmt=auto&app=138&f=JPEG?w=380&h=380"
+										alt="默认头像"></el-avatar>
 								</div>
-								<div class="username">
-									<span>{{ this.username }}</span>
+								<div v-if="postmap.user && postmap.user.profileImageUrl" class="username">
+									<span>{{ postmap.user.username }}</span>
 								</div>
-								<div class="Type">{{ post.Type }}</div>
-								<div class="createTime"></div>
-								<div class="likeCount">{{  }}</div>
-								<div class="commentCount">{{ post.commentCount }}</div>
-							</div> -->
-							<el-table :data="posts" style="width: 100%">
-									<el-table-column prop="title" label="标题" width="180">
-									</el-table-column>
-									<el-table-column prop="content" label="内容" width="180">
-									</el-table-column>
-									<el-table-column prop="createTime" label="事件">
-									</el-table-column>
-								</el-table>
-							
-							<el-divider></el-divider>
+								<div v-else class="username">
+									<span>没有用户名的用户</span>
+								</div>
+								<div class="title">
+									<span>{{ postmap.post.title }}</span>
+								</div>
+								<div class="createTime">
+									<span>发布于{{ postmap.post.formattedCreateTime}}</span>
+								</div>
+								<div class="collectCount">
+									<span class="font-itme1"><i class="el-icon-star-off"></i>{{ postmap.likeCount
+										}}</span>
+								</div>
+								<div class="likeCount">
+									<span class="font-itme1">赞{{ postmap.likeCount }}</span>
+								</div>
+								<div class="commentCount">
+									<span class="font-itme1">回帖{{ postmap.post.commentCount }}</span>
+								</div>
+							</div>
 						</div>
 
-						<div class="block">
-							<el-pagination layout="prev, pager, next" :total="50">
-							</el-pagination>
+						<div class="page">
+							<div class="pagination">
+								<button id="firstPage" @click="handleshouye()">首页</button>
+								<button id="prevPage" @click="handlelast()">上一页</button>
+								<span id="pageInfo">第 {{ this.listParams.pageNum }} 页</span>
+								<button id="nextPage" @click="handlenext()">下一页</button>
+								<button id="lastPage" @click="handleweiye()">尾页</button>
+							</div>
 						</div>
 					</el-card>
 				</div>
@@ -118,38 +138,90 @@ export default {
         input: '',
 		posts: [],
 		total: 0,
-		imageurl: '',
-		username:'',
-		userId:0,
+		users:[],
 		listParams: {
 			pageNum: 1,
 			pageSize: 10,
 			userId:0,
 			orderMode:0
 		},
+		value: true,
+		activeCategory: null
       }
       }
     ,
 	created() {
-    this.hotPostList();
 	this.fetchPostList();
 
   },
    methods: {   
     hotPostList() {  
-      console.log('文字被点击了！');
+		this.activeCategory = 'hot';
+		this.listParams.orderMode=1;
+		this.listParams.pageNum=1;
+		this.fetchPostList();
+      console.log('热门被点击了！');
     }, 
-	fetchPostList () {
+	newPostList() {  
+		this.activeCategory = 'new';
+		this.listParams.orderMode=0;
+		this.listParams.pageNum=1;
+		this.fetchPostList();
+      console.log('最新被点击了！');
+    },
+	elitePostList(){
+		this.activeCategory = 'elite';
+		this.listParams.orderMode=2;
+		this.listParams.pageNum=1;
+		this.fetchPostList();
+      console.log('精华被点击了！');
+	},
+  handleshouye(){
+  this.listParams.pageNum=1;
+  this.fetchPostList();
+  console.log("点击首页");
+  },
+  handlelast(){
+  if(this.listParams.pageNum>1){
+  this.listParams.pageNum--;
+  this.fetchPostList();
+  console.log("点击上一页");
+  }
+  },
+  handlenext(){
+	if(this.listParams.pageNum==this.total){
+		this.$message.info('已经是最后一页了');
+	}else if(this.listParams.pageNum<=this.total)
+	{  this.listParams.pageNum++;
+  this.fetchPostList();
+  console.log("点击下一页");}
+  },
+handleweiye(){
+	if(this.listParams.pageNum==this.total){
+		this.$message.info('已经是最后一页了');
+	}else{ this.listParams.pageNum=this.total;
+  this.fetchPostList();
+  console.log("点击尾页");}
+  },
+	formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleString(); // 转换为本地时间格式
+  },
+  fetchPostList () {
     showPostList(this.listParams).then(response => {
-         this.posts = response.data.list;
-         this.total=response.data.total;
+        this.posts = response.data.list.map(postmap => {
+            postmap.post.formattedCreateTime = this.formatDate(postmap.post.createTime);
+            return postmap;
+        });
+        this.total = response.data.page.Pages;
     }).catch(error => {  
-        console.error('获取帖子列表失败:', error);  
-        // 处理错误，比如显示错误消息给用户  
-      });  
+        console.error('获取帖子列表失败:', error);   
+    });  
   }
 
-  } 
+  }
+
 
   } 
+
 </script>  

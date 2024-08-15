@@ -4,10 +4,13 @@
 	align-items: flex-start;
 	background-image:url("../../../assets/images/image.png");
 	background-position:center left ;
-	width: 100%;
+	width: 1520px;
 	height: 150px;
 	position:fixed; /*定位导航栏*/
+	position: relative;
+	position:absolute;
 	top:0;
+	
 }
 
 .community-nav{
@@ -62,9 +65,14 @@
 	display: flex;
 	align-items: flex-start;
 	padding: 0px,0px,24px,24px;
+	
 }
 
 /*首页左部内容 */
+.main-left{
+	/* position:fixed;
+	position:relative; */
+}
 .text {
     font-size: 14px;
   }
@@ -88,6 +96,7 @@
 	height: 50px;
     margin-top: 10px;
 	margin-bottom:100%;
+	
 }
 .content-header  span{
   font-size: 17px;
@@ -98,6 +107,13 @@
 .sign:hover {  
     color: rgb(204, 109, 14); /* 示例：鼠标悬停时变为红色 */  
 	cursor: pointer; /* 当鼠标悬停时显示小手光标 */  
+}
+.sign.active {
+	color: rgb(204, 109, 14);; /* 点击后的固定颜色 */
+}
+.el-divider{
+	margin-bottom: 18px;
+	margin-top: 10px;
 }
 
 .content-list{
@@ -113,19 +129,98 @@
 	margin-top: 100px;
 	margin-left: 9px;
   }
-  .post-item{
-	border-radius:30px ;
-	border-color: aquamarine;
+.post-item{
+	display: flex;
+	flex-direction: row;
+    height: 125px;
+	border: 1px solid #ddd;
+    background-color: #fff;
+	border-radius: 8px;
+	position: relative;
+	cursor: pointer;
   }
-/* .el-pagination  {
+.profile-photo-main{
+  margin-top: 20px;
+  margin-left: 10px;
+  position: relative;
+  }
+.username{
+	margin-left: 70px;
+	font-size: 16px;
+	color: #000000c6;
+	font-weight: 600;
+	margin-top: 15px;
+	position: absolute;
+  }
+.title{
+	position:absolute;
+	margin-top: 50px;
+	margin-left: 80px;
+}
+.title span{
+	font-size: 16px;
+	
+}
+.createTime{
+	margin-top: 90px;
+	margin-left:20px;
+	position: absolute;
+}
+.createTime span{
+	font-size: xx-small;
+}
+.collectCount{
+	margin-top:100px;
+	margin-left: 600px;
+	position: absolute;
+}
+.likeCount{
+ margin-top:100px;
+ margin-left: 650px;
+ position: absolute;
+  }
+.commentCount{
+margin-top:100px;
+margin-left: 700px;
+position: absolute;
+  }
+.font-itme1{
+	font-size: small;
+  }
+
+ .pagination {
     display: flex;
     align-items: center;
-    margin-top: 800px;
-  } */
+    gap: 5px;
+	margin-top: 18px;
+	margin-left: 220px;
+}
+
+button {
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+button:disabled {
+    background-color: #eee;
+    cursor: not-allowed;
+}
+
+#pageInfo {
+    font-size: 14px;
+}
 
   /*首页右部内容*/
+  .main-right{
+	/* position:fixed;
+	position:relative; */
+  }
 .box3-card{
-	width: 400px;
+	width: 375px;
 	height: 1430px;
 	margin-top: 125px;
 	margin-left: 40px;
