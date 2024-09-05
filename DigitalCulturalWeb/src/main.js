@@ -16,6 +16,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
 
+//引入wangeditor样式
+import '@wangeditor/editor/dist/css/style.css'
+
+
 //引入MockServe.js-----mock数据
 // import './mock/mockServer';
 

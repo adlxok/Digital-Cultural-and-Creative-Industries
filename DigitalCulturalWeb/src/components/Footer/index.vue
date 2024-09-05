@@ -73,6 +73,7 @@ export default {
   box-sizing: border-box;
   line-height: 2.3;
   margin-top: 20px;
+  position: fixed; /*暂时固定定位*/
 }
 
 

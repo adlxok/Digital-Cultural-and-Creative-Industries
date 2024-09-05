@@ -1,13 +1,16 @@
+.post{
+	background-color: #F2F6FC;
+	height: 4915px;
+}
 /* 首页头部导航 */
 .community-heander{
 	display: flex;
 	align-items: flex-start;
-	background-image:url("../../../assets/images/image.png");
-	background-position:center left ;
+	background-image:url("../../../assets/images/back2.jpg");
+	background-position: center;
 	width: 1520px;
 	height: 150px;
 	position:fixed; /*定位导航栏*/
-	position: relative;
 	position:absolute;
 	top:0;
 	
@@ -18,12 +21,16 @@
 	align-items: center;/*主轴居中对齐*/
 	padding: 24px;   /*容器内上下左右的边距*/
 	flex-shrink: 0;/*缩小*/
-	
+	top:0;
+	z-index: 10;
 }
 .left-nav{
 	display: flex;
 	align-items: center;
-	
+}
+.left-nav li:hover{
+	color: rgb(204, 109, 14); /* 示例：鼠标悬停时变为红色 */  
+	cursor: pointer; 
 }
 .nav-item{
 	margin-left: 24px;
@@ -64,42 +71,85 @@
 .main{
 	display: flex;
 	align-items: flex-start;
-	padding: 0px,0px,24px,24px;
-	
+	padding: 0px,0px,50px,50px;
+	margin-left: 150px;
+	margin-right: 100px;
 }
 
 /*首页左部内容 */
 .main-left{
-	/* position:fixed;
-	position:relative; */
+	position: relative;
 }
-.text {
-    font-size: 14px;
+.box1-card{
+	width: 350px;
+	height: auto;
+	margin-top: 5px;
+	margin-left:20px;
+	
   }
+.hot-nav{
+	margin-top: 10px;
+	position: relative;
+}
+.hot-nav span{
+	position: relative;
+	font-size: 18px;
+    font-weight:600;
+}
+.hot-list{
+	margin-top: 15px;
+}
+.hot-itme{
+	position: relative;
+	display: flex;
+	align-self: center;
+	margin-top: 10px;
+}
+.hot-itme em{
+	font-size: 24px;
+	color: #cc9f18;
+	font-weight: 600;
+}
+.hot-title{
+	position: relative;
+	margin:5px 20px;
 
-  .item {
-    padding: 18px 0;
-  }
- 
-  .box1-card{
-	width: 300px;
-	height: 1430px;
+}
+.hot-title span{
+	font-size: 17px;
+}
+.hot-title span:hover{
+	color:rgb(204, 109, 14);
+	font-size: 18px;
+}
+.box1-itme-card{
+	width: 350px;
+	height: 500px;
+	margin-top: 5px;
+	margin-left:20px;
+	position: sticky;
+    
+}
+.box3-card{
+	width: 350px;
+	height:300px;
 	margin-top: 125px;
-  }
-
+	margin-left: 20px;
+	
+}
 /* 首页中部内容 */
 .recommend-list{
 	display: flex;
 	align-items: center;
 	background-color:#fff;
-	width: 800px;
+	width: 750px;
 	height: 50px;
     margin-top: 10px;
 	margin-bottom:100%;
 	
 }
 .content-header  span{
-  font-size: 17px;
+  font-size: 18px;
   color: #000000c6;
   font-weight:550;
   margin-left: 20px;
@@ -124,18 +174,21 @@
   .box2-card {
 	display: flex;
 	flex-direction: column;
-    width: 820px;
-	height: 1430px;
+    width: 850px;
+	height: auto;
 	margin-top: 100px;
-	margin-left: 9px;
+	margin-left: 15px;
+  }
+.post-list{
+	
   }
 .post-item{
 	display: flex;
-	flex-direction: row;
-    height: 125px;
-	border: 1px solid #ddd;
-    background-color: #fff;
-	border-radius: 8px;
+	flex-direction:column;
+    /* height: 300px; */
+	/* border: 1px solid #ddd;
+    background-color: #fff; */
+	/* border-radius: 8px; */
 	position: relative;
 	cursor: pointer;
   }
@@ -154,41 +207,107 @@
   }
 .title{
 	position:absolute;
-	margin-top: 50px;
-	margin-left: 80px;
-}
-.title span{
-	font-size: 16px;
+	margin-top: 70px;
+	margin-left: 70px;
 	
 }
+.title span{
+	font-size: 17.5px;
+	color: #242526;
+}
+.title span:hover{
+	color: #2d93f9; /* 示例：鼠标悬停时变为红色 */  
+	cursor: pointer; /* 当鼠标悬停时显示小手光标 */  
+}
 .createTime{
-	margin-top: 90px;
-	margin-left:20px;
+	margin-top: 40px;
+	margin-left:70px;
 	position: absolute;
 }
 .createTime span{
 	font-size: xx-small;
 }
+.content{
+	margin-top: 30px;
+	margin-left: 70px;
+	position: relative;
+}
+.small-sign {
+	display: flex;
+	position: relative; /* 绝对定位 */
+  }
 .collectCount{
-	margin-top:100px;
-	margin-left: 600px;
-	position: absolute;
+	margin-top:20px;
+	margin-left: 70px;
+	position: relative;
 }
 .likeCount{
- margin-top:100px;
- margin-left: 650px;
- position: absolute;
+ margin-top:20px;
+ margin-left: 80px;
+ position: relative;
   }
 .commentCount{
-margin-top:100px;
-margin-left: 700px;
-position: absolute;
+margin-top:20px;
+margin-left: 80px;
+position: relative;
   }
+.small-sign span{
+	font-size: medium;
+}
+
+.url{
+	display: flex; /* 使每个图片元素横向排列 */
+	position: relative;
+	margin-top: 10px;
+	margin-left: 70px;
+ }
+ .post-image{
+  width: 25%;
+  max-width: 200px; /* 或其他你希望的最大宽度 */
+  margin: 10px 3px; /* 使图片居中显示 */
+  overflow: hidden; /* 防止图片溢出 */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  position: relative;
+ }
+ img {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: auto; /* 保持图片比例 */
+	margin-left: 20px;	
+	cursor: pointer;
+	position: relative;
+	margin: 0px;
+	margin-bottom: 0px;
+	
+}
+.post-video{
+	width: 50%;
+	max-width: 200px; /* 或其他你希望的最大宽度 */
+	margin: 10px 0px; /* 使图片居中显示 */
+	overflow: hidden; /* 防止图片溢出 */
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	position: relative;
+}
+ video{
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: auto; /* 保持图片比例 */
+	margin-left: 20px;	
+	cursor: pointer;
+	position: relative;	
+	margin: 0px;
+	margin-bottom: 0px;
+	
+ }
 .font-itme1{
 	font-size: small;
   }
 
- .pagination {
+.pagination {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -216,12 +335,23 @@ button:disabled {
 
   /*首页右部内容*/
   .main-right{
-	/* position:fixed;
-	position:relative; */
+   width:360px;
+   
   }
-.box3-card{
-	width: 375px;
-	height: 1430px;
+/* .box3-card{
+	width: 360px;
+	height:300px;
 	margin-top: 125px;
-	margin-left: 40px;
+	margin-left: 20px;
+	margin-right: 20px;
+	right: 20px;
+	left: 20px;
+	margin-top: 125px;
+	bottom: 0px;
+	
+} */
+.block span{
+	margin-bottom: 30px;
 }
+
+

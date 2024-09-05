@@ -40,6 +40,14 @@ export default new VueRouter({
             path: '/comhome',
             name: 'Comhome',
             component:() => import('../views/Community/post/index.vue')
+        },
+        {
+            path: '/addpost',
+            name: 'Addpost',
+            meta: {
+                Footer:false
+            },
+            component:() => import('../views/Community/addpost/index.vue')
         }
     ]
 })

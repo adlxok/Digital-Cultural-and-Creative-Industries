@@ -1,11 +1,13 @@
 <template>
-	<div>
+	<div class="post">
 		<!-- 头部 -->
 		<div class="community-heander">
 			<!-- 导航 -->
 			<div class="community-nav">
 				<ul class="left-nav">
-					<li class="nav-item">首页</li>
+					<router-link to="/home">
+						<li class="nav-item">首页</li>
+					</router-link>
 					<li class="nav-item">书法</li>
 					<li class="nav-item">国画</li>
 					<li class="nav-item">中医</li>
@@ -25,9 +27,15 @@
 					</a>
 					<li class="nav1-item"><i class="el-icon-star-off "></i></li>
 					<li class="nav1-item"><i class="el-icon-time"></i></li>
-					<a href='../../Home/index.vue'>
-						<li class="nav1-item"><i class="el-icon-edit"></i></li>
-					</a>
+					<router-link to="/addpost">
+						<li class="nav1-item">
+							<el-popover placement="bottom-start" title="发布帖子" width="100" trigger="hover"
+								content="快开始你的创造吧！">
+								<i class="el-icon-edit" slot="reference"></i>
+							</el-popover>
+						</li>
+					</router-link>
+
 					<li class="nav1-item"><i class="el-icon-setting"></i></li>
 				</ul>
 
@@ -44,8 +52,37 @@
 		<div class="main">
 			<!-- 左侧 -->
 			<div class="main-left">
-				<el-card class="box1-card">
+				<div class="main-right">
+					<el-card class="box3-card">
+						<div class="block">
+							<span class="demonstration">千里之行,始于足下 ——《道德经》</span>
+							<el-carousel height="250px">
+								<el-carousel-item v-for="(image, index) in showimage" :key="index">
+									<img :src="image" alt="轮播图" />
+								</el-carousel-item>
+							</el-carousel>
+						</div>
 
+					</el-card>
+				</div>
+				<el-card class="box1-card">
+					<div class="hot-nav">
+						<span>今日热帖</span>
+					</div>
+					<div v-for="(hotpost,index) in hotPost" :key="hotpost.id" class="hot-list">
+						<div class="hot-itme">
+							<em>
+								{{ index+1 }}
+							</em>
+							<div class="hot-title">
+								<router-link to="/addpost">
+									<span>{{ hotpost.title }}</span>
+								</router-link>
+							</div>
+						</div>
+					</div>
+				</el-card>
+				<el-card class="box1-itme-card">
 				</el-card>
 			</div>
 			<!-- 中部-推荐帖子列表 -->
@@ -53,6 +90,7 @@
 				<div class="content-list">
 					<el-card class="box2-card">
 						<div class="content-header">
+							<a id="mao"></a>
 							<span class="sign" :class="{ active: activeCategory === 'hot' }"
 								@click="hotPostList">热门</span>
 
@@ -68,13 +106,15 @@
 
 						<div class="post-list">
 							<div v-for="postmap in posts" :key="postmap.post.id" class="post-item">
-
 								<div class="profile-photo-main">
-									<el-avatar v-if="postmap.user && postmap.user.profileImageUrl" :size="50"
+									<router-link to="/addpost">
+										<el-avatar v-if="postmap.user && postmap.user.profileImageUrl" :size="50"
 										:src="postmap.user.profileImageUrl" alt="用户头像"></el-avatar>
-									<el-avatar v-else :size="50"
+										<el-avatar v-else :size="50"
 										src="https://img1.baidu.com/it/u=3647744349,2477516282&fm=253&fmt=auto&app=138&f=JPEG?w=380&h=380"
 										alt="默认头像"></el-avatar>
+									</router-link>
+									
 								</div>
 								<div v-if="postmap.user && postmap.user.profileImageUrl" class="username">
 									<span>{{ postmap.user.username }}</span>
@@ -86,39 +126,64 @@
 									<span>{{ postmap.post.title }}</span>
 								</div>
 								<div class="createTime">
-									<span>发布于{{ postmap.post.formattedCreateTime}}</span>
+									<span>{{ postmap.post.formattedCreateTime}}</span>
 								</div>
-								<div class="collectCount">
-									<span class="font-itme1"><i class="el-icon-star-off"></i>{{ postmap.likeCount
-										}}</span>
+								<div class="content">
+									<div v-html="truncateContent(postmap.post.content)"></div>
 								</div>
-								<div class="likeCount">
-									<span class="font-itme1">赞{{ postmap.likeCount }}</span>
+								<div class="url">
+									<div v-for="(imageUrl, index) in postmap.url.image" :key="index" class="post-image">
+										<a :href="imageUrl" target="_blank">
+										<img v-if="postmap.url.image.length > 0 && imageUrl" :src="imageUrl" alt="帖子图片"/>
+										</a>
+									</div>
+									<div class="post-video"
+										v-if="postmap.url.video.length!=0&&postmap.url.image.length ==0">
+										<video :src="postmap.url.video[0]" controls></video>
+									</div>
 								</div>
-								<div class="commentCount">
-									<span class="font-itme1">回帖{{ postmap.post.commentCount }}</span>
+								<div class="small-sign">
+									<div class="collectCount">
+										<span class="font-itme1">收藏 {{ postmap.likeCount
+											}}</span>
+									</div>
+									<div class="likeCount">
+										<span class="font-itme1">赞 {{ postmap.likeCount }}</span>
+									</div>
+									<div class="commentCount">
+										<span class="font-itme1">回帖 {{ postmap.post.commentCount }}</span>
+									</div>
 								</div>
+								<el-divider></el-divider>
 							</div>
 						</div>
 
 						<div class="page">
 							<div class="pagination">
-								<button id="firstPage" @click="handleshouye()">首页</button>
-								<button id="prevPage" @click="handlelast()">上一页</button>
+								<a href="#mao"> <button id="firstPage" @click="handleshouye()">首页</button></a>
+								<a href="#mao"> <button id="prevPage" @click="handlelast()">上一页</button></a>
 								<span id="pageInfo">第 {{ this.listParams.pageNum }} 页</span>
-								<button id="nextPage" @click="handlenext()">下一页</button>
-								<button id="lastPage" @click="handleweiye()">尾页</button>
+								<a href="#mao"> <button id="nextPage" @click="handlenext()">下一页</button></a>
+								<a href="#mao"><button id="lastPage" @click="handleweiye()">尾页</button></a>
 							</div>
 						</div>
 					</el-card>
 				</div>
 			</div>
 			<!-- 右侧 -->
-			<div class="main-right">
+			<!-- <div class="main-right">
 				<el-card class="box3-card">
+					<div class="block">
+						<span class="demonstration">千里之行,始于足下 ——《道德经》</span>
+						<el-carousel height="250px">
+							<el-carousel-item  v-for="(image, index) in showimage" :key="index">
+								<img :src="image" alt="轮播图" />
+							</el-carousel-item>
+						</el-carousel>
+					</div>
 
 				</el-card>
-			</div>
+			</div> -->
 		</div>
 	</div>
 
@@ -130,9 +195,10 @@
 // 引入组件样式  
 import '../css/base.css';  
 import '../css/post.css';
-import { showPostList} from "../../../api/post";
+import { showPostList,hotPost} from "../../../api/post";
   
 export default {
+	name: "CommunityPost",
     data() {
       return {
         input: '',
@@ -141,20 +207,31 @@ export default {
 		users:[],
 		listParams: {
 			pageNum: 1,
-			pageSize: 10,
+			pageSize: 20,
 			userId:0,
 			orderMode:0
 		},
+		imageList:[],
+		video:'',
 		value: true,
-		activeCategory: null
+		activeCategory: null,
+        hotPost:[],
+		showimage:["https://img1.baidu.com/it/u=3427678510,362959101&fm=253&fmt=auto&app=138&f=JPEG?w=517&h=500",
+		'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage109.360doc.com%2FDownloadImg%2F2023%2F03%2F2417%2F263098200_44_20230324052120600.jpg&refer=http%3A%2F%2Fimage109.360doc.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1727953954&t=41aeff736495085e4609a457d80a2481',
+		'https://picnew5.photophoto.cn/20110222/guohua-mudantupian-12054681_1.jpg'
+		],
       }
-      }
-    ,
+      } ,
 	created() {
 	this.fetchPostList();
-
+    this.fetchhotPost();
   },
    methods: {   
+	truncateContent(content) {  
+      if (!content) return '';  
+      return content.length > 100 ? content.slice(0, 100) + '...' : content;  
+    },  
+  
     hotPostList() {  
 		this.activeCategory = 'hot';
 		this.listParams.orderMode=1;
@@ -217,11 +294,15 @@ handleweiye(){
     }).catch(error => {  
         console.error('获取帖子列表失败:', error);   
     });  
+  },
+  fetchhotPost(){
+	hotPost().then(response => {
+	this.hotPost=response.data;
+	}).catch(error => {  
+        console.error('获取帖子列表失败:', error);   
+    });
   }
 
   }
-
-
   } 
-
-</script>  
+</script> 

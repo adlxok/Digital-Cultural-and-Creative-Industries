@@ -12,6 +12,25 @@ export function showUser(userId){
         url: '/communityHome/user/'+userId,
         method: 'get'
     })
+}
 
-
+export function addpost(data){
+    return request({
+        url: '/post/addPost',
+        method: 'post',
+        data:data
+    })
+}
+export function saveImage(data){
+    return request({
+        url: '/communityUpload/saveImage',
+        method: 'post',
+        data:data
+    })
+}
+export function hotPost(){
+    return request({
+        url: '/post/hotPost',
+        method: 'get'
+    })
 }
