@@ -1,0 +1,94 @@
+
+.editor{
+    display: flex;
+    width: 100%;
+    height: 800px;
+    flex-direction: column;
+    background-image: url(../../../assets/images/back3.jpg);
+    background-position: fixed;
+}
+.editor-header{
+    width: 100%;
+    height: 80px;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+}
+.editor-box1-card{
+    width: 100%;
+    height: 120px; 
+    
+    
+}
+.editor-nav{
+    display: flex;
+    align-items: center;
+    position: absolute;
+
+}
+.editor-nav i{
+    font-size: 25px;
+    margin-left: 5px;
+    
+}
+.editor-nav-title span{
+    margin-left: 15px;
+    font-size: 20px;
+    font-weight: 600;
+    margin-right: 20px;
+}
+.editor-box2-card{
+    position: fixed;
+    width: 350px;
+    height: 550px;  
+    margin-top: 20px;
+    margin-left: 15px;
+}
+.editor-tool{
+    margin-left: 200px;
+    
+}
+.tool-other{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+.tool-other span{
+    font-size: 16px;
+}
+.tool-title{
+   margin-left: 20px;  
+}
+.font-item{
+    font-size: 16px; 
+    margin-right: 20px;
+    margin-left: 200px;
+}
+
+.editor-box3-card{
+    width: 1000px;
+    margin-left: 50px;
+    margin-top: 50px;
+    position: fixed;
+}
+.editor-end{
+    width: 100%;
+    height: 80px;
+    position: fixed;
+    z-index: 10;
+    margin-top: 560px;
+}
+
+.editor-button{
+    display: flex;
+    gap: 10px;
+    margin-left: 1200px;
+}
+.editor-box4-card{
+    position:relative;
+    background-color: #fff;
+    width: 100%;
+    height: 70px;
+   
+}
