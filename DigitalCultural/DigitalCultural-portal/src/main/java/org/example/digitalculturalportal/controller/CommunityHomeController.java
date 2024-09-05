@@ -7,8 +7,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.example.digitalculturalportal.common.CommonPage;
 import org.example.digitalculturalportal.common.CommonResult;
+import org.example.digitalculturalportal.common.ResultCode;
 import org.example.digitalculturalportal.pojo.CommunityPost;
 import org.example.digitalculturalportal.pojo.User;
+import org.example.digitalculturalportal.service.CommunityImageService;
 import org.example.digitalculturalportal.service.CommunityLikeService;
 import org.example.digitalculturalportal.service.CommunityPostService;
 import org.example.digitalculturalportal.service.UserService;
@@ -39,6 +41,8 @@ public class CommunityHomeController implements CommunityConstant{
     @Autowired
     private CommunityLikeService communityLikeService;
     @Autowired
+    private CommunityImageService communityImageService;
+    @Autowired
     private UserService userService;
     @ApiOperation("分页展示帖子列表")
     @RequestMapping(value = "/postList", method = RequestMethod.GET)
@@ -54,6 +58,27 @@ public class CommunityHomeController implements CommunityConstant{
         for (CommunityPost communityPost : postList) {
             Map<String,Object> map=new HashMap<>();
             map.put("post",communityPost);
+            //封装url
+            List<String> imagelist=communityImageService.queryImageList(communityPost.getId());
+//            if(list.isEmpty()) {
+//                return CommonResult.error(ResultCode.LIST_ERROR);
+//            }
+            List<String> list1=new ArrayList<>();
+            List<String> list2=new ArrayList<>();
+            for (String url : imagelist) {
+                if (url.contains(".")) {
+                    String suffix = url.substring(url.lastIndexOf("."));
+                    if (".mp4".equals(suffix)) {
+                        list1.add(url);
+                    }else {
+                        list2.add(url);
+                    }
+                }
+            }
+            Map<String,Object> imagemap=new HashMap<>();
+            imagemap.put("video",list1);
+            imagemap.put("image",list2);
+            map.put("url",imagemap);
             User user=userService.queryUserByIdInCache(communityPost.getUserId());
             map.put("user",user);
             long likeCount=communityLikeService.queryEntityLikeCount(ENTITY_TYPE_POST,communityPost.getId());

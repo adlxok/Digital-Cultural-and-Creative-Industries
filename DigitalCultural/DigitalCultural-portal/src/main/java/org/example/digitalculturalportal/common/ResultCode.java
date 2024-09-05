@@ -21,7 +21,9 @@ public enum ResultCode {
     INPUT_ERROR(40010, "账号或密码错误"),
     FAIL_TITLE(301,"内容不能为空"),
     USER_EXITS(40011,"用户名已存在"),
-    USER_ERROR(302,"用户不存在");
+    USER_ERROR(302,"用户不存在"),
+    UPLOAD_ERROR(303,"文件为空"),
+    LIST_ERROR(304,"列表为空");
 
     private final Integer code;
     private final String message;

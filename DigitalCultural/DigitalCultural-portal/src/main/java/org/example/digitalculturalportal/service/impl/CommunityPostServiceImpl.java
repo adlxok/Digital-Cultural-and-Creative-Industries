@@ -42,6 +42,9 @@ public class CommunityPostServiceImpl implements CommunityPostService, Community
         int pageSize=Integer.valueOf(param[1]);
         PageHelper.startPage(pageNum,pageSize);
         List<CommunityPost> postList=communityPostDao.selectCommunityPosts(0,1);
+        if(postList.isEmpty()){
+            return;
+        }
         redisCache.setCacheList(key,postList);
     }
 
@@ -70,9 +73,9 @@ public class CommunityPostServiceImpl implements CommunityPostService, Community
         if (communityPost == null) {
             throw new IllegalArgumentException("参数不能为空");
         }
-        //转义HTML标记，确保用户输入内容在web页面上为普通文本，不是作为HTML执行，防止脚本攻击
-        communityPost.setTitle(HtmlUtils.htmlEscape(communityPost.getTitle()));
-        communityPost.setContent(HtmlUtils.htmlEscape(communityPost.getContent()));
+        //转义HTML标记，确保用户输入内容在web页面上为普通文本，不是作为HTML执行，防止脚本攻击[使用该方法会使数据库不能正常存储编辑器的HTML]
+//        communityPost.setTitle(HtmlUtils.htmlEscape(communityPost.getTitle()));
+//        communityPost.setContent(HtmlUtils.htmlEscape(communityPost.getContent()));
 
         //过滤器
         communityPost.setTitle(sensitiveFilter.filter(communityPost.getTitle()));
@@ -136,5 +139,10 @@ public class CommunityPostServiceImpl implements CommunityPostService, Community
     @Override
     public int queryCommentCount(Integer id) {
         return communityPostDao.selectCommentCount(id);
+    }
+
+    @Override
+    public List<CommunityPost> queryHotPost() {
+        return communityPostDao.selectHotPost();
     }
 }

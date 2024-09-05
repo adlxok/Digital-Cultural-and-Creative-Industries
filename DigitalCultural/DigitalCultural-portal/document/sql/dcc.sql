@@ -147,6 +147,7 @@ CREATE TABLE `community_post` (
                                   `user_id` int(11) NOT NULL,
                                   `title` varchar(100) NOT NULL,
                                   `content` text,
+                                  `content_html` text,
                                   `type` int(11) DEFAULT 0 COMMENT '0-普通; 1-置顶;',
                                   `status` int(11) DEFAULT 0 COMMENT '0-正常; 1-精华; 2-拉黑;',
                                   `create_time` timestamp NULL DEFAULT NULL,
@@ -192,6 +193,16 @@ CREATE TABLE `community_message` (
                                      KEY `index_to_id` (`to_id`),
                                      KEY `index_conversation_id` (`conversation_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- --------------------------------
+-- Table structure for community_image
+-- --------------------------------
+DROP TABLE IF EXISTS `community_image`;
+CREATE TABLE community_image (
+                                 id INT AUTO_INCREMENT PRIMARY KEY,
+                                 post_id INT(11) DEFAULT NULL,
+                                 url VARCHAR(255) NOT NULL,
+                                 upload_time DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 
 
 

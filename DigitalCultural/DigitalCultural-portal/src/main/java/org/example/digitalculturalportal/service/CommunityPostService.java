@@ -96,4 +96,5 @@ public interface CommunityPostService {
      * @return
      */
     int queryCommentCount(Integer id);
+    List<CommunityPost> queryHotPost();
 }

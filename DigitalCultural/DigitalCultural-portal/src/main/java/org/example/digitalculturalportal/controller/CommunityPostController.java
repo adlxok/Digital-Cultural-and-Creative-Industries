@@ -1,28 +1,34 @@
 package org.example.digitalculturalportal.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.example.digitalculturalportal.common.CommonResult;
 import org.example.digitalculturalportal.common.ResultCode;
-import org.example.digitalculturalportal.pojo.CommunityEvent;
-import org.example.digitalculturalportal.pojo.CommunityPost;
-import org.example.digitalculturalportal.pojo.LoginUser;
+import org.example.digitalculturalportal.pojo.*;
 import org.example.digitalculturalportal.rabbitmqevent.CommunityProducer;
 import org.example.digitalculturalportal.service.CommunityPostService;
 import org.example.digitalculturalportal.utils.CommunityConstant;
 import org.example.digitalculturalportal.utils.RedisCache;
 import org.example.digitalculturalportal.utils.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 /**
  * 社区帖子Controller
@@ -41,13 +47,11 @@ public class CommunityPostController implements CommunityConstant {
     private CommunityProducer communityProducer;
     @Autowired
     private RedisCache redisCache;
-
-
     @ApiOperation("用户发布帖子")
-    @RequestMapping(value = "/addPost", method = RequestMethod.GET)
+    @RequestMapping(value = "/addPost", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult addCommunityPost(@RequestParam("title") String title,@RequestParam("content") String content) {
-        if (title.isEmpty()) {
+    public CommonResult addCommunityPost(@RequestBody PostParam param) {
+        if (param.getTitle().isEmpty()) {
             return CommonResult.fail(ResultCode.FAIL_TITLE);
         }
         //获取SecurityContextHolder中的用户id
@@ -55,10 +59,11 @@ public class CommunityPostController implements CommunityConstant {
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         Long userId = loginUser.getUser().getId();
         CommunityPost communityPost=new CommunityPost();
-        communityPost.setTitle(title);
-        communityPost.setContent(content);
+        communityPost.setTitle(param.getTitle());
+        communityPost.setContent(param.getContent());
         communityPost.setUserId(Math.toIntExact(userId));
         communityPost.setCreateTime(new Date());
+        communityPost.setContentHtml(param.getContentHtml());
         int post=communityPostService.addCommunityPost(communityPost);
 
         //帖子存进redis定时计算更新分数
@@ -79,7 +84,7 @@ public class CommunityPostController implements CommunityConstant {
         map.put("postId",communityPost.getId());
         communityEvent.setData(map);
         communityProducer.sendAddPostEvent(communityEvent);
-        return CommonResult.success("发帖成功");
+        return CommonResult.success(communityPost.getId());
     }
     @ApiOperation("置顶帖子")
     @RequestMapping(value = "/topPost", method = RequestMethod.GET)
@@ -119,6 +124,16 @@ public class CommunityPostController implements CommunityConstant {
         communityEvent.setData(map);
         communityProducer.sendDeletePostEvent(communityEvent);
         return CommonResult.success("删帖成功");
+    }
+    @ApiOperation("热门帖子")
+    @RequestMapping(value = "/hotPost", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult hotPost(){
+     List<CommunityPost> list=communityPostService.queryHotPost();
+     if(list.isEmpty()){
+         return CommonResult.error(ResultCode.LIST_ERROR);
+     }
+     return CommonResult.success(list);
     }
 
 }

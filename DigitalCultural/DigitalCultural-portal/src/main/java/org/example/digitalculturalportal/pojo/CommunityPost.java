@@ -34,7 +34,7 @@ public class CommunityPost {
     private String title;
 
     /**
-     * 内容
+     * 内容（纯文本）
      */
     @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String content;
@@ -68,4 +68,9 @@ public class CommunityPost {
      */
     @Field(type = FieldType.Double)
     private double score;
+    /**
+     * 内容（html）
+     */
+    @Field(type = FieldType.Text)
+    private String contentHtml;
 }

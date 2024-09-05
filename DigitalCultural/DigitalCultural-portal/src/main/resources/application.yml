@@ -1,5 +1,7 @@
 server:
   port: 8080
+file:
+  save-path: D:\ProgramData\newcultural\Digital-Cultural-and-Creative-Industries\DigitalCultural\DigitalCultural-portal\src\main\resources\static\images\
 
 spring:
   datasource:

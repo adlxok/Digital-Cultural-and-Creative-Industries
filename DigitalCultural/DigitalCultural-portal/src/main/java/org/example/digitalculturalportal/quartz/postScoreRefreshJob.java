@@ -67,6 +67,7 @@ public class postScoreRefreshJob implements Job, CommunityConstant {
         CommunityPost post=communityPostService.queryCommunityPostById(postId);
         if(post==null){
             log.info("该帖子不存在id="+postId);
+
             return;
         }
         //计算帖子分数

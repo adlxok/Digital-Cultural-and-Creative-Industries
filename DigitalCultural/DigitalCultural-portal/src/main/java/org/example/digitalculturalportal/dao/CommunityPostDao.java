@@ -83,5 +83,12 @@ public interface CommunityPostDao {
      * @return
      */
     int selectCommentCount(Integer id);
+
+    /**
+     * 查询前十热门帖子
+     * @return
+     */
+    List<CommunityPost> selectHotPost();
+
 }
 
