@@ -66,13 +66,12 @@ export default {
   color: #b4b3b8;
 }
 .footer {
-  position: relative;
   background-color: #272727;
   padding: 30px 0 27px;
-  min-height: 230px;
-  box-sizing: border-box;
+  color: #b4b3b8;
+  text-align: center;
   line-height: 2.3;
-  margin-top: 20px;
+  margin-top: auto; /* 确保页脚在内容下方 */
 }
 
 
@@ -135,34 +134,26 @@ export default {
   font-style: normal;
 }
 /*  */
+
 .footer .nav_foot {
   margin-top: 20px;
-  text-align: center;
   color: #fff;
   font-weight: bold;
 }
 .footer .nav_foot a {
   display: inline-block;
   line-height: 22px;
+  color: #b4b3b8;
 }
 /*  */
-.footer .copyright {
-  text-transform: inherit;
-  text-align: center;
-  font-weight: 350;
+.footer .copyright, .footer .records {
+  margin-top: 20px;
 }
-.footer .records {
-  text-align: center;
 
-  width: 100%;
-}
 .footer .records a {
   display: inline-block;
-  text-decoration: none !important;
-}
-.footer .records a img,
-p {
-  float: left;
+  text-decoration: none;
+  color: #b4b3b8;
 }
 
 /* 过渡动画样式 */

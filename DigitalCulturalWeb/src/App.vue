@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <Header></Header>
-    <router-view></router-view>
+    <div class="main-content">
+      <router-view></router-view>
+    </div>
     <Footer></Footer>
   </div>
-
-
 </template>
 
 <script>
@@ -25,9 +25,25 @@ export default {
   margin: 0;
   padding: 0;
   text-decoration: none;
-  /* color: #333; */
   font-family: 微软雅黑;
   font-size: 14px;
 }
 
+html, body {
+  height: 100%;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.footer {
+  margin-top: auto;
+}
 </style>

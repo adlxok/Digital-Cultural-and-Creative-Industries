@@ -1,6 +1,6 @@
 const user = {
     state: {
-        user: window.localStorage.getItem('user'),
+        userId: window.localStorage.getItem('userId'),
         token: window.localStorage.getItem('token')
     },
  
@@ -11,18 +11,18 @@ const user = {
             window.localStorage.setItem('token', data)
         },
         //获取用户名
-        SET_USER: (state, data) => {
+        SET_USERID: (state, data) => {
             // 把用户名存起来
-            state.user = data
-            window.localStorage.setItem('user', data)
+            state.userId = data
+            window.localStorage.setItem('userId', data)
         },
         //登出
         LOGOUT: (state) => {
             // 登出的时候要清除token
             state.token = null
-            state.user = null
+            state.userId = null
             window.localStorage.removeItem('token')
-            window.localStorage.removeItem('user')
+            window.localStorage.removeItem('userId')
         }
     },
     actions: {

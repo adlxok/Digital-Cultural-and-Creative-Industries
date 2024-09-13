@@ -1,48 +1,57 @@
 <template>
-    <div class="login-container">
-      <div class="switch-buttons">
-        <button :class="{ active: loginMode }" @click="switchToLogin">Login</button>
-        <button :class="{ active: !loginMode }" @click="switchToRegister">Register</button>
-      </div>
-  
-      <h2 v-if="loginMode">Login</h2>
-      <h2 v-else>Register</h2>
-  
-      <form @submit.prevent="handleSubmit">
-        <div class="form-group">
-          <label for="username">Username:</label>
-          <input type="text" id="username" v-model="username" required>
-        </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" id="password" v-model="password" required>
-        </div>
-  
-        <div v-if="!loginMode" class="form-group">
-          <label for="confirmPassword">Confirm Password:</label>
-          <input type="password" id="confirmPassword" v-model="confirmPassword" required>
-        </div>
-  
-        <div class="form-group">
-          <label for="captcha">Verification Code:</label>
-          <div class="captcha-container">
-            <input type="text" id="captcha" v-model="captchaInput" required style="width: 100px; height: 30px;">
-            <span class="captcha" v-html="captcha"></span>
-            <button type="button" @click="refreshCaptcha">Refresh</button>
-          </div>
-        </div>
-  
-        <button type="submit" v-if="loginMode">Login</button>
-        <button type="submit" v-else>Register</button>
-      </form>
-  
-      <p v-if="error" class="error-msg">{{ error }}</p>
-      <p v-if="success" class="success-msg">{{ success }}</p>
+  <div class="login-container">
+    <div class="switch-buttons">
+      <button :class="{ active: loginMode }" @click="switchToLogin">登录</button>
+      <button :class="{ active: !loginMode }" @click="switchToRegister">注册</button>
     </div>
-  </template>
+
+    <h2 v-if="loginMode">登录</h2>
+    <h2 v-else>注册</h2>
+
+    <form @submit.prevent="handleSubmit">
+      <div class="form-group">
+        <label for="username">账号:</label>
+        <input type="text" id="username" v-model="username" required />
+      </div>
+      <div class="form-group">
+        <label for="password">密码:</label>
+        <input type="password" id="password" v-model="password" required />
+      </div>
+
+      <div v-if="!loginMode" class="form-group">
+        <label for="confirmPassword">确认密码:</label>
+        <input type="password" id="confirmPassword" v-model="confirmPassword" required />
+      </div>
+
+      <div class="form-group">
+        <label for="captcha">验证码:</label>
+        <div class="captcha-container">
+          <input
+            type="text"
+            id="captcha"
+            v-model="captchaInput"
+            required
+            class="captcha-input"
+          />
+          <span class="captcha" v-html="captcha"></span>
+          <button type="button" @click="refreshCaptcha" class="refresh-button">刷新一下</button>
+        </div>
+      </div>
+
+      <button type="submit" v-if="loginMode">登录</button>
+      <button type="submit" v-else>注册</button>
+    </form>
+
+    <p v-if="error" class="error-msg">{{ error }}</p>
+    <p v-if="success" class="success-msg">{{ success }}</p>
+  </div>
+</template>
+
   
   <script>
   import {login} from '../../api/login'
+  import { getInfo } from '../../api/getInfo';
+
   export default {
     data() {
       return {
@@ -53,7 +62,8 @@
         captchaInput: '', // 用户输入的验证码
         loginMode: true, // 默认显示登录表单
         error: '',
-        success: ''
+        success: '',
+        user: null
       };
     },
     created() {
@@ -81,17 +91,26 @@
         }
       },
       handleLogin() {
-        login(this.username, this.password).then((res) => {
-            console.log(res.data.token)
-            this.$message.success('登录成功')
-            this.$store.commit('SET_TOKEN', res.data.token)
-            // this.$store.commit('GET_USER', JSON.stringify(res.data.data))
-            // sessionStorage.setItem('token', res.data.token);
-            this.$router.push('/');
-        }).catch(e => {
-            console.log(e)
-        });
-        
+        login(this.username, this.password)
+          .then((res) => {
+            const token = res.data.token;
+            this.$message.success('登录成功');
+            this.$store.commit('SET_TOKEN', token);
+
+            // 这里用大括号包裹箭头函数，确保正确赋值和逻辑
+            getInfo(token).then((res) => {
+              this.user = res.data;
+              this.$store.commit('SET_USERID', this.user.id);
+              console.log(this.$store.state.user.userId);
+              // 确保用户信息已成功存储后，再跳转到首页
+              this.$router.push('/');
+            });
+            
+          })
+          .catch((error) => {
+            console.error(error);
+            this.$message.error('登录失败，请检查用户名或密码');
+          });
       },
       handleRegister() {
         // 实现注册逻辑
@@ -134,113 +153,147 @@
   </script>
   
   <style scoped>
-  
-  .login-container {
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 100px;
-    margin-bottom: 140px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    text-align: center;
-  }
-  
-  .switch-buttons {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-  }
-  
-  .switch-buttons button {
-    padding: 10px 20px;
-    margin: 0 5px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: #fff;
-  }
-  
-  .switch-buttons button.active {
-    background-color: #0056b3;
-  }
-  
-  h2 {
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  input[type="text"],
-  input[type="password"],
-  input[type="number"] {
-    width: 100%;
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .captcha-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .captcha {
-    margin-left: 10px;
-    padding: 5px;
-    font-size: 18px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100px; /* 与输入框宽度一致 */
-    height: 30px; /* 与输入框高度一致 */
-  }
-  
-  button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button[type="button"] {
-  padding: 10px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 30px;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
-  
-  button[type="submit"]:hover,
-  button[type="button"]:hover {
-    background-color: #0056b3;
-  }
-  
-  .error-msg,
-  .success-msg {
-    color: #ff0000;
-    margin-top: 10px;
-  }
-  .success-msg {
-    color: green;
-  }
-  </style>
-  
+
+.switch-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.switch-buttons button {
+  padding: 12px 25px;
+  margin: 0 10px;
+  font-size: 18px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #6b73ff, #000dff);
+  color: #ffffff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease;
+}
+
+.switch-buttons button.active {
+  background: linear-gradient(135deg, #ff73a1, #ff007e);
+}
+
+.switch-buttons button:hover {
+  background: linear-gradient(135deg, #4f54ff, #000cff);
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+  font-size: 16px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: #6b73ff;
+}
+
+.captcha-container {
+  display: flex;
+  align-items: center;
+}
+
+.captcha-input {
+  width: 100px;
+  height: 40px;
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.captcha {
+  margin-left: 10px;
+  font-size: 20px;
+  color: #333;
+  background-color: #f1f1f1;
+  padding: 8px;
+  border-radius: 5px;
+  width: 120px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.refresh-button {
+  margin-left: 10px;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  background-color: #6b73ff;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.refresh-button:hover {
+  background-color: #4f54ff;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 15px;
+  font-size: 18px;
+  background: linear-gradient(135deg, #6b73ff, #000dff);
+  border: none;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #4f54ff, #000cff);
+}
+
+.error-msg,
+.success-msg {
+  margin-top: 15px;
+  font-size: 16px;
+}
+
+.error-msg {
+  color: #ff4d4d;
+}
+
+.success-msg {
+  color: #28a745;
+}
+</style>

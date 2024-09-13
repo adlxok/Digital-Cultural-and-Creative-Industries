@@ -67,7 +67,6 @@
     max-width: 600px;
     margin: 0 auto;
     margin-top: 100px;
-    margin-bottom: 230px;
   }
   
   .message-list {

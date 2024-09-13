@@ -40,6 +40,26 @@ export default new VueRouter({
             path: '/comhome',
             name: 'Comhome',
             component:() => import('../views/Community/post/index.vue')
-        }
+        },
+        {
+            path: '/mall',
+            name: 'mall',
+            component:() => import('../views/mall/index.vue')
+        },
+        {
+            path: '/mall/products/:id',
+            name: 'ProductDetail',
+            component:() => import('../views/ProductDetail/index.vue')
+        },
+        {
+            path: '/cart',
+            name: 'cart',
+            component:() => import('../views/cart/index.vue')
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component:() => import('../views/profile/index.vue')
+        },
     ]
 })

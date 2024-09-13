@@ -11,11 +11,129 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 23/07/2024 11:30:55
+ Date: 04/09/2024 20:52:00
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for carousel
+-- ----------------------------
+DROP TABLE IF EXISTS `carousel`;
+CREATE TABLE `carousel`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键，自动递增',
+  `img_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '图片的 URL 地址',
+  `alt_text` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '图片的替代文本或描述',
+  `link_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '图片的链接地址',
+  `position` int(0) NULL DEFAULT NULL COMMENT '显示顺序',
+  `is_active` tinyint(1) NULL DEFAULT 1 COMMENT '标记图片是否显示',
+  `created_at` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `updated_at` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of carousel
+-- ----------------------------
+INSERT INTO `carousel` VALUES (1, 'https://www.dpm.org.cn/Uploads/Picture/2022/06/08/s62a06be9e26f1.jpg', NULL, NULL, NULL, 1, '2024-07-31 20:44:34', '2024-07-31 20:44:34');
+INSERT INTO `carousel` VALUES (2, 'https://www.dpm.org.cn/Uploads/Picture/2022/05/26/s628f5119637c1.jpg', NULL, NULL, NULL, 1, '2024-07-31 20:44:34', '2024-07-31 20:44:34');
+INSERT INTO `carousel` VALUES (3, 'https://www.dpm.org.cn/Uploads/Picture/2022/05/31/s6295eda55e369.jpg', NULL, NULL, NULL, 1, '2024-07-31 20:44:34', '2024-07-31 20:44:34');
+INSERT INTO `carousel` VALUES (4, 'https://www.dpm.org.cn/Uploads/Picture/2022/05/31/s6295d1401ffb4.JPG', NULL, NULL, NULL, 1, '2024-07-31 20:44:34', '2024-07-31 20:44:34');
+INSERT INTO `carousel` VALUES (5, 'https://www.dpm.org.cn/Uploads/Picture/2022/05/31/s629606c22fefc.jpg', NULL, NULL, NULL, 1, '2024-07-31 20:44:34', '2024-07-31 20:44:34');
+INSERT INTO `carousel` VALUES (6, 'https://www.dpm.org.cn/Uploads/Picture/2022/04/29/s626b3655db080.jpg', NULL, NULL, NULL, 1, '2024-07-31 20:44:34', '2024-07-31 20:44:34');
+
+-- ----------------------------
+-- Table structure for community_comment
+-- ----------------------------
+DROP TABLE IF EXISTS `community_comment`;
+CREATE TABLE `community_comment`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `user_id` int(0) NULL DEFAULT NULL,
+  `entity_type` int(0) NULL DEFAULT NULL,
+  `entity_id` int(0) NULL DEFAULT NULL,
+  `target_id` int(0) NULL DEFAULT NULL,
+  `content` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
+  `status` int(0) NULL DEFAULT NULL,
+  `create_time` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `index_user_id`(`user_id`) USING BTREE,
+  INDEX `index_entity_id`(`entity_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of community_comment
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for community_message
+-- ----------------------------
+DROP TABLE IF EXISTS `community_message`;
+CREATE TABLE `community_message`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `from_id` int(0) NULL DEFAULT NULL,
+  `to_id` int(0) NULL DEFAULT NULL,
+  `conversation_id` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `content` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
+  `status` int(0) NULL DEFAULT NULL COMMENT '0-未读;1-已读;2-删除;',
+  `create_time` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `index_from_id`(`from_id`) USING BTREE,
+  INDEX `index_to_id`(`to_id`) USING BTREE,
+  INDEX `index_conversation_id`(`conversation_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of community_message
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for community_post
+-- ----------------------------
+DROP TABLE IF EXISTS `community_post`;
+CREATE TABLE `community_post`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `user_id` int(0) NOT NULL,
+  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  `type` int(0) NULL DEFAULT 0 COMMENT '0-普通; 1-置顶;',
+  `status` int(0) NULL DEFAULT 0 COMMENT '0-正常; 1-精华; 2-拉黑;',
+  `create_time` timestamp(0) NULL DEFAULT NULL,
+  `comment_count` int(0) NULL DEFAULT 0,
+  `score` double NULL DEFAULT 0,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `index_user_id`(`user_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of community_post
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for navigation_items
+-- ----------------------------
+DROP TABLE IF EXISTS `navigation_items`;
+CREATE TABLE `navigation_items`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '导航项唯一标识，自增',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '导航项名称，例如\"首页\"或\"论坛\"',
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '导航项链接地址，指向该项的目标页面',
+  `parent_id` int(0) NULL DEFAULT NULL COMMENT '父导航项ID，用于表示子导航项。NULL表示顶级导航项',
+  `position` int(0) NULL DEFAULT 0 COMMENT '导航项显示顺序，数值越小越靠前',
+  `is_active` tinyint(1) NULL DEFAULT 1 COMMENT '导航项是否激活，TRUE表示显示，FALSE表示隐藏',
+  `created_at` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '导航项创建时间',
+  `updated_at` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '导航项最后更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `name`(`name`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of navigation_items
+-- ----------------------------
+INSERT INTO `navigation_items` VALUES (1, '首页', '/home', NULL, 1, 1, '2024-07-30 15:40:11', '2024-07-30 15:40:11');
+INSERT INTO `navigation_items` VALUES (2, '创作', '/create', NULL, 2, 1, '2024-07-30 15:40:11', '2024-07-30 15:40:11');
+INSERT INTO `navigation_items` VALUES (3, '社区', '/comhome', NULL, 3, 1, '2024-07-30 15:40:11', '2024-09-04 20:11:56');
+INSERT INTO `navigation_items` VALUES (4, '商城', '/shop', NULL, 4, 1, '2024-07-30 15:40:11', '2024-07-30 15:40:11');
+INSERT INTO `navigation_items` VALUES (5, '关于', '/about', NULL, 5, 1, '2024-07-30 15:40:11', '2024-07-30 15:40:11');
 
 -- ----------------------------
 -- Table structure for udc_menu
@@ -34,7 +152,7 @@ CREATE TABLE `udc_menu`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `sort` int(0) NULL DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of udc_menu
@@ -58,7 +176,7 @@ CREATE TABLE `udc_role`  (
   `status` int(0) NULL DEFAULT 1 COMMENT '启用状态：0->禁用；1->启用',
   `sort` int(0) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of udc_role
@@ -75,7 +193,7 @@ CREATE TABLE `udc_role_menu`  (
   `role_id` bigint(0) NULL DEFAULT NULL,
   `menu_id` bigint(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '后台用户角色和权限关系表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '后台用户角色和权限关系表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of udc_role_menu
@@ -109,7 +227,7 @@ CREATE TABLE `udc_user`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username`(`username`) USING BTREE,
   UNIQUE INDEX `email`(`email`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of udc_user
@@ -127,7 +245,7 @@ CREATE TABLE `udc_user_role`  (
   `user_id` bigint(0) NULL DEFAULT NULL,
   `role_id` bigint(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户和角色关系表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户和角色关系表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of udc_user_role
@@ -136,62 +254,3 @@ INSERT INTO `udc_user_role` VALUES (1, 3, 2);
 INSERT INTO `udc_user_role` VALUES (2, 4, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
-
--- --------------------------------
--- Table structure for community_post
--- --------------------------------
-DROP TABLE IF EXISTS `community_post`;
-SET character_set_client = utf8mb4 ;
-CREATE TABLE `community_post` (
-                                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                                  `user_id` int(11) NOT NULL,
-                                  `title` varchar(100) NOT NULL,
-                                  `content` text,
-                                  `type` int(11) DEFAULT 0 COMMENT '0-普通; 1-置顶;',
-                                  `status` int(11) DEFAULT 0 COMMENT '0-正常; 1-精华; 2-拉黑;',
-                                  `create_time` timestamp NULL DEFAULT NULL,
-                                  `comment_count` int(11) DEFAULT 0,
-                                  `score` double DEFAULT 0.0,
-                                  PRIMARY KEY (`id`),
-                                  KEY `index_user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
--- --------------------------------
--- Table structure for community_comment
--- --------------------------------
-DROP TABLE IF EXISTS `community_comment`;
-SET character_set_client = utf8mb4 ;
-CREATE TABLE `community_comment` (
-                                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                                     `user_id` int(11) DEFAULT NULL,
-                                     `entity_type` int(11) DEFAULT NULL,
-                                     `entity_id` int(11) DEFAULT NULL,
-                                     `target_id` int(11) DEFAULT NULL,
-                                     `content` text,
-                                     `status` int(11) DEFAULT NULL,
-                                     `create_time` timestamp NULL DEFAULT NULL,
-                                     PRIMARY KEY (`id`),
-                                     KEY `index_user_id` (`user_id`),
-                                     KEY `index_entity_id` (`entity_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
--- --------------------------------
--- Table structure for community_message
--- --------------------------------
-
-DROP TABLE IF EXISTS `community_message`;
-SET character_set_client = utf8mb4 ;
-CREATE TABLE `community_message` (
-                                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                                     `from_id` int(11) DEFAULT NULL,
-                                     `to_id` int(11) DEFAULT NULL,
-                                     `conversation_id` varchar(45) NOT NULL,
-                                     `content` text,
-                                     `status` int(11) DEFAULT NULL COMMENT '0-未读;1-已读;2-删除;',
-                                     `create_time` timestamp NULL DEFAULT NULL,
-                                     PRIMARY KEY (`id`),
-                                     KEY `index_from_id` (`from_id`),
-                                     KEY `index_to_id` (`to_id`),
-                                     KEY `index_conversation_id` (`conversation_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
