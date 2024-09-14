@@ -44,10 +44,12 @@ export default new VueRouter({
         {
             path: '/addpost',
             name: 'Addpost',
-            meta: {
-                Footer:false
-            },
             component:() => import('../views/Community/addpost/index.vue')
+        },
+        {
+            path: '/postDetail',
+            name: 'PostDetail',
+            component:() => import('../views/Community/postDetail/index.vue')
         }
     ]
 })

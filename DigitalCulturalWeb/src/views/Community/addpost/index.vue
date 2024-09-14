@@ -12,8 +12,9 @@
           </div>
           <div style="border: 1px solid #ccc; margin-top: 30px">
             <!-- 工具栏 -->
-          <Toolbar style="border-bottom: 1px solid #ccc;height: 60px;" :editor="editor" :defaultConfig="toolbarConfig" />
-        </div>
+            <Toolbar style="border-bottom: 1px solid #ccc;height: 60px;" :editor="editor"
+              :defaultConfig="toolbarConfig" />
+          </div>
         </div>
       </el-card>
     </div>
@@ -28,35 +29,28 @@
       </ul>  
       </el-card>
     </div> -->
-     <!-- 编辑工具 -->
+    <!-- 编辑工具 -->
     <div class="editor-tool">
       <el-card class="editor-box3-card">
-       <div class="tool-other">
-        <span>标题</span>
-        <div class="tool-title">
-          <el-input placeholder="请输入标题" v-model="input" clearable>
-          </el-input>
+        <div class="tool-other">
+          <span>标题</span>
+          <div class="tool-title">
+            <el-input type="text" placeholder="请输入内容" v-model="input" maxlength="50" show-word-limit />
+          </div>
+          <div class="font-item">
+            <span>类别</span>
+          </div>
+          <div class="tool-class">
+            <el-select v-model="value" placeholder="请选择">
+              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+
+            </el-select>
+          </div>
         </div>
-        <div class="font-item">
-          <span>类别</span>
-        </div>
-        <div class="tool-class">
-          <el-select v-model="value" placeholder="请选择">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"/>
-            
-          </el-select>
-        </div>
-      </div>
         <div style="border: 1px solid #ccc; margin-top: 30px">
           <!-- 编辑器 -->
-            <Editor
-            style="height: 400px; overflow-y: hidden;"
-            v-model="html"
-            :defaultConfig="editorConfig"
-            :mode="mode"
-            @onCreated="onCreated"
-             @onChange="onChange"
-        />
+          <Editor style="height: 400px; overflow-y: hidden;" v-model="html" :defaultConfig="editorConfig" :mode="mode"
+            @onCreated="onCreated" @onChange="onChange" />
         </div>
       </el-card>
     </div>

@@ -1,6 +1,6 @@
 .post{
-	background-color: #F2F6FC;
-	height: 4915px;
+	/* background-color: #F2F6FC; */
+	height: auto;
 }
 /* 首页头部导航 */
 .community-heander{
@@ -31,6 +31,7 @@
 .left-nav li:hover{
 	color: rgb(204, 109, 14); /* 示例：鼠标悬停时变为红色 */  
 	cursor: pointer; 
+	font-size: 18px;
 }
 .nav-item{
 	margin-left: 24px;
@@ -155,8 +156,8 @@
   margin-left: 20px;
 }
 .sign:hover {  
-    color: rgb(204, 109, 14); /* 示例：鼠标悬停时变为红色 */  
-	cursor: pointer; /* 当鼠标悬停时显示小手光标 */  
+    color: rgb(204, 109, 14); 
+	cursor: pointer; 
 }
 .sign.active {
 	color: rgb(204, 109, 14);; /* 点击后的固定颜色 */

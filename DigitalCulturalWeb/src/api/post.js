@@ -34,3 +34,9 @@ export function hotPost(){
         method: 'get'
     })
 }
+export function getPostById(params){
+    return request({
+        url: '/communityHome/getPostById/'+params,
+        method: 'get'
+    })
+}

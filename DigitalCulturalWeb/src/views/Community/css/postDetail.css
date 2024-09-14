@@ -1,0 +1,302 @@
+.postDetail{
+    width: 800px;
+    height: 800px;
+}
+.detail-box1-card{
+    width: 900px;
+    height: auto;
+    border: 2px solid #e5e5e5;
+    margin-left: 300px;
+    position: relative;
+  
+}
+.author{
+    display: flex;
+    align-items: center;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    width: 850px;
+    height: auto;
+}
+.profile-photo-detail{
+    margin-top: 10px;
+    margin-left: 15px;
+    position: relative;
+    }
+.username-detail{
+        margin-left: 90px;
+        margin-bottom: 20px;
+        position: absolute;
+      }
+.username-detail span{
+        font-size: 18px;
+        color: #000000c6;
+        font-weight: 600;
+      }
+.createTime-detail{
+        margin-top: 30px;
+        margin-left:90px;
+        position: absolute;
+    }
+.createTime-detail span{
+    font-size: small;
+    }
+.post-detail{
+    border: 1px solid #e5e5e5;
+    width: 850px;
+    height: auto;
+    min-height:200px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+.title-detail{
+    position: relative;
+    margin-top: 15px;
+    margin-left: 24px;
+}
+.title-detail span{
+    font-size: 20px;
+}
+.like-button{
+    display: flex;
+    
+}
+.like-button-item span{
+font-size: 14px;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade{
+    width: 50px;
+}
+
+.heart {
+  margin-top: 5px;
+  font-size: 18px;
+  color: red;
+  
+}
+.el-icon-star-off-detail{
+    font-size:23px ;
+    color: #cfde4c;;
+}
+.contentHtml{
+ margin-left: 25px;   
+ margin-right: 20px; 
+}
+.star-button{
+    position: relative;
+    margin-left: 10px;
+}
+img {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: auto; /* 保持图片比例 */
+	cursor: pointer;
+	position: relative;
+	margin: 0px;
+	margin-bottom: 0px;
+	
+}
+.detail-box2-card{
+    width: 900px;
+    height: auto;
+    border: 2px solid #e5e5e5;
+    margin-left: 300px;
+    position: relative;
+    min-height: 250px;  
+    margin-top: 20px;
+}
+.detail-item{
+    display: flex;
+}
+.sign-detail{
+    border: 1px solid #d12d2d;
+    width: 10px;
+    height: 10px;
+    background-color: #d12d2d;
+    margin-top: 10px;
+}
+.detail-item span{
+    font-size: 16px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+.detail-button1{
+position: relative;
+margin-left: 650px;
+}
+.add-comment{
+    position: relative;
+    border: 1px solid #e5e5e5;
+    width: 850px;
+    height: auto;
+    background-color:#fff;
+    margin-top: 30px;
+}
+.reply-comment-item{
+    /* min-height: 200px; */
+    border-bottom: 1px solid #e5e5e5;
+}
+.profile-photo-detail{
+    margin-top: 20px;
+    margin-left: 10px;
+    position: relative;
+    
+    }
+.profile-photo-main{
+        margin-top: 20px;
+        margin-left: 10px;
+        position: relative;
+        
+        }
+.username-detail {
+    position: absolute;
+    margin-left: 90px;
+    color: #000000c6;
+    font-weight: 600;
+    margin-top: 10px;
+}
+.username span{
+    font-size: 18px;
+}
+.comment{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-left: 100px;
+    margin-top: px;
+
+}
+.page-detail{
+    margin-top: 30px;
+}
+button {
+    padding: 8px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+button:disabled {
+    background-color: #eeeeee83;
+    cursor: not-allowed;
+}
+.sign-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 560px;
+  }
+.el-icon-lollipop{
+    font-size: 24px;
+}
+.el-icon-lollipo span{
+    font-size: 20px;
+    margin-left: 5px;
+   
+}
+/* .like-button, .star-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+  }
+  
+  .el-icon-lollipop, .el-icon-star, .el-icon-star-off {
+    transition: color 0.3s;
+  }
+  
+  .red {
+    color: red;
+  } */
+  
+.replypost-time{
+    position: absolute;
+    margin-left: 600px;
+    
+    
+} 
+.replypost-time span{
+    font-size: small;
+    margin-right: 10px;
+}
+.replycomment-itme{
+    
+}
+.transition-box {
+    margin-bottom: 10px;
+    width: 650px;
+    height: auto;
+    border-radius: 4px;
+    background-color: #F2F6FC;
+    text-align: center;
+    color: #0b0b0b;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    margin-left: 100px;
+  }
+  .reply-button{
+  position: relative;
+  margin-left: 755px;
+  font-size: mini;
+  }
+.profile-photo-reply{
+   position:relative;
+   margin-right: 550px;
+
+  }
+.username-reply{
+position: absolute;
+margin-left: 60px;
+}
+.reply-content-username{
+    font-size: 14px;
+    color: #2f2264c6;
+}
+.reply-content-itme{
+    color: #000;
+    font-size: 15px;
+}
+.reply-comment-item1{
+    margin-top: 20px;
+}
+.relpy-comment-sign{
+    display: flex;
+    position: relative;
+    margin-left: 400px;
+    margin-bottom:10px ;
+}
+.relpy-comment-sign span{
+    font-size: small;
+    padding: 5px;
+}
+ 
+.reply-button1{
+position: relative;
+margin-bottom:10px ;
+}
+.reply-button1 span:hover {   
+    color: blue;  
+    cursor: pointer; 
+  }
+.reply-textarea{
+    position: relative;
+    margin-top: 10px;
+}
+.reply-button2{
+    position: relative;
+    margin-left: 550px;
+    margin-top: 10px;;
+}

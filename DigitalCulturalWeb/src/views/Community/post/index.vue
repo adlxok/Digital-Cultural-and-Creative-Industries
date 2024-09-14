@@ -105,7 +105,7 @@
 						<!-- <el-empty description="暂无数据"></el-empty> -->
 
 						<div class="post-list">
-							<div v-for="postmap in posts" :key="postmap.post.id" class="post-item">
+							<div v-for="(postmap) in posts" :key="postmap.post.id" class="post-item">
 								<div class="profile-photo-main">
 									<router-link to="/addpost">
 										<el-avatar v-if="postmap.user && postmap.user.profileImageUrl" :size="50"
@@ -116,14 +116,16 @@
 									</router-link>
 									
 								</div>
-								<div v-if="postmap.user && postmap.user.profileImageUrl" class="username">
+								<div v-if="postmap.user " class="username">
 									<span>{{ postmap.user.username }}</span>
 								</div>
 								<div v-else class="username">
 									<span>没有用户名的用户</span>
 								</div>
 								<div class="title">
-									<span>{{ postmap.post.title }}</span>
+								<router-link :to="{ path: '/postDetail', query: { postId: postmap.post.id }}"> 
+								<span>{{ postmap.post.title }}</span>	
+								</router-link>
 								</div>
 								<div class="createTime">
 									<span>{{ postmap.post.formattedCreateTime}}</span>
@@ -144,8 +146,8 @@
 								</div>
 								<div class="small-sign">
 									<div class="collectCount">
-										<span class="font-itme1">收藏 {{ postmap.likeCount
-											}}</span>
+										<span class="font-itme1" >收藏 {{ favorites[postmap.post.id] }}
+											</span>
 									</div>
 									<div class="likeCount">
 										<span class="font-itme1">赞 {{ postmap.likeCount }}</span>
@@ -196,6 +198,7 @@
 import '../css/base.css';  
 import '../css/post.css';
 import { showPostList,hotPost} from "../../../api/post";
+import { favoriteStatus} from "../../../api/like";
   
 export default {
 	name: "CommunityPost",
@@ -220,6 +223,7 @@ export default {
 		'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage109.360doc.com%2FDownloadImg%2F2023%2F03%2F2417%2F263098200_44_20230324052120600.jpg&refer=http%3A%2F%2Fimage109.360doc.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1727953954&t=41aeff736495085e4609a457d80a2481',
 		'https://picnew5.photophoto.cn/20110222/guohua-mudantupian-12054681_1.jpg'
 		],
+		favorites: {},// 用于存储每个帖子的收藏数量
       }
       } ,
 	created() {
@@ -288,12 +292,16 @@ handleweiye(){
     showPostList(this.listParams).then(response => {
         this.posts = response.data.list.map(postmap => {
             postmap.post.formattedCreateTime = this.formatDate(postmap.post.createTime);
-            return postmap;
+		favoriteStatus(postmap.post.id).then(response => {
+		this.$set(this.favorites, postmap.post.id, response.data.count);
+	})
+        return postmap;
         });
         this.total = response.data.page.Pages;
+		
     }).catch(error => {  
         console.error('获取帖子列表失败:', error);   
-    });  
+    });
   },
   fetchhotPost(){
 	hotPost().then(response => {
@@ -302,7 +310,6 @@ handleweiye(){
         console.error('获取帖子列表失败:', error);   
     });
   }
-
   }
   } 
 </script> 
