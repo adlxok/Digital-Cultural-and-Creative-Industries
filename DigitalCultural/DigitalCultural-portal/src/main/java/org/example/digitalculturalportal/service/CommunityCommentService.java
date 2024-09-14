@@ -62,4 +62,11 @@ public interface CommunityCommentService {
      */
     int queryCommentCountByUserId(Integer userId);
 
+    /**
+     * 查询回复评论列表
+     * @param replyCommentId
+     * @return
+     */
+    List<CommunityComment> queryReplyCommentList(Integer replyCommentId);
+
 }

@@ -64,5 +64,6 @@ public interface CommunityCommentDao {
      * @return
      */
    int selectCommentCountByUserId(Integer userId);
+   List<CommunityComment> selectReplyComment(Integer replyId);
 
 }

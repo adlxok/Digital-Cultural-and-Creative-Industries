@@ -99,6 +99,5 @@
         FROM community_post
         ORDER BY score DESC
             LIMIT 10;
-
     </select>
 </mapper>

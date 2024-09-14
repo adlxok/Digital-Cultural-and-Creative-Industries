@@ -1,6 +1,7 @@
 package org.example.digitalculturalportal.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.digitalculturalportal.pojo.CommunityFavorite;
 import org.example.digitalculturalportal.pojo.User;
 import org.example.digitalculturalportal.service.CommunityFollowService;
 import org.example.digitalculturalportal.service.UserService;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 import static org.example.digitalculturalportal.utils.CommunityConstant.ENTITY_TYPE_USER;
-
 @Service
 @Slf4j
 public class CommunityFollowServiceImpl implements CommunityFollowService {

@@ -37,7 +37,7 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
          throw new IllegalArgumentException("参数不能为空");
         }
         //转义
-        communityComment.setContent(HtmlUtils.htmlEscape(communityComment.getContent()));
+//        communityComment.setContent(HtmlUtils.htmlEscape(communityComment.getContent()));
         //过滤
         communityComment.setContent(sensitiveFilter.filter(communityComment.getContent()));
         int index=communityCommentDao.insertCommunityComment(communityComment);
@@ -78,5 +78,10 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
     @Override
     public int queryCommentCountByUserId(Integer userId) {
         return communityCommentDao.selectCommentCountByUserId(userId);
+    }
+
+    @Override
+    public List<CommunityComment> queryReplyCommentList(Integer replyId) {
+        return communityCommentDao.selectReplyComment(replyId);
     }
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.digitalculturalportal.dao.CommunityFavoriteDao">
+    <resultMap id="BaseResultMap" type="org.example.digitalculturalportal.pojo.CommunityFavorite">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="entity_type" property="entityType"/>
+        <result column="entity_id" property="entityId"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <sql id="selectFields">
+        id, user_id,entity_type,entity_id, status, create_time
+    </sql>
+    <sql id="insertFields">
+        user_id,entity_type,entity_id, status, create_time
+    </sql>
+    <insert id="addFavorite" parameterType="org.example.digitalculturalportal.pojo.CommunityFavorite" >
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into community_favorite (<include refid="insertFields"/>)
+        values (#{userId}, #{entityType}, #{entityId},  #{status}, #{createTime})
+    </insert>
+
+    <update id="updateStatus" parameterType="int">
+        UPDATE community_favorite
+        SET status=#{status}
+        WHERE user_id=#{userId}
+        AND entity_id=#{entityId}
+    </update>
+    <select id="selectFavoriteListByUserId" resultMap="BaseResultMap">
+        SELECT <include refid="selectFields"/>
+        FROM community_favorite
+        WHERE user_id=#{userId}
+        ORDER BY create_time DESC
+    </select>
+    <select id="selectFavoriteStatus" resultType="java.lang.Integer">
+        SELECT status
+        FROM community_favorite
+        WHERE user_id=#{id}
+        AND entity_id=#{entityId}
+    </select>
+    <select id="selectFavoriteCount" resultType="int">
+        SELECT COUNT(id)
+        FROM community_favorite
+        WHERE status!=0
+        AND entity_id=#{entityId}
+    </select>
+    <select id="selectFavorite" resultMap="BaseResultMap">
+        SELECT <include refid="selectFields"/>
+        FROM community_favorite
+        WHERE user_id=#{userId}
+        AND entity_id=#{entityId}
+    </select>
+</mapper>

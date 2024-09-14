@@ -4,11 +4,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.common.recycler.Recycler;
 import org.example.digitalculturalportal.common.CommonResult;
-import org.example.digitalculturalportal.pojo.CommunityEvent;
-import org.example.digitalculturalportal.pojo.LoginUser;
+import org.example.digitalculturalportal.common.ResultCode;
+import org.example.digitalculturalportal.dao.CommunityFavoriteDao;
+import org.example.digitalculturalportal.pojo.*;
 import org.example.digitalculturalportal.rabbitmqevent.CommunityProducer;
+import org.example.digitalculturalportal.service.CommunityFavoriteService;
 import org.example.digitalculturalportal.service.CommunityLikeService;
+import org.example.digitalculturalportal.service.CommunityPostService;
+import org.example.digitalculturalportal.service.UserService;
 import org.example.digitalculturalportal.utils.CommunityConstant;
 import org.example.digitalculturalportal.utils.RedisCache;
 import org.example.digitalculturalportal.utils.RedisKeyUtil;
@@ -18,8 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 社区点赞Controller
@@ -32,6 +36,12 @@ import java.util.Map;
 public class CommunityLikeController implements CommunityConstant {
     @Autowired
     private CommunityLikeService communityLikeService;
+    @Autowired
+    private CommunityFavoriteService communityFavoriteService;
+    @Autowired
+    private CommunityPostService communityPostService;
+    @Autowired
+    private UserService userService;
     @Autowired
     private CommunityProducer communityProducer;
     @Autowired
@@ -99,6 +109,87 @@ public class CommunityLikeController implements CommunityConstant {
         Long userId = loginUser.getUser().getId();
        int status= communityLikeService.isLike(Math.toIntExact(userId),entityType,entityId);
        return CommonResult.success(status);
+    }
+    @ApiOperation("添加收藏")
+    @RequestMapping(value = "/addFavorite", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult addFavorite(@RequestBody FavoriteParam favoriteParam){
+        //获取SecurityContextHolder中的用户id
+        UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Long userId = loginUser.getUser().getId();
+        Integer status=communityFavoriteService.queryFavoriteStatus(Math.toIntExact(userId),favoriteParam.getEntityId());
+        if(status==null){
+            CommunityFavorite communityFavorite = new CommunityFavorite();
+            communityFavorite.setEntityType(favoriteParam.getEntityType());
+            communityFavorite.setEntityId(favoriteParam.getEntityId());
+            communityFavorite.setUserId(Math.toIntExact(userId));
+            communityFavorite.setStatus(1);//默认1收藏
+            communityFavorite.setCreateTime(new Date());
+            int id = communityFavoriteService.favorite(communityFavorite);
+            return CommonResult.success(id);
+        }
+        else if(status==1){
+            CommunityFavorite communityFavorite1=communityFavoriteService.queryFavorite(Math.toIntExact(userId),favoriteParam.getEntityId());
+            if(communityFavorite1==null){
+                return CommonResult.fail(ResultCode.OBJECT_ERROR);
+            }
+            communityFavoriteService.isFavorite(communityFavorite1.getUserId(),0,communityFavorite1.getEntityId());
+            return CommonResult.success("取消收藏");
+        } else  {
+            CommunityFavorite communityFavorite1=communityFavoriteService.queryFavorite(Math.toIntExact(userId),favoriteParam.getEntityId());
+            if(communityFavorite1==null){
+                return CommonResult.fail(ResultCode.OBJECT_ERROR);
+            }
+            communityFavoriteService.isFavorite(communityFavorite1.getUserId(),1,communityFavorite1.getEntityId());
+            return CommonResult.success("收藏");
+        }
+
+    }
+    @ApiOperation("改变收藏状态")
+    @RequestMapping(value = "/isFavorite", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult isFavorite(@RequestParam("userId") Integer userId,@RequestParam("status") Integer status,@RequestParam("entityId") Integer entityId){
+        communityFavoriteService.isFavorite(userId,status,entityId);
+        return CommonResult.success(status);
+    }
+    @ApiOperation("收藏列表")
+    @RequestMapping(value = "/favoriteList", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult favoriteList(@RequestParam("userId") Integer userId){
+        List<CommunityFavorite> list=communityFavoriteService.favoriteListByUserId(userId);
+        if(list.isEmpty()){
+            return CommonResult.success("还没有收藏列表");
+        }
+        List<Map<String,Object>> favoriteList=new ArrayList<>();
+        for (CommunityFavorite communityFavorite : list) {
+            Map<String,Object> map=new HashMap<>();
+            CommunityPost post=communityPostService.queryCommunityPostById(communityFavorite.getEntityId());
+            map.put("post",post);
+            User entityUser=userService.queryUserByIdInCache(post.getUserId());
+            map.put("entityUser",entityUser);
+            favoriteList.add(map);
+        }
+        return CommonResult.success(favoriteList);
+    }
+
+    @ApiOperation("收藏状态")
+    @RequestMapping(value = "/favoriteStatus/{entityId}", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult favoriteStatus(@PathVariable Integer entityId) {
+        //获取SecurityContextHolder中的用户id
+        UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Long userId = loginUser.getUser().getId();
+        Integer status = communityFavoriteService.queryFavoriteStatus(Math.toIntExact(userId),entityId);
+        if(status==null){
+            status=0;
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("status ",status );
+        int count= communityFavoriteService.queryFavoriteCount(entityId);
+        map.put("count",count);
+        return CommonResult.success(map);
     }
 
 }

@@ -10,6 +10,7 @@ public class RedisKeyUtil {
     private static final String PREFIX_USER="user";//用户信息
     private static final String PREFIX_USER_LIKE="user:like";//用户获赞
     private static final String PREFIX_ENTITY_LIKE="entity:like";//实体获赞
+    private static final String PREFIX_ENTITY_FAVORITE="entity:favorite";//实体获赞
     private static String hotPostKey;//热帖
 
     /**
@@ -89,6 +90,16 @@ public class RedisKeyUtil {
      */
     public static String getScoreKey(){
         return PREFIX_POST+SPLIT+"score";
+    }
+    /**
+     * 实体获得点赞key
+     * key->set(userId)
+     * @param entityType
+     * @param entityId
+     * @return
+     */
+    public static String getEntityFavoriteKey(Integer entityType,Integer entityId){
+        return PREFIX_ENTITY_FAVORITE+SPLIT+entityType+SPLIT+entityId;
     }
 
 }

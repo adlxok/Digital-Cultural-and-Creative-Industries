@@ -173,7 +173,7 @@ CREATE TABLE `community_comment` (
                                      PRIMARY KEY (`id`),
                                      KEY `index_user_id` (`user_id`),
                                      KEY `index_entity_id` (`entity_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 -- --------------------------------
 -- Table structure for community_message
 -- --------------------------------

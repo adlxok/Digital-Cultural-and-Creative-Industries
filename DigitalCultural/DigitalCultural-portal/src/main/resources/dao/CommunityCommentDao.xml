@@ -66,4 +66,13 @@
         WHERE user_id = #{userId}
          AND   status = 0
     </select>
+
+    <!--查询某个用户的评论列表（我的回复列表）-->
+    <select id="selectReplyComment" resultMap="BasesResultMap">
+        SELECT <include refid="selectFields"></include>
+        FROM community_comment
+        WHERE entity_id = #{replyId}
+        AND   status = 0
+        ORDER BY create_time DESC
+    </select>
 </mapper>

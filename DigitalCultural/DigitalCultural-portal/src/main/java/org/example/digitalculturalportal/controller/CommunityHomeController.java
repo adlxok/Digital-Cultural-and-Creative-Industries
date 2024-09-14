@@ -98,4 +98,17 @@ public class CommunityHomeController implements CommunityConstant{
         map.put("page",pageMap);
         return CommonResult.success(map);
     }
+    @ApiOperation("查询单个帖子")
+    @RequestMapping(value = "/getPostById/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult getPostById(@PathVariable Integer id){
+        Map<String,Object> map=new HashMap<>();
+        CommunityPost communityPost=communityPostService.queryCommunityPostById(id);
+        map.put("post",communityPost);
+        User user=userService.queryUserByIdInCache(communityPost.getUserId());
+        map.put("user",user);
+        long likeCount=communityLikeService.queryEntityLikeCount(ENTITY_TYPE_POST,communityPost.getId());
+        map.put("likeCount",likeCount);
+        return CommonResult.success(map);
+    }
 }
