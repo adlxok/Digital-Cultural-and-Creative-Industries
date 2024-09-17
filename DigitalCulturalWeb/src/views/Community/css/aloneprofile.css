@@ -1,0 +1,112 @@
+.com-aloneprofile{
+    height: auto;
+	
+}
+.com-box-card0-aloneprofile{
+    width:1520px ;
+    height: 200px;
+    background-image: url("../../../assets/images/back4.jpg");
+    background-position: center right;
+}
+.com-nav-aloneprofile{
+    display: flex;
+    align-items: center;
+    width: 1800px;
+    height: auto;
+   
+}
+.com-box-card1-aloneprofile{
+width: 1200px;
+min-height: 150px;
+margin-top: 0px;
+margin-left: 150px;
+
+}
+.com-info-item-aloneprofile{
+    display: flex;
+}
+.com-name-aloneprofile{
+position:absolute;
+margin-left: 95px;
+margin-top: 10px;
+}
+.com-name-aloneprofile span{
+    font-size: 20px;
+    font-weight: 600;
+    
+}
+.com-profile-aloneprofile{
+    position: relative;
+    margin-top: 5px;
+}
+.button-aloneprofile{
+    position: absolute;
+    margin-left: 180px;
+}
+.com-like-aloneprofile{
+    position: relative;
+    margin-left: 15px;
+    margin-top: 40px;
+    
+}
+.el-icon-location-information{
+    margin-left: 20px;
+    font-size: 20px;
+}
+.bio-aloneprofile{
+    position: relative;
+    
+}
+.com-box-card2-aloneprofil{
+    width: 900px;
+    height: 300px;
+    margin-left: 300px;
+    margin-top: 20px;
+}
+.com-pagination-aloneprofil {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+	margin-top: 18px;
+}
+
+.com-button-item {
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+button:disabled {
+    background-color: #eee;
+    cursor: not-allowed;
+}
+.com-title-aloneprofil{
+    display: flex;
+    height: 40px;
+    width:850px ;
+    border: 1px solid #dce1eb;
+    border-bottom: none;
+}
+.com-title-text-aloneprofil{
+    margin-left: 20px;
+    font-size: 17px;
+    color: #409EFF;
+}
+.com-content-aloneprofil{
+    position: relative;;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+.com-content-aloneprofil span{
+    font-size: 14px;
+}
+.com-sing-aloneprofil{
+    margin-left: 20px;
+}
+.com-sing-aloneprofil span{
+    font-size: 13px;
+    margin-right: 10px;
+}

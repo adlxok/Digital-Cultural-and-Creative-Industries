@@ -11,3 +11,20 @@ export function login(username, password) {
     })
 }
 
+export function getInfo(params) {
+    return request({
+        url: '/user/getInfo',
+        method: 'get',
+        params:{
+            token: params
+        }
+    })
+}
+
+export function getUser(userId) {
+    return request({
+        url: '/user/getUser/'+userId,
+        method: 'get',
+     
+    })
+}

@@ -2,10 +2,11 @@
 .editor{
     display: flex;
     width: 100%;
-    height: 800px;
+    height: 600px;
     flex-direction: column;
     background-image: url(../../../assets/images/back3.jpg);
     background-position: fixed;
+    position: fixed;
 }
 .editor-header{
     width: 100%;

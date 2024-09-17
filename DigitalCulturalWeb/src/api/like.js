@@ -27,16 +27,31 @@ export function isFavorite(params){
         params: params
     })
 }
-export function favoriteList(params){
+export function favoriteList(){
     return request({
         url: '/like/favoriteList',
         method: 'get',
-        params: params
     })
 }
 export function favoriteStatus(params){
     return request({
         url: '/like/favoriteStatus/'+params,
         method: 'get',
+    })
+}
+export function entLikeCount(params){
+    return request({
+        url: '/like/entLikeCount/',
+        method: 'get',
+        params:params
+    })
+}
+export function userLikeCount(params){
+    return request({
+        url: '/like/userLikeCount',
+        method: 'get',
+        params:{
+            userId:params
+        }
     })
 }

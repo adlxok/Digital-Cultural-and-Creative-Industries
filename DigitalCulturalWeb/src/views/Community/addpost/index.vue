@@ -78,7 +78,7 @@
     data() {
         return {
             editor: null,
-            html: '<p>hello</p>',
+            html: '',
             toolbarConfig: { },
              // 跨域是否传递 cookie ，默认为 false
             editorConfig: { 

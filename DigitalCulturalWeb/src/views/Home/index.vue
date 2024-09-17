@@ -5,30 +5,30 @@
     <!-- 轮播图 -->
     <Carousel></Carousel>
     <!-- 内容部分 -->
-    <!-- <Content></Content> -->
+    <Content></Content>
     <!-- 故宫——藏品 -->
     <block></block>
     <!-- 文章部分 -->
-    <!-- <Article></Article> -->
+    <Article></Article>
     <!-- 下面——滑动 -->
-    <!-- <huad></huad> -->
+    <huad></huad>
   </div>
 </template>
 
 <script>
 import Carousel from "./Carousel";
-// import Content from "./Content";
+import Content from "./Content";
 import block from "./block";
-// import Article from "./Article";
-// import huad from "./huad";
+import Article from "./Article";
+import huad from "./huad";
 export default {
   name: "Home",
   components: {
     Carousel,
-    // Content,
+    Content,
     block,
-    // Article,
-    // huad,
+    Article,
+    huad,
   },
 };
 </script>

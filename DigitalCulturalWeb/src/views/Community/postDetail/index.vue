@@ -98,7 +98,7 @@
                         <span>没有用户名的用户</span>
                       </div>
                       <div class="profile-photo-reply">
-                        <router-link to="/addpost">
+                        <router-link to="/comprofile">
                           <el-avatar v-if="replymap.user && replymap.user.profileImageUrl" :size="40"
                             :src="commentmap.commentUser.profileImageUrl" alt="用户头像"></el-avatar>
                           <el-avatar v-else :size="40"

@@ -37,8 +37,9 @@ export default new VueRouter({
             component:() => import('../views/meg/index.vue')
         },
         {
-            path: '/comhome',
+            path: '/forum',
             name: 'Comhome',
+            meta: { hideHeaderFooter: true },
             component:() => import('../views/Community/post/index.vue')
         },
         {
@@ -50,6 +51,38 @@ export default new VueRouter({
             path: '/postDetail',
             name: 'PostDetail',
             component:() => import('../views/Community/postDetail/index.vue')
-        }
+        },
+        {
+            path: '/comprofile',
+            name: 'ComProfile',
+            meta: { hideHeaderFooter: true },
+            component:() => import('../views/Community/comprofile/index.vue')
+        },
+        {
+            path: '/aloneprofile',
+            name: 'AloneProfile',
+            meta: { hideHeaderFooter: true },
+            component:() => import('../views/Community/aloneprofile/index.vue')
+        },
+        {   path: '/mall',
+            name: 'mall',
+            component:() => import('../views/mall/index.vue')
+        },
+        {
+            path: '/mall/products/:id',
+            name: 'ProductDetail',
+            component:() => import('../views/ProductDetail/index.vue')
+        },
+        {
+            path: '/cart',
+            name: 'cart',
+            component:() => import('../views/cart/index.vue')
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component:() => import('../views/profile/index.vue')
+        },
+
     ]
 })

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.digitalculturalportal.dao.CarouselDao">
+
+    <resultMap type="org.example.digitalculturalportal.entity.Carousel" id="CarouselMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="imgUrl" column="img_url" jdbcType="VARCHAR"/>
+        <result property="altText" column="alt_text" jdbcType="VARCHAR"/>
+        <result property="linkUrl" column="link_url" jdbcType="VARCHAR"/>
+        <result property="position" column="position" jdbcType="INTEGER"/>
+        <result property="isActive" column="is_active" jdbcType="INTEGER"/>
+        <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+        <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CarouselMap">
+        select
+idimg_urlalt_textlink_urlpositionis_activecreated_atupdated_at
+        from carousel
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CarouselMap">
+        select
+idimg_urlalt_textlink_urlpositionis_activecreated_atupdated_at
+        from carousel
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="imgUrl != null and imgUrl != ''">
+                and img_url = #{imgUrl}
+            </if>
+            <if test="altText != null and altText != ''">
+                and alt_text = #{altText}
+            </if>
+            <if test="linkUrl != null and linkUrl != ''">
+                and link_url = #{linkUrl}
+            </if>
+            <if test="position != null">
+                and position = #{position}
+            </if>
+            <if test="isActive != null">
+                and is_active = #{isActive}
+            </if>
+            <if test="createdAt != null">
+                and created_at = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and updated_at = #{updatedAt}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from carousel
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="imgUrl != null and imgUrl != ''">
+                and img_url = #{imgUrl}
+            </if>
+            <if test="altText != null and altText != ''">
+                and alt_text = #{altText}
+            </if>
+            <if test="linkUrl != null and linkUrl != ''">
+                and link_url = #{linkUrl}
+            </if>
+            <if test="position != null">
+                and position = #{position}
+            </if>
+            <if test="isActive != null">
+                and is_active = #{isActive}
+            </if>
+            <if test="createdAt != null">
+                and created_at = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and updated_at = #{updatedAt}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into carousel(img_urlalt_textlink_urlpositionis_activecreated_atupdated_at)
+        values (#{imgUrl}#{altText}#{linkUrl}#{position}#{isActive}#{createdAt}#{updatedAt})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into carousel(img_urlalt_textlink_urlpositionis_activecreated_atupdated_at)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.imgUrl}#{entity.altText}#{entity.linkUrl}#{entity.position}#{entity.isActive}#{entity.createdAt}#{entity.updatedAt})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into carousel(img_urlalt_textlink_urlpositionis_activecreated_atupdated_at)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.imgUrl}#{entity.altText}#{entity.linkUrl}#{entity.position}#{entity.isActive}#{entity.createdAt}#{entity.updatedAt})
+        </foreach>
+        on duplicate key update
+img_url = values(img_url)alt_text = values(alt_text)link_url = values(link_url)position = values(position)is_active = values(is_active)created_at = values(created_at)updated_at = values(updated_at)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update carousel
+        <set>
+            <if test="imgUrl != null and imgUrl != ''">
+                img_url = #{imgUrl},
+            </if>
+            <if test="altText != null and altText != ''">
+                alt_text = #{altText},
+            </if>
+            <if test="linkUrl != null and linkUrl != ''">
+                link_url = #{linkUrl},
+            </if>
+            <if test="position != null">
+                position = #{position},
+            </if>
+            <if test="isActive != null">
+                is_active = #{isActive},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from carousel where id = #{id}
+    </delete>
+
+</mapper>
+

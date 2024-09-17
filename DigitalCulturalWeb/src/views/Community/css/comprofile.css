@@ -1,0 +1,204 @@
+.com-center{
+    height: auto;
+	
+}
+.com-box-card0{
+    width:1520px ;
+    height: 200px;
+    background-image: url("../../../assets/images/back4.jpg");
+    background-position: center right;
+}
+.com-nav{
+    display: flex;
+    align-items: center;
+    width: 1800px;
+    height: auto;
+   
+}
+.com-box-card1{
+width: 1200px;
+min-height: 150px;
+margin-top: 0px;
+margin-left: 150px;
+
+}
+.com-info-item{
+    display: flex;
+}
+.com-name{
+position:absolute;
+margin-left: 95px;
+margin-top: 10px;
+}
+.com-name span{
+    font-size: 20px;
+    font-weight: 600;
+    
+}
+.com-profile{
+    position: relative;
+    margin-top: 5px;
+}
+.button{
+    position: absolute;
+    margin-left: 180px;
+}
+.com-like{
+    position: relative;
+    margin-left: 15px;
+    margin-top: 40px;
+    
+}
+.el-icon-location-information{
+    margin-left: 20px;
+    font-size: 20px;
+}
+.bio{
+    position: relative;
+    
+}
+
+/* 左边 */
+.com-right{
+    position: absolute;
+    width: 800px;
+    height: auto;
+
+}
+.com-box-card2{
+width: 280px;
+height: auto;
+min-height: 300px;
+margin-left: 150px;
+margin-top: 10px;
+
+}
+.com-list i{
+    font-size: 18px;
+    color:#909399 ;
+}
+.com-list span{
+    margin-left: 10px;
+    font-size: 18px;
+}
+.com-list span:hover{
+    border: 0.1px solid #d8dce3;
+    cursor: pointer; 
+    height: 5px;
+    width: 30px;
+    background-color: #d8dce3;
+}
+.com-list span.active{
+    border: 1px solid #d8dce3;
+    cursor: pointer; 
+    height: 5px;
+    width: 30px;
+    background-color: #d8dce3;
+}
+
+.com-item{
+    margin-top: 15px;
+}
+.followee-name{
+    position: absolute;
+    margin-left: 70px;
+}
+.followee-bio{
+    position:absolute;
+    margin-left:80px;
+    margin-top:30px;
+}
+.followee-bio span{
+    font-size: 13px;
+    color: #909399;
+}
+.followee-button{
+    position: absolute;
+    margin-left: 750px;
+}
+.dialog-text{
+    font-size: 17px;
+}
+.com-title{
+    display: flex;
+    height: 40px;
+    width:850px ;
+    border: 1px solid #dce1eb;
+    border-bottom: none;
+}
+.com-title-text{
+    margin-left: 20px;
+    font-size: 17px;
+    color: #409EFF;
+}
+.com-content{
+    position: relative;;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+.com-content span{
+    font-size: 14px;
+}
+.com-sing{
+    margin-left: 20px;
+}
+.com-sing span{
+    font-size: 13px;
+    margin-right: 10px;
+}
+.com-button{
+    position: absolute;
+    margin-left: 760px;
+}
+
+.com-pagination {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+	margin-top: 18px;
+}
+
+.com-button-item {
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+button:disabled {
+    background-color: #eee;
+    cursor: not-allowed;
+}
+
+/* 中部 */
+
+.com-box-card3{
+     width: 900px;
+    height: auto;
+    margin-left: 450px;
+    margin-top:10px;
+}
+.com-info{
+    position: absolute;
+    margin-left: 100px;
+    margin-top: 40px;
+}
+.com-info span{
+    font-size:14px;
+    margin-right: 10px;
+}
+.com-info1{
+    margin-top: 10px;
+    margin-left: 100px;
+}
+.com-info1 span{
+    font-size:16px;
+}
+.com-info1 li{
+    margin-top: 10px;
+}
+.el-button{
+    margin-top: 10px;
+}

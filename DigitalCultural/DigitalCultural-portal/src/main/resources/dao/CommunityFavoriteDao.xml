@@ -33,6 +33,7 @@
         SELECT <include refid="selectFields"/>
         FROM community_favorite
         WHERE user_id=#{userId}
+        AND status!=0
         ORDER BY create_time DESC
     </select>
     <select id="selectFavoriteStatus" resultType="java.lang.Integer">

@@ -57,10 +57,10 @@
                 AND user_id = #{userId}
             </if>
             <if test="orderMode==0">
-                ORDER BY type DESC, create_time DESC
+                ORDER BY create_time DESC
             </if>
             <if test="orderMode==1">
-                ORDER BY type DESC,score DESC,create_time DESC
+                ORDER BY score DESC,create_time DESC
             </if>
     </select>
     <!--修改评论数量-->
@@ -97,6 +97,7 @@
     <select id="selectHotPost" resultMap="BaseResultMap">
         SELECT <include refid="selectFields"/>
         FROM community_post
+        WHERE status!=2
         ORDER BY score DESC
             LIMIT 10;
     </select>

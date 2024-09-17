@@ -75,7 +75,7 @@ public class CommunityFollowController implements CommunityConstant {
         if(isFollow){
             return CommonResult.success("已关注");
         }
-        return CommonResult.success("未关注");
+        return CommonResult.success("关注");
     }
     @ApiOperation("取消关注")
     @RequestMapping(value = "/unfollow", method = RequestMethod.GET)

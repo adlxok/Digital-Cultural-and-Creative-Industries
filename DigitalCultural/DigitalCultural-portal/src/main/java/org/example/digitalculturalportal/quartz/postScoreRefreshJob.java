@@ -84,8 +84,9 @@ public class postScoreRefreshJob implements Job, CommunityConstant {
         // 时间以天为单位
         double score = Math.log10(Math.max(w, 1))
                 + (post.getCreateTime().getTime() - epoch.getTime()) / (1000 * 3600 * 24);
+        String formattedScore = String.format("%.2f", score);
         //更新数据库的帖子分数
-        communityPostService.alterScore(postId,score);
+        communityPostService.alterScore(postId, Double.valueOf(formattedScore));
 
     }
 }

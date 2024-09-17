@@ -25,7 +25,35 @@
 					<a href='../../Home/index.vue'>
 						<li class="nav1-item"><i class="el-icon-chat-dot-square"></i></li>
 					</a>
-					<li class="nav1-item"><i class="el-icon-star-off "></i></li>
+					<!-- <li class="nav1-item" @click="show3 = !show3"><i class="el-icon-star-off" ></i></li> -->
+
+					<div>
+						<li class="nav1-item" @click="drawer = true">
+							<el-popover placement="bottom-start" title="收藏帖子" width="50" trigger="hover"
+								content="查看我的收藏列表">
+								<i class="el-icon-star-off" slot="reference"></i>
+							</el-popover>
+
+						</li>
+						<el-drawer title="我的收藏列表" :visible.sync="drawer" :direction="direction"
+							:before-close="handleClose" :close-on-click-overlay="true">
+							<div class="favoritelist">
+								<div v-for="favoritemap in favoriteList" :key="favoritemap.post.id">
+									<div class="favorite-item">
+										<div class="favorite-title">
+											<i class="el-icon-caret-right"></i>
+											<router-link
+												:to="{ path: '/postDetail', query: { postId: favoritemap.post.id }}">
+												<span>{{ favoritemap.post.title }}</span>
+											</router-link>
+										</div>
+									</div>
+								</div>
+							</div>
+						</el-drawer>
+					</div>
+
+
 					<li class="nav1-item"><i class="el-icon-time"></i></li>
 					<router-link to="/addpost">
 						<li class="nav1-item">
@@ -41,8 +69,9 @@
 
 				<div class="profile-photo">
 					<div>
-						<el-avatar
-							src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+						<router-link :to="{ path: '/comprofile', query: { userId: userInfo.id }}">
+							<el-avatar :src="userInfo.profileImageUrl" :size="55"></el-avatar>
+						</router-link>
 					</div>
 				</div>
 			</div>
@@ -75,15 +104,62 @@
 								{{ index+1 }}
 							</em>
 							<div class="hot-title">
-								<router-link to="/addpost">
-									<span>{{ hotpost.title }}</span>
+								<router-link :to="{ path: '/postDetail', query: { postId: hotpost.id} }">
+									<span class="hot-title-item1"> {{ hotpost.title }}</span>
 								</router-link>
 							</div>
+							<span class="hot-title-item2">热度{{ hotpost.score }}</span>
 						</div>
 					</div>
 				</el-card>
-				<el-card class="box1-itme-card">
-				</el-card>
+				<el-card class="box1-itme-card" >
+  <div class="card-content">
+	<span class="block-title">探索更多</span>
+	<div class="demo-image">
+  <div class="block-item1">
+    <el-image
+      style="width: 100px; height: 100px"
+      :src="url"
+      :fit="fits"></el-image>
+	<span class="block-item1-span">花鸟虫鱼篇</span>
+    <span class="block-item1-span2">齐白石《多子图》张大千《禽鸟》关山月《黑牡丹》谢稚柳《荷花图》吴青霞《连年有余》...</span>
+  </div>
+  <div class="block-item1">
+    <el-image
+      style="width: 100px; height: 100px"
+      src="https://img.phb01.com/d/file/p/2021/08-13/57-200FQ10A4300.jpg"
+      fit="cover"></el-image>
+	<span class="block-item1-span">笔墨丹青篇</span>
+    <span class="block-item1-span2">王羲之《兰亭序》颜真卿《祭侄文稿》苏轼《黄州寒食帖》欧阳询《仲尼梦奠帖》怀素《自叙帖》...</span>
+  </div>
+  <div class="block-item1">
+    <el-image
+      style="width: 100px; height: 100px"
+      src="https://img.ixintu.com/download/jpg/202004/8a9cd6cc7d117279c1fa3ecdb6d77b11_800_1422.jpg%21con0"
+      fit="cover"></el-image>
+	<span class="block-item1-span">医者仁心篇</span>
+    <span class="block-item1-span2">阴阳学说 五行学说 脏腑学说 经络学说 中药治疗 针灸疗法 推拿按摩疗法...</span>
+  </div>
+  <div class="block-item1">
+    <el-image
+      style="width: 100px; height: 100px"
+      src="https://img0.baidu.com/it/u=651072961,585621092&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1726678800&t=0e6d8f8a54d5da1afe20bda56450473d"
+      fit="cover"></el-image>
+	<span class="block-item1-span">戏韵悠长篇</span>
+    <span class="block-item1-span2">京剧 昆曲 豫剧 评剧 越剧 黄梅戏 曲剧 越调 吕剧 沪剧...</span>
+  </div>
+  <div class="block-item1">
+    <el-image
+      style="width: 100px; height: 100px"
+      src="https://img1.baidu.com/it/u=3616382313,1125059306&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=605"
+      fit="cover"></el-image>
+	<span class="block-item1-span">锦绣华章篇</span>
+    <span class="block-item1-span2">苏绣 湘绣 粤绣 蜀绣 京绣 鲁绣 汴绣 瓯绣 杭绣 汉绣...</span>
+  </div>
+</div>
+</div>
+</el-card>
+
 			</div>
 			<!-- 中部-推荐帖子列表 -->
 			<div class="recommend-list">
@@ -107,14 +183,14 @@
 						<div class="post-list">
 							<div v-for="(postmap) in posts" :key="postmap.post.id" class="post-item">
 								<div class="profile-photo-main">
-									<router-link to="/addpost">
-										<el-avatar v-if="postmap.user && postmap.user.profileImageUrl" :size="50"
-										:src="postmap.user.profileImageUrl" alt="用户头像"></el-avatar>
-										<el-avatar v-else :size="50"
-										src="https://img1.baidu.com/it/u=3647744349,2477516282&fm=253&fmt=auto&app=138&f=JPEG?w=380&h=380"
-										alt="默认头像"></el-avatar>
+									<router-link :to="{ path: '/aloneprofile', query: { userId: postmap.user.id }}">
+										<el-avatar v-if="postmap.user && postmap.user.profileImageUrl" :size="55"
+											:src="postmap.user.profileImageUrl" alt="用户头像"></el-avatar>
+										<el-avatar v-else :size="55"
+											src="https://img1.baidu.com/it/u=3647744349,2477516282&fm=253&fmt=auto&app=138&f=JPEG?w=380&h=380"
+											alt="默认头像"></el-avatar>
 									</router-link>
-									
+
 								</div>
 								<div v-if="postmap.user " class="username">
 									<span>{{ postmap.user.username }}</span>
@@ -123,9 +199,9 @@
 									<span>没有用户名的用户</span>
 								</div>
 								<div class="title">
-								<router-link :to="{ path: '/postDetail', query: { postId: postmap.post.id }}"> 
-								<span>{{ postmap.post.title }}</span>	
-								</router-link>
+									<router-link :to="{ path: '/postDetail', query: { postId: postmap.post.id }}">
+										<span>{{ postmap.post.title }}</span>
+									</router-link>
 								</div>
 								<div class="createTime">
 									<span>{{ postmap.post.formattedCreateTime}}</span>
@@ -136,7 +212,8 @@
 								<div class="url">
 									<div v-for="(imageUrl, index) in postmap.url.image" :key="index" class="post-image">
 										<a :href="imageUrl" target="_blank">
-										<img v-if="postmap.url.image.length > 0 && imageUrl" :src="imageUrl" alt="帖子图片"/>
+											<img v-if="postmap.url.image.length > 0 && imageUrl" :src="imageUrl"
+												alt="帖子图片" />
 										</a>
 									</div>
 									<div class="post-video"
@@ -146,8 +223,8 @@
 								</div>
 								<div class="small-sign">
 									<div class="collectCount">
-										<span class="font-itme1" >收藏 {{ favorites[postmap.post.id] }}
-											</span>
+										<span class="font-itme1">收藏 {{ favorites[postmap.post.id] }}
+										</span>
 									</div>
 									<div class="likeCount">
 										<span class="font-itme1">赞 {{ postmap.likeCount }}</span>
@@ -172,20 +249,6 @@
 					</el-card>
 				</div>
 			</div>
-			<!-- 右侧 -->
-			<!-- <div class="main-right">
-				<el-card class="box3-card">
-					<div class="block">
-						<span class="demonstration">千里之行,始于足下 ——《道德经》</span>
-						<el-carousel height="250px">
-							<el-carousel-item  v-for="(image, index) in showimage" :key="index">
-								<img :src="image" alt="轮播图" />
-							</el-carousel-item>
-						</el-carousel>
-					</div>
-
-				</el-card>
-			</div> -->
 		</div>
 	</div>
 
@@ -198,19 +261,24 @@
 import '../css/base.css';  
 import '../css/post.css';
 import { showPostList,hotPost} from "../../../api/post";
-import { favoriteStatus} from "../../../api/like";
+import { favoriteStatus,favoriteList} from "../../../api/like";
+import {getInfo}from '../../../api/login';
+import store from '@/store'
   
 export default {
 	name: "CommunityPost",
     data() {
       return {
+		fits: 'cover',
+        url: 'https://img1.baidu.com/it/u=2289635445,3333255469&fm=253&fmt=auto&app=138&f=JPEG?w=1067&h=800',
+		userInfo:{},
         input: '',
 		posts: [],
 		total: 0,
 		users:[],
 		listParams: {
 			pageNum: 1,
-			pageSize: 20,
+			pageSize: 5,
 			userId:0,
 			orderMode:0
 		},
@@ -224,11 +292,17 @@ export default {
 		'https://picnew5.photophoto.cn/20110222/guohua-mudantupian-12054681_1.jpg'
 		],
 		favorites: {},// 用于存储每个帖子的收藏数量
+		activeNames: [],
+		drawer: false,
+        direction: 'rtl',
+		favoriteList:[]
       }
       } ,
 	created() {
 	this.fetchPostList();
     this.fetchhotPost();
+	this.fetchfavoriteList();
+	this. fetchuser()
   },
    methods: {   
 	truncateContent(content) {  
@@ -252,7 +326,7 @@ export default {
     },
 	elitePostList(){
 		this.activeCategory = 'elite';
-		this.listParams.orderMode=2;
+		this.listParams.orderMode=0;
 		this.listParams.pageNum=1;
 		this.fetchPostList();
       console.log('精华被点击了！');
@@ -309,7 +383,23 @@ handleweiye(){
 	}).catch(error => {  
         console.error('获取帖子列表失败:', error);   
     });
-  }
+  },
+  fetchfavoriteList(){
+	favoriteList().then(response => {
+	this.favoriteList=response.data;
+	}).catch(error => {  
+        console.error('获取收藏列表失败:', error);   
+    });
+  },
+  fetchuser(){
+	const token = store.state.user.token;
+    getInfo(token).then(response => {
+	this.userInfo=response.data;
+	console.log(this.userInfo)
+	}).catch(error => {  
+        console.error('获取用户信息失败:', error);   
+    });
+}
   }
   } 
 </script> 

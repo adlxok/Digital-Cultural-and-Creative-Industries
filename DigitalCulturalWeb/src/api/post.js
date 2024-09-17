@@ -34,9 +34,19 @@ export function hotPost(){
         method: 'get'
     })
 }
+export function deletePost(params){
+    return request({
+        url: '/post/deletePost',
+        method: 'get',
+        params:{
+            id:params
+        }
+    })
+}
 export function getPostById(params){
     return request({
         url: '/communityHome/getPostById/'+params,
         method: 'get'
     })
 }
+

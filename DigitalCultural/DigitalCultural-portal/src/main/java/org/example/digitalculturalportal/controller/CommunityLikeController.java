@@ -92,7 +92,7 @@ public class CommunityLikeController implements CommunityConstant {
        return CommonResult.success(count);
     }
     @ApiOperation("用户获赞数量")
-    @RequestMapping(value = "/useLikeCount", method = RequestMethod.GET)
+    @RequestMapping(value = "/userLikeCount", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult useLikeCount(@RequestParam("userId") Integer userId){
         long count=communityLikeService.queryUserLikeCount(userId);
@@ -156,8 +156,12 @@ public class CommunityLikeController implements CommunityConstant {
     @ApiOperation("收藏列表")
     @RequestMapping(value = "/favoriteList", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult favoriteList(@RequestParam("userId") Integer userId){
-        List<CommunityFavorite> list=communityFavoriteService.favoriteListByUserId(userId);
+    public CommonResult favoriteList(){
+        //获取SecurityContextHolder中的用户id
+        UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Long userId = loginUser.getUser().getId();
+        List<CommunityFavorite> list=communityFavoriteService.favoriteListByUserId(Math.toIntExact(userId));
         if(list.isEmpty()){
             return CommonResult.success("还没有收藏列表");
         }
@@ -165,10 +169,12 @@ public class CommunityLikeController implements CommunityConstant {
         for (CommunityFavorite communityFavorite : list) {
             Map<String,Object> map=new HashMap<>();
             CommunityPost post=communityPostService.queryCommunityPostById(communityFavorite.getEntityId());
-            map.put("post",post);
-            User entityUser=userService.queryUserByIdInCache(post.getUserId());
-            map.put("entityUser",entityUser);
-            favoriteList.add(map);
+            if(post.getStatus()!=2) {
+                map.put("post", post);
+                User entityUser = userService.queryUserByIdInCache(post.getUserId());
+                map.put("entityUser", entityUser);
+                favoriteList.add(map);
+            }
         }
         return CommonResult.success(favoriteList);
     }

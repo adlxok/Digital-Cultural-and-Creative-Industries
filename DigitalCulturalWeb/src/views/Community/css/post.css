@@ -1,6 +1,7 @@
 .post{
 	/* background-color: #F2F6FC; */
 	height: auto;
+	min-height: 1800px;
 }
 /* 首页头部导航 */
 .community-heander{
@@ -9,7 +10,8 @@
 	background-image:url("../../../assets/images/back2.jpg");
 	background-position: center;
 	width: 1520px;
-	height: 150px;
+	height: auto;
+	min-height: 150px;
 	position:fixed; /*定位导航栏*/
 	position:absolute;
 	top:0;
@@ -22,17 +24,17 @@
 	padding: 24px;   /*容器内上下左右的边距*/
 	flex-shrink: 0;/*缩小*/
 	top:0;
-	z-index: 10;
+	
 }
 .left-nav{
 	display: flex;
 	align-items: center;
 }
-.left-nav li:hover{
-	color: rgb(204, 109, 14); /* 示例：鼠标悬停时变为红色 */  
-	cursor: pointer; 
-	font-size: 18px;
-}
+ .nav-item:hover {  
+    color: rgb(204, 109, 14);  
+    cursor: pointer;  
+    font-size: 18px;  
+}  
 .nav-item{
 	margin-left: 24px;
     font-size: 16px;
@@ -69,6 +71,22 @@
     vertical-align: middle; /* 可选，用于垂直居中对齐 */  
 	flex-wrap: 1;
 }
+.favorite-title{
+	margin-bottom:20px;
+}
+.el-icon-caret-right{
+	font-size: 20px;
+	color: #909399;
+}
+.favorite-title span{
+	font-size: 16px;
+	color: #000;
+}
+.favorite-title span:hover{
+	color:#409EFF;
+}
+
+
 .main{
 	display: flex;
 	align-items: flex-start;
@@ -114,27 +132,68 @@
 .hot-title{
 	position: relative;
 	margin:5px 20px;
+	display: flex;
+	align-self: center;
 
 }
-.hot-title span{
+.hot-title-item1 {
 	font-size: 17px;
 }
-.hot-title span:hover{
+.hot-title-item1:hover{
 	color:rgb(204, 109, 14);
 	font-size: 18px;
 }
+.hot-title-item2 {
+	position:absolute;
+	font-size: 12px;
+	left: 230px;
+	top:10px;
+	color: #909399;
+}
+
 .box1-itme-card{
 	width: 350px;
-	height: 500px;
+	height: auto;
 	margin-top: 5px;
 	margin-left:20px;
 	position: sticky;
+     border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+	/* background: #f9f0e7;  */
     
+}
+.block-title{
+	font-size: 18px;
+	color: #000000c6;
+	font-weight:550;
+	margin-left: 20px;
+	margin:10px;
+}
+.block-item1{
+	display: flex;;
+	height: 100px;
+	width: 320px;
+	border: 1px solid #ddd;
+	margin-top: 15px;
+}
+.block-item1-span{
+	font-size: 16px;
+	color: #606266;
+	margin-left: 10px;
+	font-weight:550;
+	margin-top: 15px;
+}
+.block-item1-span2{
+	position: absolute;
+	margin-left: 110px;
+	font-size: 12px;
+	margin-top: 45px;
+	margin-right: 5px;
+	color: #606266;
 }
 .box3-card{
 	width: 350px;
 	height:300px;
-	margin-top: 125px;
+	margin-top: 175px;
 	margin-left: 20px;
 	
 }
@@ -177,7 +236,7 @@
 	flex-direction: column;
     width: 850px;
 	height: auto;
-	margin-top: 100px;
+	margin-top: 150px;
 	margin-left: 15px;
   }
 .post-list{

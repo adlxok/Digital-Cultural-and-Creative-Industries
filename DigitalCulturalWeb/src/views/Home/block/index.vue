@@ -9,47 +9,47 @@
                         <!-- public-icon1.png -->
                         <img src="https://img.dpm.org.cn/Public/static/themes/image/public-icon1.png" alt="">
                     </span>
-                    <span class="s1">故宫</span>
-                    <span class="s2">藏品</span>
+                    <span class="s1">文创</span>
+                    <span class="s2">商城</span>
                     <span class="tit-span">
                         <!-- public-icon2.png -->
                         <img src="https://img.dpm.org.cn/Public/static/themes/image/public-icon2.png" alt="">
                     </span>
                 </h1>
             </a>
-            <div class="num all-center flex">
+            <!-- <div class="num all-center flex"> -->
                     <!-- 可实现数字滚动效果 全在js文件中 靠的是插件-->
-                    <countTo id="time" :startVal='startVal' :endVal='endVal' :duration='5000'></countTo>
-                    <p><img src="https://img.dpm.org.cn/Public/static/themes/image/lyc/indexicon1.png" width="22" alt=""></p>
-            </div>
-            <div class="links flex dir-top all-center">
-                <a href="" target="_blank" class="link link1">
-                    藏品总目
-                    <div id="line1" style="position:absolute; inset: 0px;" >
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="140" height="40" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); left: 0px">
+                    <!-- <countTo id="time" :startVal='startVal' :endVal='endVal' :duration='5000'></countTo> -->
+                    <!-- <p><img src="https://img.dpm.org.cn/Public/static/themes/image/lyc/indexicon1.png" width="22" alt=""></p> -->
+            <!-- </div> -->
+            <!-- <div class="links flex dir-top all-center"> -->
+                <!-- <a href="" target="_blank" class="link link1"> -->
+                    <!-- 藏品总目 -->
+                    <!-- <div id="line1" style="position:absolute; inset: 0px;" > -->
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="140" height="40" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); left: 0px"> -->
                             <!-- <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphael</desc>
                             <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs> -->
-                            <path fill="none" stroke="#ffffff" d="M0,5L5,5L5,0L135,0L135,5L140,5L140,35L135,35L135,40L5,40L5,35L0,35L0,5"
-                            stroke-width="2" stroke-dasharray="1000,1000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 
-                            2; stroke-dashoffset: 0px; stroke-dasharray: 500, 500;"></path>
+                            <!-- <path fill="none" stroke="#ffffff" d="M0,5L5,5L5,0L135,0L135,5L140,5L140,35L135,35L135,40L5,40L5,35L0,35L0,5" -->
+                            <!-- stroke-width="2" stroke-dasharray="1000,1000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width:  -->
+                            <!-- 2; stroke-dashoffset: 0px; stroke-dasharray: 500, 500;"></path> -->
 
-                        </svg>
-                    </div>
-                </a>
-                <br>
-                <a href="" target="_blank" class="link link2" >
-                    数字文库
-                    <div class="line2" style="position:absolute; inset: 0px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="140" height="40" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); left: 0px">
+                        <!-- </svg> -->
+                    <!-- </div> -->
+                <!-- </a> -->
+                <!-- <br> -->
+                <!-- <a href="" target="_blank" class="link link2" > -->
+                    <!-- 数字文库 -->
+                    <!-- <div class="line2" style="position:absolute; inset: 0px;"> -->
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="140" height="40" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); left: 0px"> -->
                             <!-- <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphael</desc>
                             <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs> -->
-                            <path fill="none" stroke="#ffffff" d="M0,5L5,5L5,0L135,0L135,5L140,5L140,35L135,35L135,40L5,40L5,35L0,35L0,5"
-                            stroke-width="2" stroke-dasharray="1000,1000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 
-                            2; stroke-dashoffset: 0px; stroke-dasharray: 500, 500;"></path>
-                        </svg>
-                    </div>
-                </a>
-            </div>
+                            <!-- <path fill="none" stroke="#ffffff" d="M0,5L5,5L5,0L135,0L135,5L140,5L140,35L135,35L135,40L5,40L5,35L0,35L0,5" -->
+                            <!-- stroke-width="2" stroke-dasharray="1000,1000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width:  -->
+                            <!-- 2; stroke-dashoffset: 0px; stroke-dasharray: 500, 500;"></path> -->
+                        <!-- </svg> -->
+                    <!-- </div> -->
+                <!-- </a> -->
+            <!-- </div> -->
         </div>
         
         <!-- 右边区域 -->
@@ -58,7 +58,7 @@
                 <li class="sHoverItem" style="position: relative; overflow: hidden;">
                     <!-- wan.jpg -->
                     <img alt="" title="" class=" lazyloaded" data-src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1de712.jpg" src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1de712.jpg">
-                    <div class="mask1" style="width: 292px; height: 370px; z-index: 99; opacity: 1;">
+                    <div class="mask1" style="width: 375px; height: 450px; z-index: 99; opacity: 1;">
                             <a href="">
                                 <p>斗彩婴戏图杯</p>
                                 <p>明成化</p>
@@ -74,7 +74,7 @@
                 <li class="sHoverItem" style="position: relative; overflow: hidden;">
                     <!-- ping.jpg -->
                     <img alt="" title="" class=" lazyloaded" data-src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1df355.jpg" src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1df355.jpg">
-                    <div class="mask1" style="width: 292px; height: 370px; z-index: 99; opacity: 1;">
+                    <div class="mask1" style="width: 375px; height: 450px; z-index: 99; opacity: 1;">
                         <a href="">
                             <p>粉彩花卉凸三婴戏瓶</p>
                             <p>清乾隆</p>
@@ -90,7 +90,7 @@
                 <li class="sHoverItem" style="position: relative; overflow: hidden;">
                     <!-- bowl.jpg -->
                     <img alt="" title="" class=" lazyloaded" data-src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1dfe4a.jpg" src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1dfe4a.jpg">
-                    <div class="mask1" style="width: 292px; height: 370px; z-index: 99; opacity: 1;">
+                    <div class="mask1" style="width: 375px; height: 450px; z-index: 99; opacity: 1;">
                         <a href="">
                             <p>青花婴戏图碗</p>
                             <p>清光绪</p>
@@ -110,10 +110,10 @@
 </template>
 
 <script>
-import countTo from 'vue-count-to';
+// import countTo from 'vue-count-to';
   export default {
   //注册组件
-    components: { countTo },
+    // components: { countTo },
     data () {
       return {
       //数字开始
@@ -156,8 +156,8 @@ img {
 .block2 {
     position: relative;
     top: 0px;
-    height: 350px;
-    width: 1200px;
+    height: 450px;
+    width: 1600px;
     display: -webkit-flex;
     margin: 0 auto;
     /* 测试 可删除 */
@@ -178,18 +178,18 @@ img {
 }
 
 /* 利用伪类元素设置内容 */
-.block2 .box .title:after {
+/* .block2 .box .title:after {
     content: "";
     display: block;
     width: 6px;
-    height: 30px;
+    height: 30px; */
     /* home_line.png */
-    background: url(https://img.dpm.org.cn/Public/static/themes/image/lyc/home_line.png);
+    /* background: url(https://img.dpm.org.cn/Public/static/themes/image/lyc/home_line.png);
     position: absolute;
     left: 3%;
     margin-left: 110px;
     margin-top: 10px;
-}
+} */
 
 .box .title h1{
     /* title_dot.png */
@@ -198,7 +198,7 @@ img {
     line-height: 1.2;
     font-weight: normal;
     color: #fff;
-    margin-top: 55px;
+    margin-top: 190px;
 }
 
 .box .title .tit-span {
@@ -206,7 +206,7 @@ img {
 }
 
 .box .title .tit-span img {
-    width: 20px;
+    width: 60px;
     margin-top: -5px;
 }
 
@@ -275,7 +275,7 @@ img {
 .list {
     position: relative;
     width: 20px;
-    height: 350px;
+    height: 450px;
     flex: 3;
 }
 .block2 .list ul {
@@ -293,7 +293,7 @@ img {
     position: absolute;
     /* 将盒子定位到下面 */
     bottom: 0px;
-    left: -292px;
+    left: -375px;
     background-color: rgba(0, 0, 0, 0.6);
     color: #fff;
 }

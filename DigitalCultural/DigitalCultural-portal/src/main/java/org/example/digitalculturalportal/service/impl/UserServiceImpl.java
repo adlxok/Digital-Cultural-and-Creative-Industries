@@ -1,5 +1,6 @@
 package org.example.digitalculturalportal.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.digitalculturalportal.common.CommonResult;
 import org.example.digitalculturalportal.common.ResultCode;
 import org.example.digitalculturalportal.dao.UserDao;
@@ -31,6 +32,7 @@ import java.util.*;
  * @since 2024-07-13
  */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
@@ -67,8 +69,10 @@ public class UserServiceImpl implements UserService {
         UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken ) SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         Long userid = loginUser.getUser().getId();
+        log.info("userid: {}", userid);
         //删除Redis中的值
-        rediscache.deleteObject("login:"+userid);
+        boolean flag = rediscache.deleteObject("login:"+userid);
+        log.info("rediscache.deleteObject: {}", flag);
     }
 
     @Override
