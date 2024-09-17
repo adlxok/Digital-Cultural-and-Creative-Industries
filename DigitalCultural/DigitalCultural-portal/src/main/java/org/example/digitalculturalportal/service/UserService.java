@@ -22,4 +22,10 @@ public interface UserService {
      * @return
      */
     User queryUserByIdInCache(Integer userId);
+
+    void updatePassword(String newpassword, Integer userId);
+
+    void updateProfile(String nickName, String blog, Integer userId);
+
+    User findUserByuserId(Integer userId);
 }

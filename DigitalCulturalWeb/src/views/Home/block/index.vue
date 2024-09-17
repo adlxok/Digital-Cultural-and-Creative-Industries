@@ -3,7 +3,7 @@
     <div class="block2">
         <!-- 左边 故宫.馆藏 -->
         <div class="box">
-            <a class="title" href="" target="_blank">
+            <a class="title"  @click="navigateToMall"  >
                 <h1>
                     <span class="tit-span">
                         <!-- public-icon1.png -->
@@ -17,39 +17,7 @@
                     </span>
                 </h1>
             </a>
-            <!-- <div class="num all-center flex"> -->
-                    <!-- 可实现数字滚动效果 全在js文件中 靠的是插件-->
-                    <!-- <countTo id="time" :startVal='startVal' :endVal='endVal' :duration='5000'></countTo> -->
-                    <!-- <p><img src="https://img.dpm.org.cn/Public/static/themes/image/lyc/indexicon1.png" width="22" alt=""></p> -->
-            <!-- </div> -->
-            <!-- <div class="links flex dir-top all-center"> -->
-                <!-- <a href="" target="_blank" class="link link1"> -->
-                    <!-- 藏品总目 -->
-                    <!-- <div id="line1" style="position:absolute; inset: 0px;" > -->
-                        <!-- <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="140" height="40" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); left: 0px"> -->
-                            <!-- <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphael</desc>
-                            <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs> -->
-                            <!-- <path fill="none" stroke="#ffffff" d="M0,5L5,5L5,0L135,0L135,5L140,5L140,35L135,35L135,40L5,40L5,35L0,35L0,5" -->
-                            <!-- stroke-width="2" stroke-dasharray="1000,1000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width:  -->
-                            <!-- 2; stroke-dashoffset: 0px; stroke-dasharray: 500, 500;"></path> -->
-
-                        <!-- </svg> -->
-                    <!-- </div> -->
-                <!-- </a> -->
-                <!-- <br> -->
-                <!-- <a href="" target="_blank" class="link link2" > -->
-                    <!-- 数字文库 -->
-                    <!-- <div class="line2" style="position:absolute; inset: 0px;"> -->
-                        <!-- <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="140" height="40" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); left: 0px"> -->
-                            <!-- <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphael</desc>
-                            <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs> -->
-                            <!-- <path fill="none" stroke="#ffffff" d="M0,5L5,5L5,0L135,0L135,5L140,5L140,35L135,35L135,40L5,40L5,35L0,35L0,5" -->
-                            <!-- stroke-width="2" stroke-dasharray="1000,1000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width:  -->
-                            <!-- 2; stroke-dashoffset: 0px; stroke-dasharray: 500, 500;"></path> -->
-                        <!-- </svg> -->
-                    <!-- </div> -->
-                <!-- </a> -->
-            <!-- </div> -->
+            
         </div>
         
         <!-- 右边区域 -->
@@ -59,7 +27,7 @@
                     <!-- wan.jpg -->
                     <img alt="" title="" class=" lazyloaded" data-src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1de712.jpg" src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1de712.jpg">
                     <div class="mask1" style="width: 375px; height: 450px; z-index: 99; opacity: 1;">
-                            <a href="">
+                            <a @click="navigateToMall">
                                 <p>斗彩婴戏图杯</p>
                                 <p>明成化</p>
                                 <p>高4.8厘米，口径6厘米，足径2.7厘米</p>
@@ -75,7 +43,7 @@
                     <!-- ping.jpg -->
                     <img alt="" title="" class=" lazyloaded" data-src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1df355.jpg" src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1df355.jpg">
                     <div class="mask1" style="width: 375px; height: 450px; z-index: 99; opacity: 1;">
-                        <a href="">
+                        <a @click="navigateToMall">
                             <p>粉彩花卉凸三婴戏瓶</p>
                             <p>清乾隆</p>
                             <p>高21厘米，口径5.8厘米，足径7.6厘米</p>
@@ -91,7 +59,7 @@
                     <!-- bowl.jpg -->
                     <img alt="" title="" class=" lazyloaded" data-src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1dfe4a.jpg" src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1dfe4a.jpg">
                     <div class="mask1" style="width: 375px; height: 450px; z-index: 99; opacity: 1;">
-                        <a href="">
+                        <a @click="navigateToMall">
                             <p>青花婴戏图碗</p>
                             <p>清光绪</p>
                             <p>高7.4厘米，口径15.5厘米，足径5.8厘米</p>
@@ -121,12 +89,54 @@
        //数字结束
         endVal: 1863404
       }
+    },
+    methods: {
+    navigateToMall() {
+      
+      this.$router.push('/mall');
     }
+  }
   }
 
 </script>
 
 <style scoped>
+.box .title h1 .s1,
+.box .title h1 .s2 {
+    color: #fff;
+    font-size: 24px;
+    margin-right: 48px;
+    margin-top: 10px;
+    padding-left: 10px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* 鼠标悬停时的样式 */
+.box .title h1 .s1:hover,
+.box .title h1 .s2:hover {
+    color: #f51313; /* 改变文字颜色 */
+    transform: scale(1.1); /* 稍微放大 */
+    text-decoration: underline; /* 添加下划线 */
+}
+
+.sHoverItem {
+    transition: transform 0.3s ease;
+}
+
+.sHoverItem:active {
+    transform: scale(0.95); /* 点击时缩小 */
+}
+
+.list .mask1 a p {
+    line-height: 25px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.list .mask1 a p:hover {
+    color: #ffcc00; /* 鼠标悬停时改变文字颜色 */
+    transform: scale(1.05); /* 鼠标悬停时稍微放大 */
+    text-decoration: underline; /* 鼠标悬停时添加下划线 */
+}
 body {
     font-family: 微软雅黑,'Heiti SC',黑体,Arial;
     font-size: 14px;

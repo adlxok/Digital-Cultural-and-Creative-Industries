@@ -33,6 +33,7 @@
              #{item.createTime})
         </foreach>
     </insert>
+
     <select id="findUserByuserId" resultType="org.example.digitalculturalportal.pojo.User">
         SELECT
         <include refid="Base_Column_List"/>
@@ -40,5 +41,22 @@
         udc_user
         WHERE id = #{userId}
     </select>
+
+    <update id="updatePassword">
+        UPDATE udc_user
+        SET
+        password = #{newpassworod}
+        WHERE id = #{userId}
+    </update>
+
+    <update id = "updateProfile">
+        UPDATE udc_user
+        SET
+        bio = #{blog},
+        nickname = #{nickName}
+        WHERE
+        id = #{userId}
+    </update>
+
 
 </mapper>

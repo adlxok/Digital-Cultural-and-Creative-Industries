@@ -104,5 +104,21 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public void updatePassword(String newpassword, Integer userId) {
+        newpassword = passwordEncoder.encode(newpassword);
+        userDao.updatePassword(newpassword, userId);
+    }
+
+    @Override
+    public void updateProfile(String nickName, String blog, Integer userId) {
+        userDao.updateProfile(nickName, blog, userId);
+    }
+
+    @Override
+    public User findUserByuserId(Integer userId) {
+        return userDao.findUserByuserId(userId);
+    }
+
 
 }

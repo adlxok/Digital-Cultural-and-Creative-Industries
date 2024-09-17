@@ -61,5 +61,11 @@ export default new VueRouter({
             name: 'profile',
             component:() => import('../views/profile/index.vue')
         },
+        {
+            path: '/create',
+            name: 'create',
+            meta: { hideHeaderFooter: true },
+            component:() => import('../views/create/index.vue')
+        },
     ]
 })

@@ -59,11 +59,18 @@
       },
       addToCart(product) {
         console.log(this.$store.state.user.userId)
-        addToCart(this.$store.state.user.userId, product.id, 1).then((res) => {
+        if (this.$store.state.user.token)
+        {
+          addToCart(this.$store.state.user.userId, product.id, 1).then((res) => {
           console.log(res)
         })
         // console.log(`商品 ${product.name} 已加入购物车`);
+
         this.$message.success(`商品 ${product.name} 已加入购物车`)
+        } else {
+          this.$message.warning('请先登录')
+        }
+        
       },
       formatDate(date) {
         return new Date(date).toLocaleDateString(); // 格式化日期

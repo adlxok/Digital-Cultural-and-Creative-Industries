@@ -82,7 +82,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 "/verifyCode",
                 "/reqGetHeadList",
                 "/reqGetBannerList",
-                "/mall/products/**"
+                "/mall/products/**",
+                "/getallTopics"
 
         );
     }

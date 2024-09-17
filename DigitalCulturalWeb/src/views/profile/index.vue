@@ -4,16 +4,16 @@
     <el-aside width="200px" class="profile-menu">
       <!-- 头像和用户名 -->
       <div class="user-info">
-        <el-avatar :src="user.avatar" size="large"></el-avatar>
-        <p class="username">{{ user.username }}</p>
+        <el-avatar :src="user.profileImageUrl" size="large"></el-avatar>
+        <p class="username">{{ user.nickname }}</p>
       </div>
       
       <!-- 菜单项 -->
       <el-menu :default-active="activeMenu" @select="handleMenuSelect">
-        <el-menu-item index="1">个人信息</el-menu-item>
+        <el-menu-item index="1">个人设置</el-menu-item>
         <el-menu-item index="2">修改密码</el-menu-item>
-        <el-menu-item index="3">个人设置</el-menu-item>
-        <el-menu-item index="4">个人喜好</el-menu-item>
+        <!-- <el-menu-item index="3">个人设置</el-menu-item> -->
+        <!-- <el-menu-item index="4">个人喜好</el-menu-item> -->
         <el-menu-item index="5">退出登录</el-menu-item> <!-- 新增退出登录菜单项 -->
       </el-menu>
     </el-aside>
@@ -32,6 +32,7 @@ import UserSettings from './UserSettings.vue';
 import UserPreferences from './UserPreferences.vue';
 import { logout } from "@/api/logout"; // 假设有一个退出登录的 API 接口
 import { MessageBox } from 'element-ui'; // 引入 MessageBox 弹窗
+import {getInfo} from '@/api/getInfo';
 
 export default {
   components: {
@@ -42,15 +43,25 @@ export default {
   },
   data() {
     return {
-      user: {
-        username: 'JohnDoe',
-        avatar: 'https://www.dpm.org.cn/Uploads/Picture/2022/06/08/s62a06be9e26f1.jpg' // 用户头像链接
-      },
+      user: {},
       activeMenu: '1', // 默认显示个人信息
       currentComponent: 'UserInfo' // 默认显示个人信息组件
     };
   },
+  mounted() {
+    // 在组件挂载时获取用户数据
+    this.fetchUserData();
+  },
   methods: {
+    fetchUserData() {
+        getInfo().then((res) => {
+          this.user = res.data;
+          console.log(this.user)
+        })
+        .catch(error => {
+          console.error('获取用户数据失败', error);
+        });
+    },
     handleMenuSelect(index) {
       this.activeMenu = index;
       switch (index) {
