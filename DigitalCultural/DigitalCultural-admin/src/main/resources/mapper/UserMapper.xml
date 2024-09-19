@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.server_forexam.dao.UserMapper">
+    <select id="login" resultType="java.lang.String">
+        select username
+        from usermessage
+        where username=#{username} and password=#{password}
+    </select>
+    <!--
+        由于这里的查询结果字段和Java对象的属性名完全匹配，
+        所以不需要额外的<resultMap>来映射它们。
+        但如果属性名和数据库列名不匹配，则需要定义一个<resultMap>。
+    -->
+
+    <select id="getUserInfo" resultType="com.example.server_forexam.entity.UserInfo"
+        parameterType="java.lang.String">
+        SELECT roles,introduction,avatar,name
+        FROM userinfo
+        WHERE username=#{username}
+    </select>
+
+</mapper>

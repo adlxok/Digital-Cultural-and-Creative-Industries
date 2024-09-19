@@ -52,6 +52,7 @@
   import {login} from '../../api/login'
   import { getInfo } from '../../api/getInfo';
   import { register } from '../../api/register'
+  import { logout } from "@/api/logout";
 
   export default {
     data() {
@@ -95,25 +96,48 @@
         // 可以添加注册 API 调用等实际逻辑
         login(this.username, this.password)
           .then((res) => {
+            
             const token = res.data.token;
-            this.$message.success('登录成功');
-            this.$store.commit('SET_TOKEN', token);
+              if (token){
+                
+              this.$store.commit('SET_TOKEN', token);
+              }
 
             // 这里用大括号包裹箭头函数，确保正确赋值和逻辑
             getInfo().then((res) => {
               this.user = res.data;
+              console.log(this.user)
+              if (!this.user.status) {
+                this.$message.error('账号已被封禁');
+                // 执行退出登录的操作
+                logout().then(() => {
+                  // 退出成功后跳转到登录页面
+                  this.$store.commit('LOGOUT');
+                  // this.$router.push('/login');
+                }).catch(error => {
+                  console.error('退出登录失败', error);
+                });
+                // 跳转到登录页面
+                this.$router.push('/login');
+              return; // 终止后续代码执行
+              }
               this.$store.commit('SET_USERID', this.user.id);
               this.$store.commit('SET_AVATAR', this.user.profileImageUrl);
               console.log(this.$store.state.user.userId);
               console.log(this.$store.state.user.avatar);
+              
               // 确保用户信息已成功存储后，再跳转到首页
+              this.$message.success('登录成功');
               this.$router.push('/');
+              
             });
+              
+              
             
           })
           .catch((error) => {
             console.error(error);
-            this.$message.error('登录失败，请检查用户名或密码');
+            // this.$message.error('登录失败，请检查用户名或密码');
           });
           
       },
