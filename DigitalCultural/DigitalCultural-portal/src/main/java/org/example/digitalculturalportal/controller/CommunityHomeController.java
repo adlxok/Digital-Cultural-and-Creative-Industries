@@ -60,9 +60,6 @@ public class CommunityHomeController implements CommunityConstant{
             map.put("post",communityPost);
             //封装url
             List<String> imagelist=communityImageService.queryImageList(communityPost.getId());
-//            if(list.isEmpty()) {
-//                return CommonResult.error(ResultCode.LIST_ERROR);
-//            }
             List<String> list1=new ArrayList<>();
             List<String> list2=new ArrayList<>();
             for (String url : imagelist) {

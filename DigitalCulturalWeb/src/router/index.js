@@ -37,7 +37,7 @@ export default new VueRouter({
             component:() => import('../views/meg/index.vue')
         },
         {
-            path: '/forum',
+            path: '/comhome',
             name: 'Comhome',
             meta: { hideHeaderFooter: true },
             component:() => import('../views/Community/post/index.vue')
@@ -83,6 +83,12 @@ export default new VueRouter({
             name: 'profile',
             component:() => import('../views/profile/index.vue')
         },
+        {
+            path: '/create',
+            name: 'create',
+            meta: { hideHeaderFooter: true },
+            component:() => import('../views/create/index.vue')
+        },
 
-    ]
+    ] 
 })

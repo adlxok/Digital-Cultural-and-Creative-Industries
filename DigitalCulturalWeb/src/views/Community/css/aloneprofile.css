@@ -1,4 +1,4 @@
-.com-aloneprofile{
+.aloneprofile{
     height: auto;
 	
 }
@@ -57,13 +57,13 @@ margin-top: 10px;
     position: relative;
     
 }
-.com-box-card2-aloneprofil{
+.com-box-card2-aloneprofile{
     width: 900px;
-    height: 300px;
+    height: auto;
     margin-left: 300px;
     margin-top: 20px;
 }
-.com-pagination-aloneprofil {
+.com-pagination-aloneprofile {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -83,30 +83,33 @@ button:disabled {
     background-color: #eee;
     cursor: not-allowed;
 }
-.com-title-aloneprofil{
+.com-post-aloneprofile{
+    margin-top: 10px;
+}
+.com-title-aloneprofile{
     display: flex;
     height: 40px;
     width:850px ;
     border: 1px solid #dce1eb;
     border-bottom: none;
 }
-.com-title-text-aloneprofil{
+.com-title-text-aloneprofile{
     margin-left: 20px;
     font-size: 17px;
     color: #409EFF;
 }
-.com-content-aloneprofil{
+.com-content-aloneprofile{
     position: relative;;
     margin-top: 10px;
     margin-left: 20px;
 }
-.com-content-aloneprofil span{
+.com-content-aloneprofile span{
     font-size: 14px;
 }
-.com-sing-aloneprofil{
+.com-sing-aloneprofile{
     margin-left: 20px;
 }
-.com-sing-aloneprofil span{
+.com-sing-aloneprofile span{
     font-size: 13px;
     margin-right: 10px;
 }

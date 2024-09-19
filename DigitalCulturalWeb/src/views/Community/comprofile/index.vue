@@ -143,6 +143,7 @@
                     <div class="followee-profile">
                         <el-avatar :size="60" :src="follower.user.profileImageUrl" alt="用户头像"></el-avatar>
                     </div>
+                    <el-divider></el-divider>
                 </div>
             </el-card>
         </div>
@@ -197,7 +198,7 @@
         </div>
         <div class="com-like" v-if="activeTab==5">
             <el-card class="com-box-card3">
-                <span v-if="userLikeCount > 0">全部帖子（{{ userLikeCount }}）</span>
+                <span v-if="userLikeCount > 0">全部点赞（{{ userLikeCount }}）</span>
                 <span v-else>全部点赞（0）</span>
                 <el-divider></el-divider>
             </el-card>
@@ -210,6 +211,7 @@
                 <el-divider></el-divider>
                 <div class="favorite-itme">
                     <div v-for="comfavorite in comfavoriteLists" :key="comfavorite.post.id">
+                        <router-link :to="{ path: '/postDetail', query: { postId: comfavorite.post.id } }">
                         <div class="com-title">
                         <router-link :to="{ path: '/postDetail', query: { postId: comfavorite.post.id } }">
                             <span class="com-title-text">{{comfavorite.post.title }}</span>
@@ -226,17 +228,21 @@
                         </span>
                     </el-dialog>
                     <div class="com-sing">
+                        <router-link :to="{ path: '/postDetail', query: { postId: comfavorite.post.id } }">
                         <span>创作于 {{ formatDate(comfavorite.post.createTime) }}</span>
                         <span>获赞 {{ comfavorite.post.likeCount }}</span>
                         <span>回帖 {{ comfavorite.post.commentCount }}</span>
+                    </router-link>
                     </div>
                     <div class="com-content">
                         <router-link :to="{ path: '/postDetail', query: { postId: comfavorite.post.id } }">
                             <span>{{ truncateContent(comfavorite.post.content) }}</span>
                         </router-link>
                     </div>
+                </router-link>
                     <el-divider></el-divider>
                     </div>
+                    
                 </div>
             </el-card>
         </div>
@@ -420,6 +426,7 @@ export default {
             unfollow(this.unfollowParams);
             this.followStatus[entityId] = '+关注'
             this.isfollow = false
+            this.$message.success('取关成功')
         },
     fetchshowPostList(){
         this.postParams.userId=this.Id;

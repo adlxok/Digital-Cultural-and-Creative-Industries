@@ -1,7 +1,7 @@
 .post{
 	/* background-color: #F2F6FC; */
 	height: auto;
-	min-height: 1800px;
+	min-height: 1000px;
 }
 /* 首页头部导航 */
 .community-heander{
@@ -412,6 +412,13 @@ button:disabled {
 } */
 .block span{
 	margin-bottom: 30px;
+}
+em{
+	font-size: 17.5px;
+	color: #F56C6C;
+}
+.button-search-itme{
+	margin-left: 630px;
 }
 
 

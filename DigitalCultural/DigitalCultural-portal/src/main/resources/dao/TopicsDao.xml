@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.digitalculturalportal.dao.TopicsDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.example.digitalculturalportal.pojo.Topics">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="description" property="description" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, description, created_at, updated_at, is_deleted
+    </sql>
+
+    <select id="selectAll" resultType="org.example.digitalculturalportal.pojo.Topics">
+        SELECT
+            <include refid="Base_Column_List"></include>
+        FROM
+        topics_categories
+        WHERE
+        is_deleted = 0
+    </select>
+
+</mapper>

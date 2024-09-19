@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.example.digitalculturalportal.common.CommonResult;
 import org.example.digitalculturalportal.common.ResultCode;
+import org.example.digitalculturalportal.dao.UserDao;
 import org.example.digitalculturalportal.pojo.LoginUser;
 import org.example.digitalculturalportal.pojo.User;
 import org.example.digitalculturalportal.pojo.UserLoginParam;
@@ -19,6 +20,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +49,11 @@ public class UserController {
 
     @Autowired
     private RedisCache rediscache;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserDao userDao;
 
 
     @ApiOperation("用户登录,返回token")
@@ -75,15 +84,13 @@ public class UserController {
     @ApiOperation("获取用户信息")
     @RequestMapping(value = "/getInfo",method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult getInfo(@RequestParam("token") String token) throws Exception {
-//        Map<String, String> map = new HashMap<>();
-//        map.put("name", "adlx");
-//        map.put("avatar", "https://example.com/avatar.jpg");
-        Claims claims = JwtUtil.parseJWT(token);
-        String userid = claims.getSubject();
-        LoginUser loginUser = (LoginUser) rediscache.getCacheObject("login:"+userid);
+    public CommonResult getInfo() throws Exception {
+        UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken ) SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+
         User user = loginUser.getUser();
-        return CommonResult.success(user);
+        User userreal = userDao.findUserByuserId(Math.toIntExact(user.getId()));
+        return CommonResult.success(userreal);
     }
     @ApiOperation("获取用户信根据id")
     @RequestMapping(value = "/getUser/{userId}",method = RequestMethod.GET)
@@ -103,6 +110,38 @@ public class UserController {
         return CommonResult.success();
     }
 
+
+    @ApiOperation("修改密码")
+//    @PreAuthorize("@adlx.hasAuthority('dcc:use')")
+    @RequestMapping(value = "/updatepassword",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updatepassword(@RequestBody Map<String, Object> requestData) {
+        int userId = Integer.parseInt(requestData.get("userId").toString());
+        String oldpassword = requestData.get("oldpassword").toString();
+        String newpassword = requestData.get("newpassword").toString();
+        String key = "login:" + userId;
+        LoginUser loginUser = rediscache.getCacheObject(key);
+        User user= loginUser.getUser();
+        if (!passwordEncoder.matches(oldpassword, user.getPassword())) {
+            return CommonResult.error(ResultCode.INPUT_ERROR);
+        }
+        userService.updatePassword(newpassword, userId);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("保存更改")
+//    @PreAuthorize("@adlx.hasAuthority('dcc:use')")
+    @RequestMapping(value = "/updateProfile",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateProfile(@RequestBody Map<String, Object> requestData) {
+        int userId = Integer.parseInt(requestData.get("userId").toString());
+        String blog = requestData.get("blog").toString();
+        String nickName = requestData.get("nickName").toString();
+        userService.updateProfile(nickName,blog,userId);
+//        更新缓存用户
+        userService.updateUserCache(userId);
+        return CommonResult.success();
+    }
 
 
 }

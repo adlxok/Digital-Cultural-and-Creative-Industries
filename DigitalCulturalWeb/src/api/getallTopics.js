@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getInfo() {
+export function getallTopics() {
     return request({
-        url: '/user/getInfo',
+        url: '/getallTopics',
         method: 'get',
         
     })

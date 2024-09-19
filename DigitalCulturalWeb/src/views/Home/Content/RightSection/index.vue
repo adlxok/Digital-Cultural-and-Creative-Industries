@@ -3,29 +3,16 @@
         <!-- 闭馆 -->
         <div class="close">
             <div class="close-notice">
-                <div class="close-notice-content">
-                    <div class="time">{{closeInfo.time}}</div>
-                    <div class="title1">{{closeInfo.title1}}</div>
-                    <div class="p">{{closeInfo.p}}<strong>{{closeInfo.strongp}}</strong></div>
-                    <div class="time-info">
-                        <div class="content" v-if="timeInfo[0]&&timeInfo[1]&&timeInfo[2]">
-                            <div class="time-li">
-                                <h1>{{timeInfo[0].h1}}</h1>
-                                <p>{{timeInfo[0].text}}</p>
-                            </div>
-                            <span></span>
-                            <div class="time-li">
-                                <h1>{{timeInfo[1].h1}}</h1>
-                                <p>{{timeInfo[1].text}}</p>
-                            </div>
-                            <span></span>
-                            <div class="time-li">
-                                <h1>{{timeInfo[2].h1}}</h1>
-                                <p>{{timeInfo[2].text}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>   
+               <div class="right-itme">
+                <span class="right-itme-span1">数字赋能，文化焕新</span>
+                <a href="http://localhost:9876/Comhome#/comhome" >
+                <div class="right-item-img">
+                    <span>传统戏剧</span>
+                    <img src="https://img0.baidu.com/it/u=651072961,585621092&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1726678800&t=0e6d8f8a54d5da1afe20bda56450473d" alt="首页图片" style="width: 480px; height: 420px" >
+
+                </div>
+                </a>
+               </div>
             </div>
             <div class="close-tel">
                 <div class="close-tel-content">
@@ -123,6 +110,20 @@ export default {
 </script>
 
 <style scoped>
+.right-item-img{
+    position: relative;
+   
+}
+.right-item-img span{
+    font-size: 16px;
+    color:#ddd;
+}
+.right-itme-span1{
+    font-size: 25px;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-left: 240px;
+}
 .right-box{
     width: 40%;
     height: 850px;
@@ -135,7 +136,7 @@ export default {
     width: 100%;
     height: 45%;
     padding-top: 25px;
-    background: url(https://img.dpm.org.cn/Public/static/themes/image/png5.png);
+    background: url(https://img.dpm.org.cn/Public/static/themes/image/png6.png);
 }
 .close-tel{
     width: 100%;

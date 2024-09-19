@@ -1,100 +1,111 @@
 <template>
-    <div class="product-list">
-      <!-- 分类导航 -->
-      <div class="category-nav">
-        <div class="category-buttons">
-          <button
-            v-for="(category) in displayedCategories"
-            :key="category"
-            @click="filterCategory(category)"
-            :class="{ active: selectedCategory === category }"
-            class="category-button"
-          >
-            {{ category }}
-          </button>
-        </div>
-        <div class="button-wrapper">
-          <button class="toggle-button" @click="toggleShowAll">
-            {{ showAll ? "收起更多" : "展开更多" }}
-          </button>
-        </div>
-      </div>
-  
-      <!-- 商品列表 -->
-      <div v-if="loading" class="loading">加载中...</div>
-      <div v-if="error" class="error">{{ error }}</div>
-      <div class="products-grid" v-if="products && products.length">
-        <router-link
-          v-for="product in filteredProducts"
-          :key="product.id"
-          :to="{ name: 'ProductDetail', params: { id: product.id } }"
-          class="product-card"
+  <div class="product-list">
+    <!-- 分类导航 -->
+    <div class="category-nav">
+      <div class="category-buttons">
+        <button
+          v-for="(category) in displayedCategories"
+          :key="category.id"
+          @click="filterCategory(category.id)"
+          :class="{ active: selectedCategory === category.id }"
+          class="category-button"
         >
-          <img :src="product.imageUrl" alt="Product Image" class="product-image" />
-          <div class="product-info">
-            <h3>{{ product.name }}</h3>
-            <p class="description">{{ product.description }}</p>
-            <p class="price">¥{{ product.price }}</p>
-          </div>
-        </router-link>
+          {{ category.name }}
+        </button>
+      </div>
+      <div class="button-wrapper">
+        <button class="toggle-button" @click="toggleShowAll">
+          {{ showAll ? "收起更多" : "展开更多" }}
+        </button>
       </div>
     </div>
-  </template>
-  
-  <script>
-  import { getallproducts } from "../../api/mall";
-  
-  export default {
-    data() {
-      return {
-        products: [],
-        filteredProducts: [],
-        categories: ["全部", "电子产品", "服装", "文具", "图书", "家居", "玩具", "食品", "健康", "运动"], // 示例分类
-        showAll: false, // 用于控制是否显示全部分类
-        initialCategoriesToShow: 6, // 初始显示的分类数量
-        selectedCategory: "全部",
-        loading: false,
-        error: null,
-      };
+
+    <!-- 商品列表 -->
+    <div v-if="loading" class="loading">加载中...</div>
+    <div v-if="error" class="error">{{ error }}</div>
+    <div class="products-grid" v-if="filteredProducts.length">
+      <router-link
+        v-for="product in filteredProducts"
+        :key="product.id"
+        :to="{ name: 'ProductDetail', params: { id: product.id } }"
+        class="product-card"
+      >
+        <img :src="product.imageUrl" alt="Product Image" class="product-image" />
+        <div class="product-info">
+          <h3>{{ product.name }}</h3>
+          <p class="description">{{ product.description }}</p>
+          <p class="price">¥{{ product.price }}</p>
+        </div>
+      </router-link>
+    </div>
+  </div>
+</template>
+
+<script>
+import { getallproducts } from "../../api/mall";
+import { getallTopics } from '../../api/getallTopics';
+
+export default {
+  data() {
+    return {
+      products: [],
+      filteredProducts: [],
+      categories: [], // 初始化为空数组
+      showAll: false,
+      initialCategoriesToShow: 6,
+      selectedCategory: null,
+      loading: false,
+      error: null,
+    };
+  },
+  computed: {
+    displayedCategories() {
+      // 根据 showAll 的状态决定显示多少分类
+      return this.showAll ? this.categories : this.categories.slice(0, this.initialCategoriesToShow);
     },
-    computed: {
-      displayedCategories() {
-        // 根据 showAll 的状态决定显示多少分类
-        return this.showAll ? this.categories : this.categories.slice(0, this.initialCategoriesToShow);
-      },
+  },
+  methods: {
+    async fetchProducts() {
+      this.loading = true;
+      try {
+        const res = await getallproducts();
+        this.products = res.data;
+        // 如果没有选中分类，显示所有产品
+        this.filteredProducts = this.selectedCategory === null ? this.products : this.products.filter(product => product.topicId === this.selectedCategory);
+      } catch (error) {
+        this.error = "获取商品数据失败，请稍后再试。";
+      } finally {
+        this.loading = false;
+      }
     },
-    methods: {
-      async fetchProducts() {
-        this.loading = true;
-        try {
-          getallproducts().then((res) => {
-            this.products = res.data;
-            this.filteredProducts = this.products; // 初始显示全部产品
-          });
-        } catch (error) {
-          this.error = "获取商品数据失败，请稍后再试。";
-        } finally {
-          this.loading = false;
-        }
-      },
-      filterCategory(category) {
-        this.selectedCategory = category;
-        if (category === "全部") {
-          this.filteredProducts = this.products; // 显示所有商品
-        } else {
-          this.filteredProducts = this.products.filter((product) => product.category === category);
-        }
-      },
-      toggleShowAll() {
-        // 切换展开或收起更多分类
-        this.showAll = !this.showAll;
-      },
+    async fetchCategories() {
+      try {
+        const res = await getallTopics(); // 调用后端接口获取分类
+        this.categories = [{ id: null, name: "全部" }, ...res.data];
+      } catch (error) {
+        console.error('获取分类数据失败', error);
+      }
     },
-    mounted() {
-      this.fetchProducts();
+    filterCategory(categoryId) {
+      this.selectedCategory = categoryId;
+      if (categoryId === null) {
+        this.filteredProducts = this.products; // 显示所有商品
+      } else {
+        this.filteredProducts = this.products.filter(product => product.topicId === categoryId);
+      }
     },
-  };
-  </script>
+    toggleShowAll() {
+      // 切换展开或收起更多分类
+      this.showAll = !this.showAll;
+    },
+  },
+  mounted() {
+    this.fetchCategories(); // 获取分类数据
+    this.fetchProducts(); // 获取产品数据
+  },
+};
+</script>
+
   
   <style scoped>
   .product-list {
@@ -164,7 +175,7 @@
   .products-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 20px;
   }
   

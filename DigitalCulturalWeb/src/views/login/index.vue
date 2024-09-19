@@ -51,6 +51,7 @@
   <script>
   import {login} from '../../api/login'
   import { getInfo } from '../../api/getInfo';
+  import { register } from '../../api/register'
 
   export default {
     data() {
@@ -91,6 +92,7 @@
         }
       },
       handleLogin() {
+        // 可以添加注册 API 调用等实际逻辑
         login(this.username, this.password)
           .then((res) => {
             const token = res.data.token;
@@ -98,10 +100,12 @@
             this.$store.commit('SET_TOKEN', token);
 
             // 这里用大括号包裹箭头函数，确保正确赋值和逻辑
-            getInfo(token).then((res) => {
+            getInfo().then((res) => {
               this.user = res.data;
               this.$store.commit('SET_USERID', this.user.id);
+              this.$store.commit('SET_AVATAR', this.user.profileImageUrl);
               console.log(this.$store.state.user.userId);
+              console.log(this.$store.state.user.avatar);
               // 确保用户信息已成功存储后，再跳转到首页
               this.$router.push('/');
             });
@@ -111,6 +115,7 @@
             console.error(error);
             this.$message.error('登录失败，请检查用户名或密码');
           });
+          
       },
       handleRegister() {
         // 实现注册逻辑
@@ -118,8 +123,20 @@
           this.error = 'Passwords do not match. Please try again.';
           return;
         }
-        // 可以添加注册 API 调用等实际逻辑
-        this.success = 'Registration successful!';
+        let formdata = {
+          username: this.username,
+          password: this.password
+        }
+        register(formdata)
+          .then((res) => {
+            console.log(res)
+        
+          })
+          .catch((error) => {
+            console.error(error);
+            this.$message.error('注册失败，请检查用户名或密码');
+          });
+        this.success = 'Registration successful! Go to Login!';
       },
       generateCaptcha() {
         // 生成随机的验证码

@@ -1,7 +1,9 @@
+
 const user = {
     state: {
         userId: window.localStorage.getItem('userId'),
-        token: window.localStorage.getItem('token')
+        token: window.localStorage.getItem('token'),
+        avatar: window.localStorage.getItem('avatar'),
     },
  
     mutations: {
@@ -16,13 +18,19 @@ const user = {
             state.userId = data
             window.localStorage.setItem('userId', data)
         },
+        SET_AVATAR: (state, data) => {
+            state.avatar = data
+            window.localStorage.setItem('avatar', data)
+        },
         //登出
         LOGOUT: (state) => {
             // 登出的时候要清除token
             state.token = null
             state.userId = null
+            state.avatar = null
             window.localStorage.removeItem('token')
             window.localStorage.removeItem('userId')
+            window.localStorage.removeItem('avatar')
         }
     },
     actions: {

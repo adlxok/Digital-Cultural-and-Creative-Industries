@@ -36,9 +36,26 @@
       
 
         <!-- 工具模块 -->
-        <div class="tools">
+        <div style="display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: absolute;
+  right: 33px;
+  top: 0;
+  height: 100%;"   class="tools">
           <ul>
-            <li class="meg">
+            <li style="color: #595757;
+  width: 76px;
+  float: left;
+  position: relative;
+  font-size: 16px;
+  cursor: pointer;
+  height: 100%;
+  padding: 14px 18px;
+  box-sizing: border-box;" class="meg">
               <router-link  to="/cart">
                 <div class="ul1" style="z-index: 999">
                   <span class="a" @click="get">购物车</span>
@@ -46,18 +63,27 @@
               </router-link>
               
             </li>
-            <li class="login_1">
+            <li style="color: #595757;
+  width: 76px;
+  float: left;
+  position: relative;
+  font-size: 16px;
+  cursor: pointer;
+  height: 100%;
+  padding: 14px 18px;
+  box-sizing: border-box;" class="login_1">
               <router-link v-if="!this.$store.state.user.token" to="/login">
                 <div class="ul1" style="z-index: 999">
-                  <span class="a">登录/注册</span>
+                  <span   class="a">登录/注册</span>
                 </div>
               </router-link>
               
               <router-link v-else to="/profile">
-                <div class="ul1" style="z-index: 999">
-                  <span class="a">个人中心</span>
-
-                  <!-- <span class="a" @click="allLogout">退出登录</span> -->
+                <div class="ul1" style="z-index: 999"
+                
+                >
+                  <span class="a"
+                  >个人中心</span>
                 </div>
 
               </router-link>
@@ -81,6 +107,7 @@ export default {
       isShow: false,
 
       headerList: [],
+      ar: "../../assets/images/ico_user2.png",
     };
   },
   mounted() {
@@ -99,7 +126,7 @@ export default {
     },
     get() {
       
-    },
+    }
     // allLogout() {
     //   this.$store.commit('LOGOUT');
     //   logout().then((res) => {
@@ -116,40 +143,12 @@ export default {
 <style scoped>
 
 
-.p-header .tools ul li {
-  color: #595757;
-  width: 76px;
-  float: left;
-  position: relative;
-  font-size: 16px;
-  cursor: pointer;
-  height: 100%;
-  padding: 14px 18px;
-  box-sizing: border-box;
-}
-
-
-.p-header .tools {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  position: absolute;
-  right: 33px;
-  top: 0;
-  height: 100%;
-}
-
 /* 注册登录样式 */
-.p-header.blk .tools ul .login_1 a {
-  background-image: url(../../assets/images/ico_user2.png);
-}
+
 
 .p-header .tools ul .login_1 a {
   display: inline-block;
-  background: url(../../assets/images/ico_user1.png)
+  background: url(../../assets/images/ico_user2.png)
     no-repeat center top/100% auto;
   width: 17px;
   height: 19px;
@@ -364,10 +363,6 @@ img {
   content: "";
   display: inline-block;
 }
-
-
-
-
 
 
 </style>

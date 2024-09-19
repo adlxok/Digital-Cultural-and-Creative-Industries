@@ -21,4 +21,8 @@ public interface UserDao {
     List<String> selectPermsByUserId(@Param("userId") Long userId);
     int insertList(@Param("list") List<User> list);
     User findUserByuserId(@Param("userId") Integer userId);
+    void updatePassword(@Param("newpassworod") String newpassworod, @Param("userId") Integer userId);
+
+    void updateProfile(@Param("nickName") String nickName, @Param("blog") String blog, @Param("userId") Integer userId);
+
 }

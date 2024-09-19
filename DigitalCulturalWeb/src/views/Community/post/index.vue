@@ -17,8 +17,10 @@
 				</ul>
 
 				<div class="center-search">
-					<el-input placeholder="请输入内容" v-model="input" clearable suffix-icon="el-icon-search" value="搜索内容">
-					</el-input>
+					<!-- <el-input placeholder="请输入内容" v-model="input" clearable suffix-icon="el-icon-search"  value="搜索内容">
+					</el-input> -->
+					<el-input v-model="input" placeholder="请输入内容..."></el-input>
+					<el-button class="search-btn" type="primary" @click="fetchsearchPost">搜索</el-button>
 				</div>
 
 				<ul class="right-nav">
@@ -112,53 +114,46 @@
 						</div>
 					</div>
 				</el-card>
-				<el-card class="box1-itme-card" >
-  <div class="card-content">
-	<span class="block-title">探索更多</span>
-	<div class="demo-image">
-  <div class="block-item1">
-    <el-image
-      style="width: 100px; height: 100px"
-      :src="url"
-      :fit="fits"></el-image>
-	<span class="block-item1-span">花鸟虫鱼篇</span>
-    <span class="block-item1-span2">齐白石《多子图》张大千《禽鸟》关山月《黑牡丹》谢稚柳《荷花图》吴青霞《连年有余》...</span>
-  </div>
-  <div class="block-item1">
-    <el-image
-      style="width: 100px; height: 100px"
-      src="https://img.phb01.com/d/file/p/2021/08-13/57-200FQ10A4300.jpg"
-      fit="cover"></el-image>
-	<span class="block-item1-span">笔墨丹青篇</span>
-    <span class="block-item1-span2">王羲之《兰亭序》颜真卿《祭侄文稿》苏轼《黄州寒食帖》欧阳询《仲尼梦奠帖》怀素《自叙帖》...</span>
-  </div>
-  <div class="block-item1">
-    <el-image
-      style="width: 100px; height: 100px"
-      src="https://img.ixintu.com/download/jpg/202004/8a9cd6cc7d117279c1fa3ecdb6d77b11_800_1422.jpg%21con0"
-      fit="cover"></el-image>
-	<span class="block-item1-span">医者仁心篇</span>
-    <span class="block-item1-span2">阴阳学说 五行学说 脏腑学说 经络学说 中药治疗 针灸疗法 推拿按摩疗法...</span>
-  </div>
-  <div class="block-item1">
-    <el-image
-      style="width: 100px; height: 100px"
-      src="https://img0.baidu.com/it/u=651072961,585621092&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1726678800&t=0e6d8f8a54d5da1afe20bda56450473d"
-      fit="cover"></el-image>
-	<span class="block-item1-span">戏韵悠长篇</span>
-    <span class="block-item1-span2">京剧 昆曲 豫剧 评剧 越剧 黄梅戏 曲剧 越调 吕剧 沪剧...</span>
-  </div>
-  <div class="block-item1">
-    <el-image
-      style="width: 100px; height: 100px"
-      src="https://img1.baidu.com/it/u=3616382313,1125059306&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=605"
-      fit="cover"></el-image>
-	<span class="block-item1-span">锦绣华章篇</span>
-    <span class="block-item1-span2">苏绣 湘绣 粤绣 蜀绣 京绣 鲁绣 汴绣 瓯绣 杭绣 汉绣...</span>
-  </div>
-</div>
-</div>
-</el-card>
+				<el-card class="box1-itme-card">
+					<div class="card-content">
+						<span class="block-title">探索更多</span>
+						<div class="demo-image">
+							<div class="block-item1">
+								<el-image style="width: 100px; height: 100px" :src="url" :fit="fits"></el-image>
+								<span class="block-item1-span">花鸟虫鱼篇</span>
+								<span class="block-item1-span2">齐白石《多子图》张大千《禽鸟》关山月《黑牡丹》谢稚柳《荷花图》吴青霞《连年有余》...</span>
+							</div>
+							<div class="block-item1">
+								<el-image style="width: 100px; height: 100px"
+									src="https://img.phb01.com/d/file/p/2021/08-13/57-200FQ10A4300.jpg"
+									fit="cover"></el-image>
+								<span class="block-item1-span">笔墨丹青篇</span>
+								<span class="block-item1-span2">王羲之《兰亭序》颜真卿《祭侄文稿》苏轼《黄州寒食帖》欧阳询《仲尼梦奠帖》怀素《自叙帖》...</span>
+							</div>
+							<div class="block-item1">
+								<el-image style="width: 100px; height: 100px"
+									src="https://img.ixintu.com/download/jpg/202004/8a9cd6cc7d117279c1fa3ecdb6d77b11_800_1422.jpg%21con0"
+									fit="cover"></el-image>
+								<span class="block-item1-span">医者仁心篇</span>
+								<span class="block-item1-span2">阴阳学说 五行学说 脏腑学说 经络学说 中药治疗 针灸疗法 推拿按摩疗法...</span>
+							</div>
+							<div class="block-item1">
+								<el-image style="width: 100px; height: 100px"
+									src="https://img0.baidu.com/it/u=651072961,585621092&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1726678800&t=0e6d8f8a54d5da1afe20bda56450473d"
+									fit="cover"></el-image>
+								<span class="block-item1-span">戏韵悠长篇</span>
+								<span class="block-item1-span2">京剧 昆曲 豫剧 评剧 越剧 黄梅戏 曲剧 越调 吕剧 沪剧...</span>
+							</div>
+							<div class="block-item1">
+								<el-image style="width: 100px; height: 100px"
+									src="https://img1.baidu.com/it/u=3616382313,1125059306&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=605"
+									fit="cover"></el-image>
+								<span class="block-item1-span">锦绣华章篇</span>
+								<span class="block-item1-span2">苏绣 湘绣 粤绣 蜀绣 京绣 鲁绣 汴绣 瓯绣 杭绣 汉绣...</span>
+							</div>
+						</div>
+					</div>
+				</el-card>
 
 			</div>
 			<!-- 中部-推荐帖子列表 -->
@@ -180,8 +175,8 @@
 						<el-divider></el-divider>
 						<!-- <el-empty description="暂无数据"></el-empty> -->
 
-						<div class="post-list">
-							<div v-for="(postmap) in posts" :key="postmap.post.id" class="post-item">
+						<div v-if="issearch==false" class="post-list">
+							<div  v-for="(postmap) in posts" :key="postmap.post.id" class="post-item">
 								<div class="profile-photo-main">
 									<router-link :to="{ path: '/aloneprofile', query: { userId: postmap.user.id }}">
 										<el-avatar v-if="postmap.user && postmap.user.profileImageUrl" :size="55"
@@ -237,6 +232,72 @@
 							</div>
 						</div>
 
+
+
+						<div v-if="issearch==true" class="post-list-search">
+							<div class="search-result-title">搜索结果({{searchposts.length }})<el-button size="mini" round class="button-search-itme" @click="fetchOffSearch">退出搜索</el-button>
+							</div>
+							<div  v-for="(postmap) in searchposts" :key="postmap.post.id" class="post-item">
+								
+								<div class="profile-photo-main">
+									<router-link :to="{ path: '/aloneprofile', query: { userId: postmap.user.id }}">
+										<el-avatar v-if="postmap.user && postmap.user.profileImageUrl" :size="55"
+											:src="postmap.user.profileImageUrl" alt="用户头像"></el-avatar>
+										<el-avatar v-else :size="55"
+											src="https://img1.baidu.com/it/u=3647744349,2477516282&fm=253&fmt=auto&app=138&f=JPEG?w=380&h=380"
+											alt="默认头像"></el-avatar>
+									</router-link>
+
+								</div>
+								<div v-if="postmap.user " class="username">
+									<span>{{ postmap.user.username }}</span>
+								</div>
+								<div v-else class="username">
+									<span>没有用户名的用户</span>
+								</div>
+								<div class="title">
+									<router-link :to="{ path: '/postDetail', query: { postId: postmap.post.id }}">
+										<span v-html="postmap.post.title"></span>
+									</router-link>
+								</div>
+								<div class="createTime">
+									<span>{{ postmap.post.formattedCreateTime}}</span>
+								</div>
+								<router-link :to="{ path: '/postDetail', query: { postId: postmap.post.id }}">
+								<div class="content">
+									<div v-html="truncateContent(postmap.post.content)"></div>
+								</div>
+								</router-link>
+								<div class="url">
+									<div v-for="(imageUrl, index) in postmap.url.image" :key="index" class="post-image">
+										<a :href="imageUrl" target="_blank">
+											<img v-if="postmap.url.image.length > 0 && imageUrl" :src="imageUrl"
+												alt="帖子图片" />
+										</a>
+									</div>
+									<div class="post-video"
+										v-if="postmap.url.video.length!=0&&postmap.url.image.length ==0">
+										<video :src="postmap.url.video[0]" controls></video>
+									</div>
+								</div>
+								<div class="small-sign">
+									<div class="collectCount">
+										<span class="font-itme1">收藏 {{ serachfavorite[postmap.post.id] }}
+										</span>
+									</div>
+									<div class="likeCount">
+										<span class="font-itme1">赞 {{ postmap.likeCount }}</span>
+									</div>
+									<div class="commentCount">
+										<span class="font-itme1">回帖 {{ postmap.post.commentCount }}</span>
+									</div>
+								</div>
+							
+								<el-divider></el-divider>
+							</div>
+				
+						</div>
+
 						<div class="page">
 							<div class="pagination">
 								<a href="#mao"> <button id="firstPage" @click="handleshouye()">首页</button></a>
@@ -263,6 +324,7 @@ import '../css/post.css';
 import { showPostList,hotPost} from "../../../api/post";
 import { favoriteStatus,favoriteList} from "../../../api/like";
 import {getInfo}from '../../../api/login';
+import {searchPost} from '../../../api/search'
 import store from '@/store'
   
 export default {
@@ -295,7 +357,15 @@ export default {
 		activeNames: [],
 		drawer: false,
         direction: 'rtl',
-		favoriteList:[]
+		favoriteList:[],
+		serachfavorite:{},
+		serachParams:{
+			keyword:'',
+			pageNum:1,
+			pageSize:5
+		},
+		searchposts:[],
+        issearch:false
       }
       } ,
 	created() {
@@ -305,6 +375,24 @@ export default {
 	this. fetchuser()
   },
    methods: {   
+	fetchOffSearch(){
+		this.issearch=false
+		this.fetchPostList()
+	},
+	fetchsearchPost(){
+		this.issearch=true
+		this.serachParams.keyword=this.input
+		searchPost(this.serachParams).then(response => {
+        this.searchposts = response.data.list.map(postmap => {
+            postmap.post.formattedCreateTime = this.formatDate(postmap.post.createTime);
+		favoriteStatus(postmap.post.id).then(response => {
+		this.$set(this.serachfavorite, postmap.post.id, response.data.count);
+	})
+        return postmap;
+        });
+		this.total=response.data.page.Total
+    })
+},
 	truncateContent(content) {  
       if (!content) return '';  
       return content.length > 100 ? content.slice(0, 100) + '...' : content;  
@@ -381,7 +469,7 @@ handleweiye(){
 	hotPost().then(response => {
 	this.hotPost=response.data;
 	}).catch(error => {  
-        console.error('获取帖子列表失败:', error);   
+        console.error('获取热帖子列表失败:', error);   
     });
   },
   fetchfavoriteList(){

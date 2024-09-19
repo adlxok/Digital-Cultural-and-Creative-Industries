@@ -25,7 +25,7 @@
             <img :src="item.image" alt="商品图片" class="item-image" />
             <div class="item-details">
               <h2>{{ item.name }}</h2>
-              <p>价格: ¥{{ item.price }}</p>
+              <p>价格: ¥{{ item.price.toFixed(2) }}</p>
             </div>
           </div>
           <div class="item-quantity">
@@ -34,7 +34,7 @@
             <button @click="increaseQuantity(index)">+</button>
           </div>
           <div class="item-total">
-            <p>小计: ¥{{ item.price * item.quantity }}</p>
+            <p>小计: ¥{{ (item.price * item.quantity).toFixed(2) }}</p>
             <button @click="openDeleteItemDialog(index)" class="remove-button">删除</button>
           </div>
         </li>
@@ -78,6 +78,7 @@
   </div>
 </template>
 
+
 <script>
 import { getCartItems, removeFromCart, clearCart, updateCartItem} from "../../api/cart.js"
 
@@ -94,7 +95,8 @@ export default {
     selectedTotal() {
       return this.cartItems
         .filter((item) => item.selected)
-        .reduce((total, item) => total + item.price * item.quantity, 0);
+        .reduce((total, item) => total + item.price * item.quantity, 0)
+        .toFixed(2);
     },
   },
   methods: {
@@ -179,155 +181,168 @@ export default {
 
   <style scoped>
   /* 页面整体布局 */
-  .cart-page {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #333;
-  }
-  
-  /* 空购物车的样式 */
-  .empty-cart {
-    text-align: center;
-  }
-  
-  .empty-cart p {
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-  
-  .empty-cart a {
-    color: #c55137;
-    text-decoration: none;
-  }
-  
-  .cart-items {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #eee;
-    padding: 15px 0;
-    transition: background-color 0.3s ease;
-  }
-  
-  .item-selection {
-    margin-right: 10px;
-  }
-  
-  .item-info {
-    display: flex;
-    align-items: center;
-  }
-  
-  .item-image {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-right: 20px;
-  }
-  
-  .item-details {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .item-details h2 {
-    font-size: 18px;
-    margin-bottom: 5px;
-    color: #333;
-  }
-  
-  .item-details p {
-    font-size: 16px;
-    color: #666;
-  }
-  
-  .item-quantity {
-    display: flex;
-    align-items: center;
-  }
-  
-  .item-quantity button {
-    width: 30px;
-    height: 30px;
-    background-color: #f4f4f4;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .item-quantity span {
-    margin: 0 10px;
-    font-size: 16px;
-  }
-  
-  .item-total {
-    text-align: right;
-  }
-  
-  .item-total p {
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #333;
-  }
-  
-  .remove-button {
-    color: #d9534f;
-    border: none;
-    background: none;
-    cursor: pointer;
-  }
-  
-  /* 购物车底部按钮布局 */
-  .cart-footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    align-items: center;
-  }
-  
-  .cart-summary h3 {
-    font-size: 24px;
-    color: #333;
-  }
-  
-  .delete-all-button {
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .checkout-button {
-    background-color: #c55137;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .checkout-button:hover {
-    background-color: #a4432e;
-  }
+.cart-page {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* 空购物车的样式 */
+.empty-cart {
+  text-align: center;
+}
+
+.empty-cart p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.empty-cart a {
+  color: #c55137;
+  text-decoration: none;
+}
+
+/* 确保每个购物车项的布局 */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+/* 选择商品的复选框样式 */
+.item-selection {
+  margin-right: 10px;
+}
+
+/* 商品信息布局 */
+.item-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.item-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-details h2 {
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.item-details p {
+  font-size: 16px;
+  color: #666;
+}
+
+/* 商品数量控制 */
+.item-quantity {
+  display: flex;
+  align-items: center;
+  min-width: 120px; /* 确保有足够的宽度 */
+  justify-content: center;
+}
+
+.item-quantity button {
+  width: 30px;
+  height: 30px;
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px; /* 控制按钮间距 */
+  flex-shrink: 0; /* 防止缩小 */
+}
+
+.item-quantity span {
+  font-size: 16px;
+  min-width: 30px; /* 确保数字区域有足够宽度 */
+  text-align: center; /* 确保数字居中 */
+}
+
+/* 商品小计和删除按钮 */
+.item-total {
+  text-align: right;
+  min-width: 150px; /* 确保有足够的宽度 */
+}
+
+.item-total p {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.remove-button {
+  color: #d9534f;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* 购物车底部按钮布局 */
+.cart-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.cart-summary {
+  min-width: 200px; /* 确保有足够的宽度 */
+}
+
+.cart-summary h3 {
+  font-size: 24px;
+  color: #333;
+}
+
+.delete-all-button {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.checkout-button {
+  background-color: #c55137;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.checkout-button:hover {
+  background-color: #a4432e;
+}
+
   </style>
   
 

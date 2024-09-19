@@ -1,9 +1,8 @@
 import request from '@/utils/request'
-
-export function getInfo() {
+export function searchPost(params){
     return request({
-        url: '/user/getInfo',
+        url: '/search/post',
         method: 'get',
-        
+        params: params
     })
 }

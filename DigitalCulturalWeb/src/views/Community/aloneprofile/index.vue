@@ -1,5 +1,5 @@
 <template>
-     <div class="com-aloneprofile">
+     <div class="aloneprofile">
         <div class="image-back-aloneprofile">
             <el-card class="com-box-card0-aloneprofile">
             </el-card>
@@ -15,7 +15,7 @@
                         <span>{{ aloneuserInfos.username}}</span>
                     </div>
                     <div class="button-aloneprofile" v-if=" isfollow==false">
-            <el-button type="danger" @click=" fetchfollowUser() ">{{followStatusconcent}}</el-button>
+            <el-button  type="danger" @click=" fetchfollowUser() ">{{followStatusconcent}}</el-button>
             <el-button type="primary">私信</el-button>
            </div>
            <div class="button-aloneprofile" v-if=" isfollow==true">
@@ -30,7 +30,7 @@
                         <span v-if="aloneprofilfollowerCount>0">粉丝：{{aloneprofilfollowerCount}}</span>
                         <span v-else>粉丝：{{0}}</span>
                         <el-divider direction="vertical"></el-divider>
-                        <span>帖子：{{  aloneprofilpostCount}}</span>
+                        <span>帖子：{{ postCount}}</span>
                         <i class="el-icon-location-information"><span>{{aloneuserInfos.city}}</span></i>
                         <div class="bio">
                             {{ aloneuserInfos.bio }}
@@ -41,31 +41,31 @@
             </el-card>
         </div>
         <div class="alnoe-main-aloneprofil">
-            <el-card class="com-box-card2-aloneprofil">
-                <span v-if=" aloneprofilpostCount> 0">发布的全部帖子（{{  aloneprofilpostCount}}）</span>
+            <el-card class="com-box-card2-aloneprofile">
+                <span v-if="postCount > 0">发布的全部帖子（{{ postCount }}）</span>
                 <span v-else>发布的全部帖子（0）</span>
-                <el-divider></el-divider>
-                <!-- <div v-for="aloneprofil in  aloneprofilposts" :key="aloneprofil.post.id" class="com-post-aloneprofil">
-                    <div class="com-title-aloneprofil">
-                        <router-link :to="{ path: '/postDetail', query: { postId: aloneprofil.post.id } }">
-                            <span class="com-title-text-aloneprofil">{{ aloneprofil.post.title }}</span>
+                <div v-for="postmap in posts" :key="postmap.post.id" class="com-post-aloneprofile">
+                    <router-link :to="{ path: '/postDetail', query: { postId: postmap.post.id } }">
+                    <div class="com-title-aloneprofile">
+                            <span class="com-title-text-aloneprofile">{{ postmap.post.title }}</span>
+                       
+                    </div>
+                   
+                    <div class="com-sing-aloneprofile">
+                        <span>创作于 {{ formatDate(postmap.post.createTime) }}</span>
+                        <span>获赞 {{ postmap.likeCount }}</span>
+                        <span>回帖 {{ postmap.post.commentCount }}</span>
+                    </div>
+                    <div class="com-content-aloneprofile">
+                        <router-link :to="{ path: '/postDetail', query: { postId: postmap.post.id } }">
+                            <span>{{ truncateContent(postmap.post.content) }}</span>
                         </router-link>
                     </div>
-                    <div class="com-sing-aloneprofil">
-                        <span>创作于 {{ formatDate(aloneprofil.post.createTime) }}</span>
-                        <span>获赞 {{ aloneprofil.likeCount }}</span>
-                        <span>回帖 {{ aloneprofil.post.commentCount }}</span>
-                    </div>
-                    <div class="com-content-aloneprofil">
-                        <router-link :to="{ path: '/postDetail', query: { postId: aloneprofil.post.id } }">
-                            <span>{{ truncateContent(aloneprofil.post.content) }}</span>
-                        </router-link>
-                    </div>
+                </router-link>
                     <el-divider></el-divider>
-                </div> -->
-
+                </div>
                 <div class="com-page-aloneprofil">
-                    <div v-if="aloneprofilpostCount > 0" class="com-pagination-aloneprofil">
+                    <div  class="com-pagination-aloneprofil">
                         <a href="#mao3"> <button id="firstPage3" @click="handleshouye()"
                                 class="com-button-item">首页</button></a>
                         <a href="#mao3"> <button id="prevPage3" @click="handlelast()"
@@ -104,7 +104,7 @@ export default {
                 entityId:0
             },
             followStatusconcent:'',
-            aloneprofilpostCount:0,
+            postCount:0,
             aloneprofilfollowerCount:0,
             aloneprofilfolloweeCount:0,
             aloneprofiluserLikeCount:0,
@@ -112,14 +112,15 @@ export default {
             offset:0,
             limit:1000
         },
-        aloneprofilpostParams: {
+        postParams: {
             pageNum: 1,
 			pageSize: 5,
 			userId:0,
 			orderMode:0
             },
-            aloneprofilposts:[],
-            aloneprofiltotal:0
+        posts:[],
+            total:0,
+            isButtonDisabled:false
         }
     }
     ,
@@ -135,22 +136,57 @@ export default {
 
     },
     methods: {
+    fetchshowPostList(){
+        this.postParams.userId=this.id;
+       showPostList(this.postParams).then(response => {
+      this.posts = response.data.list;
+      this.postCount=response.data.page.Total;
+      this.total=response.data.page.Pages;
+      console.log("帖子列表",this.postCount);
+    }).catch(error => {
+      console.error('获取帖子列表失败:', error);
+    });
+    },
+    truncateContent(content) {  
+      if (!content) return '';  
+      return content.length > 100 ? content.slice(0, 100) + '...' : content;  
+    },  
+    handleshouye() {
+            this.postParams.pageNum = 1;
+            this.fetchshowPostList()
+            console.log("点击首页");
+        },
+        handlelast() {
+            if (this.postParams.pageNum > 1) {
+                this.postParams.pageNum--;
+                this.fetchshowPostList()
+                console.log("点击上一页");
+            }
+        },
+        handlenext() {
+            if (this.postParams.pageNum == this.total) {
+                this.$message.info('已经是最后一页了');
+            } else if (this.postParams.pageNum <= this.total) {
+                this.postParams.pageNum++;
+                this.fetchshowPostList()
+                console.log("点击下一页");
+            }
+        },
+        handleweiye() {
+            if (this.postParams.pageNum == this.total) {
+                this.$message.info('已经是最后一页了');
+            } else {
+                this.postParams.pageNum = this.total;
+                this.fetchshowPostList()
+                console.log("点击尾页");
+            }
+        },
     formatDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleString(); 
   },
 
-    fetchshowPostList(){
-        this.aloneprofilpostParams.userId=this.id;
-       showPostList(this.aloneprofilpostParams).then(response => {
-      this.aloneprofilposts = response.data.list;
-      this.aloneprofilpostCount=response.data.page.Total;
-      this.aloneprofiltotal=response.data.page.Pages;
-      console.log("帖子列表",this.aloneprofilpostCount);
-    }).catch(error => {
-      console.error('获取帖子列表失败:', error);
-    });
-    },
+
     fetchfolloweeList(){
     followeeList(this.id,this.followListParams).then(response => {
       this. aloneprofilfolloweeCount=response.data.followeeCount;
@@ -184,7 +220,7 @@ export default {
                 }
 })
         },
-        fetchfollowUser() {
+        fetchfollowUser() {   
             this.followParams.entityId = this.id;
             followUser(this.followParams);
             this.followStatusconcent = '已关注'
