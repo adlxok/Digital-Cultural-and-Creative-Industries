@@ -68,4 +68,4 @@ export default new VueRouter({
             component:() => import('../views/create/index.vue')
         },
     ]
-})
+});

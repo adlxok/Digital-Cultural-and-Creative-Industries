@@ -130,15 +130,7 @@ export default {
     get() {
       
     }
-    // allLogout() {
-    //   this.$store.commit('LOGOUT');
-    //   logout().then((res) => {
-        
-    //     console.log(res)
-    //   }).catch((e) => {
-    //     console.log(e)
-    //   })
-    // }
+
   },
 };
 </script>
@@ -147,7 +139,6 @@ export default {
 
 
 /* 注册登录样式 */
-
 
 .p-header .tools ul .login_1 a {
   display: inline-block;
