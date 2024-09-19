@@ -191,6 +191,7 @@ INSERT INTO `udc_user_role` VALUES (2, 4, 1);
 SET FOREIGN_KEY_CHECKS = 1;
 
 
+# 社区表
 -- --------------------------------
 -- Table structure for community_post
 -- --------------------------------
@@ -210,6 +211,7 @@ CREATE TABLE `community_post` (
                                   PRIMARY KEY (`id`),
                                   KEY `index_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- --------------------------------
 -- Table structure for community_comment
 -- --------------------------------
@@ -247,10 +249,15 @@ CREATE TABLE `community_message` (
                                      KEY `index_to_id` (`to_id`),
                                      KEY `index_conversation_id` (`conversation_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- ----------------------------
+--
+-- ----------------------------
+
+
 -- --------------------------------
 -- Table structure for community_image
 -- --------------------------------
-DROP TABLE IF EXISTS `community_image`;
+DROP TABLE IF EXISTS `eimage`;
 CREATE TABLE community_image (
                                  id INT AUTO_INCREMENT PRIMARY KEY,
                                  post_id INT(11) DEFAULT NULL,
@@ -270,6 +277,8 @@ CREATE TABLE IF NOT EXISTS `community_favorite` (
                                                     `create_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 可选：记录收藏的时间
                                                     UNIQUE KEY `unique_favorite` (`user_id`, `entity_type`, `entity_id`) -- 确保每个用户不能对同一实体进行重复收藏
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
 
 
 
