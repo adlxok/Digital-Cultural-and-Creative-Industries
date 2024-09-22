@@ -64,6 +64,12 @@ export default new VueRouter({
             meta: { hideHeaderFooter: true },
             component:() => import('../views/Community/aloneprofile/index.vue')
         },
+        {
+            path: '/message',
+            name: 'Message',
+            meta: { hideHeaderFooter: true },
+            component:() => import('../views/Community/message/index.vue')
+        },
         {   path: '/mall',
             name: 'mall',
             component:() => import('../views/mall/index.vue')
