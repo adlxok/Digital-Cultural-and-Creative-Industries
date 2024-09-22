@@ -103,6 +103,37 @@ export const constantRoutes = [
       
     ]
   },
+  
+  {
+    path: '/community',
+    component: Layout,
+    redirect: '/community/postmanage',
+    name: 'community',
+    meta: { title: '社区', icon: 'community' },
+    children: [
+      {
+        path: 'postmanage',
+        name: 'postmanage',
+        component: () => import('@/views/community/postmanage/index.vue'),
+        meta: { title: '普通帖管理', icon: 'usermanage' }
+      },
+      {
+        path: 'hotpostmanage',
+        name: 'hotpostmanage',
+        component: () => import('@/views/community/hotpostmanage/index.vue'),
+        meta: { title: '热门帖管理', icon: 'usermanage' }
+      },
+      {
+        path: 'commentmanage',
+        name: 'commentmanage',
+        component: () => import('@/views/community/commentmanage/index.vue'),
+        meta: { title: '评论管理', icon: 'usermanage' }
+      }
+      
+    ]
+  },
+ 
+  
 
   
 

@@ -55,7 +55,7 @@
         WHERE status != 2
         AND from_id != 1
         AND conversation_id = #{conversationId}
-        ORDER BY id DESC
+        ORDER BY id ASC
     </select>
     <!--查询某个会话的私信数量-->
     <select id="selectLetterCount" resultType="int">
