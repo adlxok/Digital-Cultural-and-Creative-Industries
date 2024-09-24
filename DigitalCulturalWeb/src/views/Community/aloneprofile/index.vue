@@ -16,11 +16,15 @@
                     </div>
                     <div class="button-aloneprofile" v-if=" isfollow==false">
             <el-button  type="danger" @click=" fetchfollowUser() ">{{followStatusconcent}}</el-button>
-            <el-button type="primary">私信</el-button>
+            <router-link :to="{ path: '/message', query: { toId: aloneuserInfos.id,routerLink:true,tousername:aloneuserInfos.username } }">
+            <el-button type="primary" @click="firstmessage()">私信</el-button>
+            </router-link>
            </div>
            <div class="button-aloneprofile" v-if=" isfollow==true">
             <el-button type="danger" @click=" fetchisfollowUser() ">{{followStatusconcent}}</el-button>
-            <el-button type="primary">私信</el-button>
+            <router-link :to="{ path: '/message', query: { toId: aloneuserInfos.id,routerLink:true,tousername:aloneuserInfos.username } }">
+            <el-button type="primary" @click="firstmessage()">私信</el-button>
+            </router-link>
            </div>
                     <div class="com-like-aloneprofile">
                         <span>获赞：{{aloneprofiluserLikeCount}}</span>
@@ -89,6 +93,7 @@ import {getUser } from '../../../api/login';
 import {userLikeCount} from '../../../api/like';
 import { showPostList} from "../../../api/post";
 import {followeeList,followStatus,unfollow,followUser,followerList} from '../../../api/follow';
+import { addLetter } from '../../../api/massage'
 export default {
     data() {
         return {
@@ -136,6 +141,26 @@ export default {
 
     },
     methods: {
+        firstmessage() {
+    // 检查 localStorage 中是否已经执行过
+    if (localStorage.getItem('firstMessageSent')) {
+        this.$message.warning('您已存有该与用户的会话，请选中会话聊天');
+        return; // 如果已经执行过，直接返回
+    }
+
+    let params = {
+        toId: this.aloneuserInfos.userId,
+        content: "茫茫人海，感谢相遇"
+    };
+
+    addLetter(params).then(response => {
+        this.$message.success(response.data);
+        // 发送成功后，设置 localStorage 标识
+        localStorage.setItem('firstMessageSent', 'true');
+    }).catch(error => {
+        console.error('发送私信失败:', error);
+    });
+},
     fetchshowPostList(){
         this.postParams.userId=this.id;
        showPostList(this.postParams).then(response => {

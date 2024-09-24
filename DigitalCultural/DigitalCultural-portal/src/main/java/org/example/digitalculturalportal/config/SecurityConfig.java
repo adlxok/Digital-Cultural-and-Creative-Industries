@@ -84,7 +84,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 "/reqGetHeadList",
                 "/reqGetBannerList",
                 "/mall/products/**",
-                "/getallTopics"
+                "/getallTopics",
+                "/communityHome/**",
+                "/post/hotPost",
+                "/search/post"
 
         );
     }

@@ -4,7 +4,7 @@
     <el-card class="detail-box1-card">
       <div class="author">
         <div class="profile-photo-detail">
-          <router-link to="/addpost">
+          <router-link :to="{ path: '/aloneprofile', query: { userId: user.id }}">
             <el-avatar v-if="user" :size="60" :src="user.profileImageUrl" alt="用户头像"></el-avatar>
             <el-avatar v-else :size="60"
               src="https://img1.baidu.com/it/u=3647744349,2477516282&fm=253&fmt=auto&app=138&f=JPEG?w=380&h=380"

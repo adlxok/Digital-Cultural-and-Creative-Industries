@@ -40,7 +40,7 @@ public class CommunityMessageController implements CommunityConstant {
     @Autowired
     private UserService userService;
     @ApiOperation("新增私信")
-    @RequestMapping(value = "/addLetter", method = RequestMethod.POST)
+    @RequestMapping(value = "/addLetter", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult addMessage(@RequestParam ("toId")Integer toId, @RequestParam("content") String content){
         User user=userService.queryUserByIdInCache(toId);

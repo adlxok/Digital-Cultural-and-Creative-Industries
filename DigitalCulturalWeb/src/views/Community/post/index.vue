@@ -20,23 +20,29 @@
 					<!-- <el-input placeholder="请输入内容" v-model="input" clearable suffix-icon="el-icon-search"  value="搜索内容">
 					</el-input> -->
 					<el-input v-model="input" placeholder="请输入内容..."></el-input>
-					<el-button class="search-btn" type="primary" @click="fetchsearchPost">搜索</el-button>
+					<el-button class="post-btn" type="primary" @click="fetchsearchPost">搜索</el-button>
 				</div>
 
 				<ul class="right-nav">
-					<a href='../../Home/index.vue'>
-						<li class="nav1-item"><i class="el-icon-chat-dot-square"></i></li>
-					</a>
+					<router-link to="/message" >
+						<li class="nav1-item">
+							<el-popover placement="bottom-start" title="私信" width="100" trigger="hover"
+								content="查看我的私信">
+								<i class="el-icon-chat-dot-square" slot="reference"></i>
+							</el-popover>
+						</li>
+					</router-link>
 					<!-- <li class="nav1-item" @click="show3 = !show3"><i class="el-icon-star-off" ></i></li> -->
 
 					<div>
-						<li class="nav1-item" @click="drawer = true">
-							<el-popover placement="bottom-start" title="收藏帖子" width="50" trigger="hover"
+						<li class="nav1-item" @click="drawer = true" >
+							<el-popover placement="bottom-start" title="收藏" width="50" trigger="hover"
 								content="查看我的收藏列表">
 								<i class="el-icon-star-off" slot="reference"></i>
 							</el-popover>
 
 						</li>
+						
 						<el-drawer title="我的收藏列表" :visible.sync="drawer" :direction="direction"
 							:before-close="handleClose" :close-on-click-overlay="true">
 							<div class="favoritelist">
@@ -56,17 +62,28 @@
 					</div>
 
 
-					<li class="nav1-item"><i class="el-icon-time"></i></li>
-					<router-link to="/addpost">
+				
+						
+					<li class="nav1-item" ><i class="el-icon-time"></i></li>
+				
+					<router-link to="/addpost" >
 						<li class="nav1-item">
-							<el-popover placement="bottom-start" title="发布帖子" width="100" trigger="hover"
+							<el-popover placement="bottom-start" title="发布" width="100" trigger="hover"
 								content="快开始你的创造吧！">
 								<i class="el-icon-edit" slot="reference"></i>
 							</el-popover>
 						</li>
 					</router-link>
 
-					<li class="nav1-item"><i class="el-icon-setting"></i></li>
+					<router-link to="/notice" >
+						<li class="nav1-item">
+						<el-popover placement="bottom-start" title="系统通知" width="100" trigger="hover"
+								content="查看我的系统通知">
+								<i class="el-icon-message" slot="reference"></i>
+							</el-popover>
+						</li>
+						</router-link>
+
 				</ul>
 
 				<div class="profile-photo">
@@ -340,7 +357,7 @@ export default {
 		users:[],
 		listParams: {
 			pageNum: 1,
-			pageSize: 5,
+			pageSize: 6,
 			userId:0,
 			orderMode:0
 		},
