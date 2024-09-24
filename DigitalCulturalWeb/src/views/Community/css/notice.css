@@ -1,0 +1,116 @@
+.comnotice{
+    width: 1500px;
+    height:auto; 
+}
+
+.notice-card{   
+    display: flex;
+    width: 800px;
+    height: auto;
+    margin-left:350px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.notice-nav{
+    width: 750px;
+    height: 50px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: antiquewhite;
+}
+.notice-name{
+    position: relative;
+    display: flex;
+    margin:10px;
+}
+.el-icon-bell{
+    font-size: 18px;
+    color: #d34d6a;
+    margin-top: 5px;
+}
+.notice-name-span{
+  font-size: 18px;
+}
+.notice-bnt{
+    position: relative;
+    margin-left: 570px;
+    
+}
+.notice-list{
+    position: relative;
+    width: 700px;
+    height: auto;
+    margin-left: 25px;
+}
+.notice-list-itme{
+    position: relative;
+    display: flex;
+    width: 700px;
+    height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+.notice-list-itme:hover {
+    background-color: #e8e8e8;
+    cursor: pointer; 
+}
+
+.notice-list-priflie{
+    margin:20px;
+}
+.notice-list-name{
+    margin-top: 25px;
+}
+.notice-list-name span{
+    font-size: 15px;
+}
+.notice-list-time{
+    position: absolute;
+    margin-top: 30px;
+    margin-left: 550px;
+}
+.notice-list-time span{
+    font-size: 12px;
+}
+.notice-list-cenent{
+    margin-top: 10px;
+}
+.notice-list-card{
+    display: flex;
+    height: 60px;
+}
+.notice-detatil-name{
+    margin: 5px;
+    font-size: 16px;
+}
+.notice-detail-itme{
+    display: flex;
+    margin-top: 15px;
+    width: 700px;
+    height: 80px;
+    border: 1px solid #ddd;;
+}
+.notice-detail-priflie{
+    margin: 10px;
+}
+.notice-detail-name1{
+    position: relative;
+    margin-top: 10px;
+}
+.notice-detail-time{
+    position: absolute;
+    margin-top: 30px;
+    margin-left: 550px;
+}
+.notice-detail-time span{
+    font-size: 12px;
+}
+.notice-detatil-bnt{
+    position: relative;
+    margin-left: 500px;
+    
+}
+.el-avatar{
+    background-color: #ddd;
+}
