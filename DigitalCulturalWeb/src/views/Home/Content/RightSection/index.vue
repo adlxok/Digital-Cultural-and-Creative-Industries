@@ -63,21 +63,21 @@
             <div class="open-content">
                         <div class="title">
                             <h1>
-                                <a href="###">
+                                <a href="http://localhost:9876/announcements#/announcements">
                                     <span class="tit-left"><img :src="title.titleft"></span>
                                     <span class="t1">{{title.t3}}</span>
                                     <span class="t2">{{title.t4}}</span>
                                     <span class="tit-right"><img :src="title.titright"></span>
                                 </a>
                             </h1>
-                            <a href="###" class="more">
+                            <a href="http://localhost:9876/announcements#/announcements" class="more">
                                 更多
                                 <i></i>
                             </a>
                         </div>
                         <div class="con-1">
                             <div class="con-1-content" v-for="item in open1List" :key="item.id">
-                                <a href="###" :title="item.title">
+                                <a href="http://localhost:9876/announcements#/announcements" :title="item.title">
                                     <em>
                                         <img :src="item.img">
                                     </em>
@@ -91,7 +91,7 @@
                                     <p>
                                         <span>{{item.time}}</span> 
                                     </p>
-                                    <a href="###" :title="item.name">{{item.name}}</a>
+                                    <a href="http://localhost:9876/announcements#/announcements" :title="item.name">{{item.name}}</a>
                                 </li>
                             </ul>
                         </div>
@@ -103,11 +103,31 @@
 <script>
 export default {
     name:'RightSection',
-    props:['title','closeInfo','timeInfo','orderInfo','telList','lineList','open1List','open2List'],
- 
-
+    props:['title','closeInfo','timeInfo','orderInfo','telList','lineList'],
+    data() {
+        return {
+            open1List: [
+                { id: 1, title: "戏剧展览公告", img: "https://img0.baidu.com/it/u=1013456396,3112712181&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1726678800&t=104c9d0f9792b98c155a96b045a8fefb" },
+                { id: 2, title: "书法艺术展览公告", img: "https://img0.baidu.com/it/u=129089299,4137226115&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1726678800&t=fae51aa033e8763158ef7edfb7dc653d" },
+                { id: 3, title: "陶瓷文化展览公告", img: "https://img2.baidu.com/it/u=4299077515,3663737074&fm=253&app=138&size=f141&n=0&f=JPEG&fmt=auto?sec=1726678800&t=6325a6c6e07b77df2c7d7d635368e04b" }
+            ],
+            open2List: [
+                { id: 1, name: "民俗文化展览", time: "2024-10-01" },
+                { id: 2, name: "剪纸艺术展览", time: "2024-10-05" },
+                { id: 3, name: "瓷器精品展览", time: "2024-10-10" }
+            ],
+            openTitle: {
+                t3: "开放公告",
+                t4: "近期展览",
+                titleft: "https://img.dpm.org.cn/Public/static/themes/image/icon_title_left.png",
+                titright: "https://img.dpm.org.cn/Public/static/themes/image/icon_title_right.png"
+            }
+        };
+    }
 }
 </script>
+
+
 
 <style scoped>
 .right-item-img{

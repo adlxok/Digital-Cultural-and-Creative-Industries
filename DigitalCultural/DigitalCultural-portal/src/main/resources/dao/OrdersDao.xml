@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.digitalculturalportal.dao.OrdersDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.example.digitalculturalportal.pojo.Orders">
+        <id column="order_id" property="orderId" />
+        <result column="user_id" property="userId" />
+        <result column="product_name" property="productName" />
+        <result column="status" property="status" />
+        <result column="order_date" property="orderDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        order_id, user_id, product_name, status, order_date, is_deleted, recipient_name, recipient_phone, shipping_address, logistics_company, total_amount, order_sn
+    </sql>
+
+    <select id="selectAll" resultType="org.example.digitalculturalportal.pojo.Orders">
+        SELECT
+            <include refid="Base_Column_List"></include>
+        FROM
+            orders
+        WHERE
+           user_id = #{userId} AND  is_deleted = 0
+    </select>
+
+    <update id="updateOrderStatus">
+        UPDATE orders
+        SET
+            status = #{status}
+        WHERE
+            order_id = #{orderId}
+    </update>
+
+    <select id="selectOrderById" resultType="org.example.digitalculturalportal.pojo.Orders">
+        SELECT
+            <include refid="Base_Column_List"></include>
+        FROM
+            orders
+        WHERE
+            order_id = #{orderId}
+    </select>
+
+    <update id = "updateOrders" parameterType="org.example.digitalculturalportal.pojo.Orders">
+        UPDATE orders
+        SET
+            recipient_name = #{recipientName},
+            recipient_phone = #{recipientPhone},
+            shipping_address = #{shippingAddress}
+        WHERE
+            order_id = #{orderId}
+    </update>
+
+
+
+    <insert id = "addOrders">
+        INSERT INTO orders (user_id, product_name, recipient_name, recipient_phone, shipping_address, total_amount)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.userId},
+             #{item.productName},
+            #{item.recipientName},
+            #{item.recipientPhone},
+            #{item.shippingAddress},
+            #{item.totalAmount})
+        </foreach>
+    </insert>
+
+</mapper>

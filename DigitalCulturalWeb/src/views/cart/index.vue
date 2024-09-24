@@ -2,13 +2,11 @@
   <div class="cart-page">
     <h1>购物车</h1>
 
-    <!-- 如果购物车为空，显示提示信息 -->
     <div v-if="cartItems.length === 0" class="empty-cart">
       <p>购物车是空的</p>
       <router-link to="/mall">去购物</router-link>
     </div>
 
-    <!-- 如果购物车有商品，展示商品列表 -->
     <div v-else>
       <ul class="cart-items">
         <li
@@ -18,7 +16,6 @@
           :class="{ 'item-selected': item.selected }"
         >
           <div class="item-selection">
-            <!-- 选择结算商品的复选框 -->
             <input type="checkbox" v-model="item.selected" />
           </div>
           <div class="item-info">
@@ -40,12 +37,11 @@
         </li>
       </ul>
 
-      <!-- 底部操作栏，包含总价、去结算和全部删除按钮 -->
       <div class="cart-footer">
         <el-button type="danger" @click="openDeleteDialog">全部删除</el-button>
         <div class="cart-summary">
           <h3>总计: ¥{{ selectedTotal }}</h3>
-          <el-button type="primary" @click="checkout">去结算</el-button>
+          <el-button type="primary" @click="openCheckoutDialog">去结算</el-button>
         </div>
       </div>
     </div>
@@ -75,20 +71,49 @@
         <el-button type="danger" @click="confirmDeleteItem">确定</el-button>
       </span>
     </el-dialog>
+
+    <!-- 收货信息填写对话框 -->
+    <el-dialog
+      title="填写收货信息"
+      :visible.sync="checkoutDialogVisible"
+      width="40%"
+    >
+      <el-form :model="checkoutForm" ref="checkoutForm">
+        <el-form-item label="收货人姓名" required>
+          <el-input v-model="checkoutForm.recipientName"></el-input>
+        </el-form-item>
+        <el-form-item label="电话号码" required>
+          <el-input v-model="checkoutForm.recipientPhone" type="tel"></el-input>
+        </el-form-item>
+        <el-form-item label="收货地址" required>
+          <el-input v-model="checkoutForm.shippingAddress"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="checkoutDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="confirmCheckout">确认结算</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
-
 <script>
-import { getCartItems, removeFromCart, clearCart, updateCartItem} from "../../api/cart.js"
+import { getCartItems, removeFromCart, clearCart, updateCartItem } from "../../api/cart.js"
+import { addOrders } from "../../api/orders.js";
 
 export default {
   data() {
     return {
-      cartItems: [], // 购物车项
-      deleteDialogVisible: false, // 控制全部删除弹框的显示
-      deleteItemDialogVisible: false, // 控制单个商品删除弹框的显示
-      currentItemIndex: null, // 当前选中的商品索引，用于删除
+      cartItems: [],
+      deleteDialogVisible: false,
+      deleteItemDialogVisible: false,
+      checkoutDialogVisible: false,
+      checkoutForm: {
+        recipientName: '',
+        recipientPhone: '',
+        shippingAddress: ''
+      },
+      currentItemIndex: null,
     };
   },
   computed: {
@@ -102,18 +127,12 @@ export default {
   methods: {
     async fetchCartItems() {
       try {
-        // 从后端 API 获取购物车数据
         const response = await getCartItems(this.$store.state.user.userId);
-        
-        // 处理获取的数据
         if (response.code === 200) {
-            this.cartItems = response.data;
+          this.cartItems = response.data;
         } else {
           this.$message.error('获取购物车数据失败');
         }
-        console.log(response.data)
-        
-        
       } catch (error) {
         this.$router.push('/login');
         this.$message.error('请登录后查看购物车');
@@ -121,17 +140,17 @@ export default {
     },
     
     increaseQuantity(index) {
-      let item = this.cartItems[index]
-      updateCartItem(this.$store.state.user.userId, item.id, this.cartItems[index].quantity + 1).then(() => {
-        this.cartItems[index].quantity++;
-      })
+      let item = this.cartItems[index];
+      updateCartItem(this.$store.state.user.userId, item.id, item.quantity + 1).then(() => {
+        this.fetchCartItems();
+      });
     },
     decreaseQuantity(index) {
       if (this.cartItems[index].quantity > 1) {
-        let item = this.cartItems[index]
-        updateCartItem(this.$store.state.user.userId, item.id, this.cartItems[index].quantity - 1).then(() => {
-        this.cartItems[index].quantity--;
-      })
+        let item = this.cartItems[index];
+        updateCartItem(this.$store.state.user.userId, item.id, item.quantity - 1).then(() => {
+          this.fetchCartItems();
+        });
       }
     },
     openDeleteItemDialog(index) {
@@ -139,45 +158,74 @@ export default {
       this.deleteItemDialogVisible = true;
     },
     confirmDeleteItem() {
-      
-      let item = this.cartItems[this.currentItemIndex]
-      removeFromCart(this.$store.state.user.userId, item.id).then((res) => {
-        console.log(res)
+      let item = this.cartItems[this.currentItemIndex];
+      removeFromCart(this.$store.state.user.userId, item.id).then(() => {
         this.cartItems.splice(this.currentItemIndex, 1);
-      })
-      .catch((e) => {
-        console.log(e)
-      })
+      });
       this.deleteItemDialogVisible = false;
     },
     openDeleteDialog() {
       this.deleteDialogVisible = true;
     },
     confirmDeleteAll() {
-      
-      clearCart(this.$store.state.user.userId).then((res) => {
+      clearCart(this.$store.state.user.userId).then(() => {
         this.cartItems = [];
-        console.log(res)
-      }).catch((e) => {
-        console.log(e)
-      })
+      });
       this.deleteDialogVisible = false;
     },
-    checkout() {
+    openCheckoutDialog() {
       const selectedItems = this.cartItems.filter((item) => item.selected);
       if (selectedItems.length === 0) {
         this.$message.error('请选择至少一件商品进行结算');
         return;
       }
-      this.$message.success('结算成功！待结算商品数量：' + selectedItems.length);
+      this.checkoutDialogVisible = true; // 显示结算对话框
     },
+    async confirmCheckout() {
+    if (this.$refs.checkoutForm.validate()) {
+      const selectedItems = this.cartItems.filter(item => item.selected);
+      
+      const ordersList = []; // 初始化一个空数组
+      const proIdList = [];
+      
+selectedItems.forEach(item => {
+  const order = {
+    userId: this.$store.state.user.userId,
+    productName: item.name, // 单个商品名称
+    totalAmount: this.selectedTotal, // 总金额
+    recipientName: this.checkoutForm.recipientName,
+    recipientPhone: this.checkoutForm.recipientPhone,
+    shippingAddress: this.checkoutForm.shippingAddress,
+    // 其他必要的字段可以添加在这里
+  };
+  ordersList.push(order); // 将 order 对象添加到 orderData 数组中
+  proIdList.push(item.id)
+});
+      
+      try {
+        const response = await addOrders(ordersList, proIdList, this.$store.state.user.userId); // 调用创建订单的 API
+        if (response.code === 200) {
+          // 成功创建订单，移除已结算的商品
+          this.cartItems = this.cartItems.filter(item => !item.selected);
+          this.$message.success('结算成功！');
+        } else {
+          this.$message.error('结算失败，请重试。');
+        }
+      } catch (error) {
+        this.$message.error('结算过程中发生错误，请稍后再试。');
+      }
+
+      this.checkoutDialogVisible = false; // 隐藏对话框
+      this.checkoutForm = { recipientName: '', recipientPhone: '', shippingAddress: '' }; // 重置表单
+    }
+  }
   },
   mounted() {
     this.fetchCartItems(); // 组件挂载后获取购物车数据
   },
 };
 </script>
-  
+
 
   <style scoped>
   /* 页面整体布局 */

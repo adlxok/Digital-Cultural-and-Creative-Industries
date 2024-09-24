@@ -2,49 +2,74 @@
   <div class="dashboard-container">
     <!-- 仪表盘标题 -->
     <h1 class="dashboard-title">仪表盘</h1>
-    
+
     <!-- 数据概览 -->
     <div class="dashboard-overview">
       <div class="overview-item">
         <h3>用户总数</h3>
-        <p>{{ 3 }}</p>
+        <p>{{ userCount }}</p>
       </div>
       <div class="overview-item">
         <h3>商品总数</h3>
-        <p>{{ 16 }}</p>
+        <p>{{ productCount }}</p>
       </div>
     </div>
-    
+
     <!-- 图表区域 -->
     <div class="dashboard-charts">
       <h2>数据统计</h2>
       <canvas id="userGrowthChart"></canvas>
       <canvas id="productSalesChart"></canvas>
     </div>
-    
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import { Chart } from 'chart.js';
+import { selectAll as selectAllProducts } from '@/api/products'; // 为产品选择重命名
+import { selectAll as selectAllUsers } from '@/api/user'; // 为用户选择重命名
 
 export default {
   name: 'Dashboard',
   computed: {
     ...mapGetters([
       'name',
-      'users',
-      'products',
+      // 'users' 和 'products' 被替换为数据中的直接引用
       'totalUsers',
       'totalProducts'
     ])
   },
+  data() {
+    return {
+      userCount: null,
+      productCount: null,
+      products: [],
+      users: []
+    };
+  },
   mounted() {
+    this.fetchDashboardData();
     this.renderUserGrowthChart();
     this.renderProductSalesChart();
   },
   methods: {
+    fetchDashboardData() {
+      // 调用重命名的函数来获取数据
+      selectAllProducts().then((res) => {
+        // 处理产品数据
+        this.products = res.data; // 假设返回的产品数据在 res.data 中
+        this.productCount = this.products.length; // 使用 this.products 进行引用
+        console.log('产品总数:', this.productCount);
+      });
+
+      selectAllUsers().then((res) => {
+        // 处理用户数据
+        this.users = res.data; // 假设返回的用户数据在 res.data 中
+        this.userCount = this.users.length; // 使用 this.users 进行引用
+        console.log('用户总数:', this.userCount);
+      });
+    },
     // 渲染用户增长图表
     renderUserGrowthChart() {
       const ctx = document.getElementById('userGrowthChart').getContext('2d');

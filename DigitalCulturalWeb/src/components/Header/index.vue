@@ -3,15 +3,15 @@
     <div class="p-header blk" id="header">
       <div class="x-wrap">
         <div>
-          <!-- <div class="logo">
+          <div class="logo">
               <router-link to="/">
                 <img 
-                  src="../../assets/images/logo_wt.png"
-                  alt="莆田学院"
+                  src="../../assets/images/logo.png"
+                  alt="logo"
                   class="wht"
                 />
               </router-link>
-          </div> -->
+          </div>
         </div>
     
 

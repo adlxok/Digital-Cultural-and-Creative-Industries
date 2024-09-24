@@ -12,95 +12,94 @@
       <el-menu :default-active="activeMenu" @select="handleMenuSelect">
         <el-menu-item index="1">个人设置</el-menu-item>
         <el-menu-item index="2">修改密码</el-menu-item>
-        <!-- <el-menu-item index="3">个人设置</el-menu-item> -->
-        <!-- <el-menu-item index="4">个人喜好</el-menu-item> -->
-        <el-menu-item index="5">退出登录</el-menu-item> <!-- 新增退出登录菜单项 -->
+        <el-menu-item index="3">我的订单</el-menu-item> <!-- 新增我的订单菜单项 -->
+        <el-menu-item index="5">退出登录</el-menu-item> <!-- 退出登录菜单项 -->
       </el-menu>
     </el-aside>
 
     <!-- 右侧内容区域 -->
     <el-main class="profile-content">
-      <component :is="currentComponent"></component>
-    </el-main>
+  <UserOrders @view-order-detail="showOrderDetail" v-if="currentComponent === 'UserOrders'" />
+  <OrderDetail ref="orderDetailComponent" :orderId="currentOrderId" v-else-if="currentComponent === 'OrderDetail'" />
+  <component v-else :is="currentComponent"></component>
+</el-main>
   </el-container>
+  
 </template>
 
 <script>
 import UserInfo from './UserInfo.vue';
 import ChangePassword from './ChangePassword.vue';
-import UserSettings from './UserSettings.vue';
-import UserPreferences from './UserPreferences.vue';
-import { logout } from "@/api/logout"; // 假设有一个退出登录的 API 接口
-import { MessageBox } from 'element-ui'; // 引入 MessageBox 弹窗
+import UserOrders from './UserOrders.vue'; // 导入我的订单组件
+import { logout } from "@/api/logout";
+import { MessageBox } from 'element-ui';
 import {getInfo} from '@/api/getInfo';
+import OrderDetail from './OrderDetail.vue';
 
 export default {
   components: {
     UserInfo,
     ChangePassword,
-    UserSettings,
-    UserPreferences
+    UserOrders,
+    OrderDetail // 注册我的订单组件
   },
   data() {
     return {
       user: {},
-      activeMenu: '1', // 默认显示个人信息
-      currentComponent: 'UserInfo' // 默认显示个人信息组件
+      activeMenu: '1', 
+      currentComponent: 'UserInfo',
+      currentOrderId: null, // 初始化当前订单 ID
     };
   },
   mounted() {
-    // 在组件挂载时获取用户数据
     this.fetchUserData();
+    console.log("Mounted currentComponent:", this.currentComponent);
   },
   methods: {
+    showOrderDetail(orderId) {
+  this.currentOrderId = orderId;
+  this.currentComponent = 'OrderDetail';
+  console.log("Switching to OrderDetail with orderId:", orderId);
+},
     fetchUserData() {
-        getInfo().then((res) => {
-          this.user = res.data;
-          console.log(this.user)
-        })
-        .catch(error => {
-          console.error('获取用户数据失败', error);
-        });
+      getInfo().then((res) => {
+        this.user = res.data;
+      })
+      .catch(error => {
+        console.error('获取用户数据失败', error);
+      });
     },
     handleMenuSelect(index) {
-      this.activeMenu = index;
-      switch (index) {
-        case '1':
-          this.currentComponent = 'UserInfo';
-          break;
-        case '2':
-          this.currentComponent = 'ChangePassword';
-          break;
-        case '3':
-          this.currentComponent = 'UserSettings';
-          break;
-        case '4':
-          this.currentComponent = 'UserPreferences';
-          break;
-        case '5': // 退出登录
-          this.confirmLogout();
-          break;
-        default:
-          this.currentComponent = 'UserInfo';
-      }
-    },
+  this.activeMenu = index;
+  switch (index) {
+    case '1':
+      this.currentComponent = 'UserInfo';
+      break;
+    case '2':
+      this.currentComponent = 'ChangePassword';
+      break;
+    case '3':
+      this.currentComponent = 'UserOrders'; // 切换到我的订单组件
+      this.currentOrderId = null; // 清除当前订单 ID
+      break;
+    case '5': 
+      this.confirmLogout();
+      break;
+    default:
+      this.currentComponent = 'UserInfo';
+  }
+},
     confirmLogout() {
-      // 使用 MessageBox 弹出确认对话框
       MessageBox.confirm('确定要退出登录吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        // 用户确认退出，执行退出逻辑
         this.logout();
-      }).catch(() => {
-        // 用户取消，关闭对话框，无需处理
-      });
+      }).catch(() => {});
     },
     logout() {
-      // 执行退出登录的操作
       logout().then(() => {
-        // 退出成功后跳转到登录页面
         this.$store.commit('LOGOUT');
         this.$router.push('/login');
       }).catch(error => {

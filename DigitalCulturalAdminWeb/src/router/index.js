@@ -85,7 +85,22 @@ export const constantRoutes = [
 
     ]
   },
-
+  {
+    path: '/order',
+    component: Layout,
+    redirect: '/order/ordermanage',
+    name: 'user',
+    meta: { title: '订单', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'ordermanage',
+        name: 'ordermanage',
+        component: () => import('@/views/order/index.vue'),
+        meta: { title: '订单管理', icon: 'usermanage' }
+      }
+      
+    ]
+  },
   
   {
     path: '/user',
@@ -103,6 +118,7 @@ export const constantRoutes = [
       
     ]
   },
+  
 
   
 

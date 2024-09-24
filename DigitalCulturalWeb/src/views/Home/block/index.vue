@@ -26,7 +26,7 @@
                 <li class="sHoverItem" style="position: relative; overflow: hidden;">
                     <!-- wan.jpg -->
                     <img alt="" title="" class=" lazyloaded" data-src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1de712.jpg" src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1de712.jpg">
-                    <div class="mask1" style="width: 375px; height: 450px; z-index: 99; opacity: 1;">
+                    <div class="mask1" style="width: 292px; height: 370px; z-index: 99; opacity: 1;">
                             <a @click="navigateToMall">
                                 <p>斗彩婴戏图杯</p>
                                 <p>明成化</p>
@@ -42,7 +42,7 @@
                 <li class="sHoverItem" style="position: relative; overflow: hidden;">
                     <!-- ping.jpg -->
                     <img alt="" title="" class=" lazyloaded" data-src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1df355.jpg" src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1df355.jpg">
-                    <div class="mask1" style="width: 375px; height: 450px; z-index: 99; opacity: 1;">
+                    <div class="mask1" style="width: 292px; height: 370px; z-index: 99; opacity: 1;">
                         <a @click="navigateToMall">
                             <p>粉彩花卉凸三婴戏瓶</p>
                             <p>清乾隆</p>
@@ -58,7 +58,7 @@
                 <li class="sHoverItem" style="position: relative; overflow: hidden;">
                     <!-- bowl.jpg -->
                     <img alt="" title="" class=" lazyloaded" data-src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1dfe4a.jpg" src="https://img.dpm.org.cn/Uploads/Picture/2022/05/31/s629590a1dfe4a.jpg">
-                    <div class="mask1" style="width: 375px; height: 450px; z-index: 99; opacity: 1;">
+                    <div class="mask1" style="width: 292px; height: 370px; z-index: 99; opacity: 1;">
                         <a @click="navigateToMall">
                             <p>青花婴戏图碗</p>
                             <p>清光绪</p>
@@ -101,10 +101,13 @@
 </script>
 
 <style scoped>
+
+
 .box .title h1 .s1,
 .box .title h1 .s2 {
+    
     color: #fff;
-    font-size: 24px;
+    font-size: 12px;
     margin-right: 48px;
     margin-top: 10px;
     padding-left: 10px;
@@ -166,8 +169,8 @@ img {
 .block2 {
     position: relative;
     top: 0px;
-    height: 450px;
-    width: 1600px;
+    height: 350px;
+    width: 1200px;
     display: -webkit-flex;
     margin: 0 auto;
     /* 测试 可删除 */
@@ -184,7 +187,7 @@ img {
 }
 
 .block2 .box a {
-    margin-top: 40px;
+    margin-top: 10px;
 }
 
 /* 利用伪类元素设置内容 */
@@ -208,7 +211,7 @@ img {
     line-height: 1.2;
     font-weight: normal;
     color: #fff;
-    margin-top: 190px;
+    margin-top: 133px;
 }
 
 .box .title .tit-span {
@@ -216,7 +219,7 @@ img {
 }
 
 .box .title .tit-span img {
-    width: 60px;
+    width: 50px;
     margin-top: -5px;
 }
 
@@ -285,7 +288,7 @@ img {
 .list {
     position: relative;
     width: 20px;
-    height: 450px;
+    height: 350px;
     flex: 3;
 }
 .block2 .list ul {
@@ -303,7 +306,7 @@ img {
     position: absolute;
     /* 将盒子定位到下面 */
     bottom: 0px;
-    left: -375px;
+    left: -292px;
     background-color: rgba(0, 0, 0, 0.6);
     color: #fff;
 }

@@ -2,16 +2,17 @@
   <div>
     <!-- 轮播图 -->
     <Carousel></Carousel>
+    <!-- 开始创作 -->
     <StartCreation></StartCreation>
     <!-- 内容部分 -->
     <Content></Content>
     <!-- 故宫——藏品 -->
     <block></block>
     <!-- 文章部分 -->
-    <Article></Article>
+    <!-- <Article></Article> -->
     <!-- 下面——滑动 -->
-    <huad></huad>
-    <!-- 开始创作 -->
+    <!-- <huad></huad> -->
+    
     
   </div>
 </template>
@@ -20,8 +21,8 @@
 import Carousel from "./Carousel";
 import Content from "./Content";
 import block from "./block";
-import Article from "./Article";
-import huad from "./huad";
+// import Article from "./Article";
+// import huad from "./huad";
 import StartCreation from "./StartCreation";
 
 export default {
@@ -30,8 +31,8 @@ export default {
     Carousel,
     Content,
     block,
-    Article,
-    huad,
+    // Article,
+    // huad,
     StartCreation,
   },
 };

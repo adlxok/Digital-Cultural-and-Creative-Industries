@@ -89,7 +89,13 @@ export default new VueRouter({
             meta: { hideHeaderFooter: true },
             component:() => import('../views/create/index.vue')
         },
-
+        {
+            path: '/announcements',
+            name: 'announcements',
+            meta: { hideHeaderFooter: true },
+            component:() => import('../views/announcements/index.vue')
+        },
+        
     ] 
 })
 

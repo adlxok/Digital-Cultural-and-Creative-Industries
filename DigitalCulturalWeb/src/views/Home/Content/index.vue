@@ -3,9 +3,9 @@
         <!-- 闭馆公告 -->
         <div class="notice">
             <div class="center">
-                <div class="title"><a href="###">{{titnotice.centertit}}</a></div>
-                <div class="con"><a href="###">{{titnotice.centercon}}</a></div>
-                <div class="btn"><div class="btn-con">{{titnotice.btn}}</div><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="110" height="40" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); left: 0px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><path fill="none" stroke="#dadada" d="M0,5L5,5L5,0L105,0L105,5L110,5L110,35L105,35L105,40L5,40L5,35L0,35L0,5" stroke-width="2" stroke-dasharray="1000,1000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2; stroke-dashoffset: 0px; stroke-dasharray: 500, 500;"></path></svg></div>
+                <!-- <div class="title"><a href="###">{{titnotice.centertit}}</a></div> -->
+                <!-- <div class="con"><a href="###">{{titnotice.centercon}}</a></div> -->
+                <div class="btn"><div class="btn-con">创艺集市</div><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="110" height="40" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); left: 0px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><path fill="none" stroke="#dadada" d="M0,5L5,5L5,0L105,0L105,5L110,5L110,35L105,35L105,40L5,40L5,35L0,35L0,5" stroke-width="2" stroke-dasharray="1000,1000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2; stroke-dashoffset: 0px; stroke-dasharray: 500, 500;"></path></svg></div>
             </div>
         </div>
         <!-- box_one -->

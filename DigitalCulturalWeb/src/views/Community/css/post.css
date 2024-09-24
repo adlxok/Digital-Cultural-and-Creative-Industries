@@ -3,13 +3,14 @@
 	height: auto;
 	min-height: 1000px;
 }
+
 /* 首页头部导航 */
 .community-heander{
 	display: flex;
 	align-items: flex-start;
 	background-image:url("../../../assets/images/back2.jpg");
 	background-position: center;
-	width: 1520px;
+	width:  1689px;
 	height: auto;
 	min-height: 150px;
 	position:fixed; /*定位导航栏*/
