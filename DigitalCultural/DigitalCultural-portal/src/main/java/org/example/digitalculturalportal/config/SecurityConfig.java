@@ -86,7 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 "/mall/products/**",
                 "/getallTopics",
                 "/communityHome/**",
-                "/post/hotPost"
+                "/post/hotPost",
+                "/search/post"
 
         );
     }

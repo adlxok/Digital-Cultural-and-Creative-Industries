@@ -59,7 +59,7 @@
       <el-card class="editor-box4-card">
         <div class="editor-button">
           <el-button plain>保存</el-button>
-          <el-button type="warning" plain @click="fetchaddpost()">发布</el-button>
+          <el-button type="warning"  @click="fetchaddpost()">发布</el-button>
         </div>
       </el-card>
     </div>

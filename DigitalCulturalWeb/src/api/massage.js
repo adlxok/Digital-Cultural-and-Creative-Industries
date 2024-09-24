@@ -29,14 +29,16 @@ export function letterDetail(params){
 }
 export function noticeList(){
     return request({
-        url: '/letter/letterDetail',
+        url: '/letter/noticeList',
         method: 'get',
     })
 }
-export function noticeDetail(param){
+export function noticeDetail(params){
     return request({
         url: '/letter/noticeDetail',
         method: 'get',
-        param: param
+        params: {
+            conversationId: params
+        }
     })
 }
